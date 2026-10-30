@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "measured_modern_BSD_registration_monitor_state_native_tested_awaiting_actual_service_boot",
+  "actual_trigger": {
+    "source_commit_short": "869e720",
+    "binary_sha256": "a01f513dda6c983ffe819fbcdfa6eea01f0aa4dfcc20aa6b31f3fd3d8b52ef95",
+    "log_sha256": "e594bfdaa8ae900645ef6ae5da71d0d7b5e5cd3b1c7e4f545a452284d75da380",
+    "private_run_description": "external host-build/runs/host-cq16xyrw",
+    "observed": "Actual boot16 completed NIFM CreateGeneralService5, then stopped opening bsd:s during the original SDK socket initializer. Callers SDK0x161fc4/0x161f7c/0x159640/0x159564/0x159450 and main0xcb0f90/0xca92e4. Run1.454 seconds, exit1; no remaining owned processes. No BSD registration/monitor/socket RPC has yet been observed returning"
+  },
+  "source_identity": {
+    "SDK_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "SDK_AOT_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+    "original_AOT_comparison": "Read-only in-memory byte-identical checks over SDK0x159400..0x159450,0x1597cc..0x159888 and0x162b24..0x162d94",
+    "sanitization": "Module hashes, offsets and decoded semantics only; no owned instruction bytes, addresses from a live process, numeric process identity, network identity, credential or personal absolute path"
+  },
+  "actual_modern_SDK_protocol": {
+    "config": "SDK0x15940c/0x15941c stores version10. The caller at0x1597cc..0x1597f0 builds exactly eight u32 fields: version,tcpTx,tcpRx,tcpTxMax,tcpRxMax,udpTx,udpRx,efficiency. This measured default is10,0x8000,0x10000,0x30000,0x30000,0x2400,0xa500,4",
+    "register_request": "Proxy vptr SDK0xb41660 slot+0x20 resolves to0x1624e0, which selects cmd0 and branches to0x162b24. The encoder uses type6, PID plus one COPY TMEM handle (special3), no buffers. Raw48 bytes are config32, zero process placeholder@32, TMEM size@40; frame alignment yields data_size56",
+    "register_response": "SDK0x162c50 reads only a u32 from response+0x10 and0x162c54 stores it into the caller's output pointer. At0x15986c/0x159870 the caller requires that status to be0. It is not a generated nonzero client ID or a returned u64 process identity",
+    "monitor_request": "On a separate control session, SDK0x159878 sets x1=0 before virtual slot+0x28. Slot resolves0x1624ec, selects cmd1 and enters0x162c94. Encoder uses type6/PID only, raw u64zero at0x162cec, no handles/buffers and no output payload; alignment yields data_size12",
+    "TMEM": "SDK0x1597b8 creates a real runtime TMEM descriptor with permission0; RegisterClient passes one COPY handle. The wrapper may close its caller handle after the request, so the service must not borrow its heap descriptor pointer",
+    "alternate_unimplemented": "The SDK contains an alternate Config flag path via virtual slot0x128/RegisterClientShared33. This path is not implemented or silently redirected by this adapter; actual next execution remains the authority"
+  },
+  "primary_references": [
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/source/services/bsd.c#L84-L105",
+      "fact": "Corroborates RegisterClient0 config32/u64zero/u64TMEM size, send-PID and COPY TMEM, plus separate StartMonitoring1 with PID and one u64. Its older wrapper names an eight-byte output client PID and passes it to monitoring; this host follows the independently decoded modern SDK's u32status0 and monitor-placeholder0 instead"
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/source/services/bsd.c#L65-L74",
+      "fact": "Provides the buffer-size resource calculation: page-round the sum of effective TCP maxima and UDP buffers, then multiply by efficiency. This host conservatively requires enough TMEM; it does not claim Horizon rejects every smaller configuration"
+    },
+    {
+      "url": "https://switchbrew.org/wiki/Sockets_services#RegisterClient",
+      "fact": "Independent public protocol documentation states a four-byte RegisterClient output, PID and reserved u64 for monitoring, and Linux wire errno values"
+    },
+    {
+      "url": "https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/errno.h#L78-L79",
+      "fact": "Linux ENETDOWN is100. Darwin/FreeBSD50 is not the correct guest wire value"
+    }
+  ],
+  "implemented_contract": {
+    "endpoint": "Only measured bsd:s. The inherited unvalidated bsd:u registration is removed, not aliased to an unconditional fake registration/monitor response",
+    "process_identity": "A genuine shared BsdClient records the native getpid identity, measured config and owned validated TMEM metadata. Raw PID bits in the in-process HIPC frame are not kernel-authenticated and never become an identity or a fabricated output token",
+    "register0": "Strict type4/6, PID, one COPY live O_TMEM handle, zero moved handles/buffers, raw48 plus CMIF alignment slack. Require version10, consistent buffer maxima/efficiency, nonzero 4KiB-aligned address/size without overflow, exact descriptor size, permission0 and enough declared resources. Only after the client registration exists return exact u32status0 in an otherwise empty successful CMIF response",
+    "monitor1": "Require raw u64zero/PID, no handles/buffers, separate unbound live session and a matching registered native process. Attach to and retain that client; repeated/invalid attachment stops. This is meaningful control-plane lifetime state, not an unconditional acknowledgment or an OS/network-health monitoring thread",
+    "TMEM_boundary": "The existing runtime TMEM is an owned descriptor, not a Horizon kernel mapping. The service snapshots validated addr/size/perm by value before the caller can close its COPY handle. It does not borrow the descriptor, read/write/pin its backing memory, duplicate a real OS TMEM handle or claim a working networking shared-memory data plane",
+    "lifetime": "Opt-in retained IPC sessions keep their state across clones/domain copies. Distinct monitor state holds a separate reference to shared registration; registration survives client close while a monitor is live, monitor detach preserves a live client, and final client/monitor state release removes the registry entry and frees all host state. No permanent pools",
+    "host_limits": "This diagnostic supports one registered native process, version10, efficiency1..8, at most64MiB TMEM metadata and sufficient configured buffer resources; duplicates/inconsistent/unsupported layouts stop explicitly. These are conservative host gates, not universal Horizon session/resource limits",
+    "socket_policy": "For registered non-monitor client sessions only, Socket2/SocketExempt3 validate raw12/no-PID/no-handle/no-buffer framing and return{s32ret=-1,u32errno=100} under the explicit offline diagnostic backend policy. This neither queries nor asserts that the Mac network is down. No OS socket, network/DNS callback, connected state, successful descriptor or network request is created",
+    "errno_evidence": "Actual SDK cmd2 decoder0x162e80..0x162e8c returns ret and errno unchanged; negative Socket branch0x15fe88/0x15fe8c reaches0x15fed4, then0x15fe7c/0x15fe80 writes that raw errno to guest storage. No host-errno translation justifies inherited50",
+    "other_commands": "All commands outside0/1 and the explicit denied socket2/3 boundary stop with their exact service/command. No successful socket/DNS/connected status or SDK-init override is manufactured",
+    "guards": "Constructor registers the endpoint/ownership callbacks only. Opening and serving require the existing compile-time diagnostic opt-in and checked isolated run. No pre-main allocation, identity, environment, profile or network I/O"
+  },
+  "native_validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -p test_bsd_ipc.py -v",
+    "compiler": "xcrun clang -arch arm64 -std=gnu11 -O1 -Wall -Wextra -Werror",
+    "tests_passed": 30,
+    "fixture": "Independent tiny requests use actual ipc.c parsing/control/domain dispatch, threads.c handles/CloseHandle, actual CreateTransferMemory and bsd_host.c. Allocated test backing memory remains private/native. No game/SDK code, real network, GPU or guest execution",
+    "cases": [
+      "Real current-process registration/config, exact typed four-byte status and actual encoder raw56/raw12 alignment; untrusted wire PID cannot replace native identity",
+      "Live O_TMEM type validation, metadata survives caller handle close; no borrowed descriptor use",
+      "Monitor requires/retains matching registration; client/monitor clones, both close orders, domain copy and domain-root close free the correct owners",
+      "1000 real TMEM/register/domain/copy/monitor/close cycles leave zero client/session/IPC/TMEM allocations, no registry entry and no handle slots",
+      "Version/configuration, raw-size, PID/COPY/MOVE/buffer/TIPC, zero placeholder, wrong/closed/session/event TMEM, size/alignment/overflow/permission/capacity negatives",
+      "Duplicate clients, early/repeated monitors, monitor/socket role errors and unknown commands stop",
+      "Denied Socket/SocketExempt return exact -1/Linux100; an OS socket fixture trap would fail if any real socket were attempted",
+      "Pre-main/default-disabled/run ownership guards; no network/profile/config files created"
+    ]
+  },
+  "independent_review": "Peer independently decoded original SDK registration/status/monitor/errno paths and reviewed source/tests. The inherited errno50 mismatch was corrected to wire100; no remaining material source/test finding. Reviewer did not edit or run tests/build/guest",
+  "owned_paths": ["runtime/bsd_host.c", "tests/test_bsd_ipc.py", "provenance/BSD_HOST_20261027.json"],
+  "actual_host_build_or_guest_execution_by_this_stage": false,
+  "remaining": "Root must build and run the real diagnostic host to observe BSD registration/monitor completion and its next actual API. No networking data plane, NRO mapping, game frame, menu or gameplay is claimed"
+}

@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "title_id": "0100BA4026E94000",
+  "state": "sealed_diagnostic_app_native_fixture_tested_actual_UI_pending",
+  "base_source_commit": "978d0181cb1462e43482d9cd9ef053f86db38e28",
+  "scope": "Explicit runner-only app packaging and launch. No C/backend/builder change, game rebuild, installation, LaunchServices registration, private signing identity, permission or OS setting change.",
+  "reason": "Root's unbundled diagnostic reached presentation, but the UI automation inventory did not identify the plain executable as an app. A real bundle gives the already compiled host a normal macOS bundle identity while preserving its guarded diagnostic launch.",
+  "option": {
+    "name": "--app-bundle",
+    "default": false,
+    "guard": "Exact bool required by run(args), validated before work IO; true requires with_window exactly true. CLI uses the same guard.",
+    "default_behavior": "Without the option, launch the original build/castlevania-native exactly as before, create no app directory and do not require bundle shader-tool metadata."
+  },
+  "fixed_layout": [
+    "<fresh-owned-run>/Castlevania Diagnostic.app/Contents/Info.plist",
+    "<fresh-owned-run>/Castlevania Diagnostic.app/Contents/MacOS/castlevania-native",
+    "<fresh-owned-run>/Castlevania Diagnostic.app/Contents/Resources/diagnostic-origin.json",
+    "<fresh-owned-run>/Castlevania Diagnostic.app/Contents/build/shader-service/totk_xlate",
+    "<fresh-owned-run>/Castlevania Diagnostic.app/Contents/build/spirv-cross/spirv-cross",
+    "<fresh-owned-run>/Castlevania Diagnostic.app/Contents/_CodeSignature/CodeResources",
+    "<fresh-owned-run>/app-bundle-receipt.json"
+  ],
+  "bundle_metadata": {
+    "CFBundleIdentifier": "org.macnativegames.castlevania.diagnostic",
+    "CFBundlePackageType": "APPL",
+    "CFBundleExecutable": "castlevania-native",
+    "CFBundleName": "Castlevania Diagnostic",
+    "CFBundleDisplayName": "Castlevania Diagnostic",
+    "CFBundleShortVersionString": "1.1.0",
+    "CFBundleVersion": "1",
+    "NSPrincipalClass": "NSApplication",
+    "NSHighResolutionCapable": true,
+    "LSEnvironment": "not present"
+  },
+  "source_and_signing": {
+    "source_binding": "Require the existing owned successful build receipt and original binary SHA. The only code sources are the original main executable and exactly the two fixed shader_tool_sha256 entries from that receipt; no caller-supplied binary/helper path or extra tool key.",
+    "copy_validation": "Canonical source path, O_NOFOLLOW regular owned executable, exclusive independent0700 destination, streamed copy SHA, source fstat stability, destination readback SHA and source post-read SHA. All copies are byte-identical to their pinned originals before signing.",
+    "original_signature": "The actual builder uses codesign --force --sign - --timestamp=none without entitlement options. Read-only inspection of the current main reported ad-hoc, no bound Info.plist or resource seal, and no entitlement data. The runner explicitly requires no entitlements from every verified code source.",
+    "entitlement_policy": "Extract using codesign --display --entitlements - --xml. Any nonempty entitlement dictionary is explicitly rejected; no silent dropping of allow-jit or other future entitlement. Derived code is checked again after signing.",
+    "signing_targets": "Sign the two fixed copied helper paths individually using only local ad-hoc identity '-', then sign the outer app. No --deep discovery, private key, certificate identity or original executable signing.",
+    "verification": "Strict codesign verification of the entire resource-sealed app and separately its main executable and both helpers. Source hashes are checked again after signing. Info.plist, origin JSON and CodeResources SHA are recorded.",
+    "derivative_identity": "Signing intentionally changes the copied Mach-O signature. Keep original compiled binary SHA, pre-sign copy SHA and signed-copy SHA distinct. The exact compiled-build-receipt.json remains unchanged; app-bundle-receipt.json describes a signature-modified derivative, never a byte-identical post-sign original.",
+    "distribution_boundary": "Contents/build is required by this frozen host's executable-relative helper lookup. Each helper is explicitly signed and the outer seal is actually verified. This is a local owned diagnostic bundle, not a Developer ID/notarization/Gatekeeper distribution or standalone installed game claim."
+  },
+  "runtime_dependencies_and_isolation": {
+    "shader_path": "Frozen totk_shader_rt.m resolves the executable and removes two parent components. For Contents/MacOS/main this root is Contents, so the two verified tools must be copied into Contents/build at their existing fixed relative paths. No external bundle symlink is used.",
+    "shader_assets": "The measured setup has no bundled shader-map/metallib/seed requirement: these are optional and absent in the current path. Runtime translation output remains in the guarded run XDG_CACHE_HOME. Tool dependency inspection found system frameworks/dylibs, not adjacent .NET runtime files.",
+    "fonts": "shared_fonts_config.h embeds absolute paths under the existing owned work/firmware/shared-fonts. shared_font.c independently enforces each compiled size/SHA on read. Packaging keeps those paths and files unchanged; it does not substitute fonts or claim a relocatable standalone installation.",
+    "game_data": "Keep the existing runroot/extracted and rewritten staged read-only views and original runtime C profile/hash gates. Do not copy ROM/AOT game payload into the app.",
+    "launch": "Popen executes exactly the fixed packaged Contents/MacOS/castlevania-native path with the existing <runroot>/rewritten/v110 boot arguments. Preserve cwd=runroot, explicit known environment, private HOME/TMP/cache/profile/saves/log, native stderr log inode, new session/PGID, file/core limits, timeout and group cleanup.",
+    "ordinary_launch": "No open -a or LaunchServices launch fallback. A direct Finder launch lacks the required fresh ownership marker/token/cwd/log and remains rejected by existing C guards.",
+    "receipt": "The completed run records the original compiled binary SHA separately from launched_binary_sha256 and includes the derived app manifest. The manifest is also saved independently outside the sealed bundle. UI_inspection_verified stays false until an actual UI observation is made."
+  },
+  "proof_reuse": "A bundle run may consume the existing fully bound non-bundle C proof. As a deliberately minimal fail-closed policy, a bundle run is explicitly rejected as a future proof source, and its proof_reuse_eligible is false. Default original-command prior validation remains unchanged; no arbitrary app command/path is admitted.",
+  "validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s native-target/tests -p 'test_host_runner*.py' -v",
+    "result": "57 tests PASS in19.761 seconds:9 new app-bundle tests plus48 runner cleanup/file-limit/GPU-policy/proof regressions.",
+    "actual_native_fixture": "Original small arm64 Objective-C/Foundation program using the existing actual tiny C RomFS fixture. It runs through the guarded runner and reports NSBundle.mainBundle identity/path. Helpers are original small native test binaries, not game or shader payloads.",
+    "cases": [
+      "actual NSBundle identifier, app path and executable path match the fixed bundle",
+      "actual full-bundle/main/helper strict signatures and exact signing-target allowlist",
+      "byte-exact pre-sign copies and original source preservation; post-sign SHA differs and is separately bound",
+      "exact compiled sidecar, fixed Info.plist and independent app manifest serialization",
+      "same cwd/environment/PGID/limits and C scratch guard work with the actual packaged executable",
+      "all bundle paths are private and no app symlink points to external code/data",
+      "bad option types/missing window fail before work IO, unrequested mode keeps original command",
+      "missing/extra/wrong helper SHA metadata and symlinked helper source fail",
+      "real authored entitlement-bearing binary is rejected without losing its entitlement/signature",
+      "tampered sealed Info.plist fails actual strict bundle verification",
+      "bundle prior proof is rejected, original verified baseline proof still copies byte-exactly"
+    ],
+    "peer_review": "Independent focused read-only source/test review found no material issue. Reviewer confirmed executable-relative layout, explicit helper signing, derivative SHA distinction, entitlement policy and bounded proof policy; ran no tests and made no edits.",
+    "diff_check": "git diff --check PASS",
+    "boundary": "No real game, guest SDK, Cocoa window/event loop, GPU, installation or UI-automation interaction was executed by this source stage. Foundation NSBundle identity is proven for the original fixture; actual game UI discovery remains the root's next measurement."
+  },
+  "primary_references": [
+    "https://developer.apple.com/documentation/bundleresources/placing-content-in-a-bundle",
+    "https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html",
+    "https://developer.apple.com/library/archive/technotes/tn2206/_index.html#//apple_ref/doc/uid/DTS40007919-CH1-TNTAG308",
+    "Installed Apple codesign(1): --entitlements output format and explicit --xml; signing modifies executable and creates bundle resource seal."
+  ],
+  "source_sha256": {
+    "scripts/run_experimental_host.py": "12e58b4613985106aaf7796d9cf2a9ef93f55f5f3d165fa960f2354a7de13ae8",
+    "tests/test_host_runner_app_bundle.py": "1d0b04d0fccf2ac1330a478c4c74214e64fcaad4ca7b2004d1a402da41aa3a09"
+  },
+  "owned_paths": [
+    "scripts/run_experimental_host.py",
+    "tests/test_host_runner_app_bundle.py",
+    "provenance/APP_BUNDLE_20261027.json"
+  ],
+  "runtime_or_backend_modified": false,
+  "original_binaries_modified": false,
+  "game_or_GPU_execution_by_this_stage": false,
+  "actual_app_UI_inspection_verified": false,
+  "standalone_installation_verified": false,
+  "remaining": "Root owns the next actual --app-bundle diagnostic, app discovery and direct UI/frame inspection. A durable install/launch procedure requires a separate resource and persistence design; no such installation is created here."
+}

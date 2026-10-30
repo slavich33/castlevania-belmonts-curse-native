@@ -1,0 +1,207 @@
+{
+  "schema": "castlevania-native-addressables-failure-v1",
+  "recorded_at_utc": "2026-10-27T07:01:48.792462+00:00",
+  "title_id": "0100BA4026E94000",
+  "version": "1.1.0",
+  "state": "actual_addressables_runtime_data_and_scene_handles_observed_failed",
+  "scope": "Independent read-only audit of a completed root-operated debugger memory witness. Only this sanitized provenance file was written by this audit. No new debugger attach, guest execution, target memory mutation, payload extraction, asset replacement or process signal was initiated by this audit.",
+  "source_binding": {
+    "compiled_source_commit": "f39e2f4f5e27195ed0158a6b96fa69aae0dc6b22",
+    "compiled_translation_units": 74,
+    "compiled_source_manifest_paths": 155,
+    "compiled_source_reference": {
+      "path": "native-target/provenance/NATIVE_PRESENT_PROGRESS_20261027.json",
+      "sha256": "b6c13978eb6fb94343e01278b70e422f319b0b8ca825b61a3fe6eea3049090e3"
+    },
+    "previous_managed_progress_reference": {
+      "path": "native-target/provenance/NATIVE_MANAGED_PROGRESS_20261027.json",
+      "sha256": "cf13bcc5f8540bde19ed766758ea1dd1b6855a4f25e4bd3dde455ec3cc8b7f68"
+    },
+    "normal_runner_source_commit": "6da63f0092919b936d3cfa0120798f4284a779d7",
+    "normal_runner_sha256": "b8584ffb55efbc6a89e653e2be38e0c51d57195f8357ddb9abda85bd4be4ec03",
+    "original_compiled_binary_sha256": "6f8212d3020e3ee1caa35ef4ee6940203434cf564325475d1124eaf75db7018b",
+    "launched_signed_derivative_sha256": "3e059e5ad990b3c155f900312323d87c70c49def23e7409276fd807313e5da12",
+    "no_new_C_build_or_game_asset_change_claimed": true
+  },
+  "artifacts": {
+    "run_relative_to_work": "runs/host-m4vzune0",
+    "hashes": {
+      "receipt.json": {
+        "sha256": "0a8a8f9290b4bad41e5f439b00b64bde45706b8ebe2ecba5e9a098bace31a8d1",
+        "bytes": 10004
+      },
+      "compiled-build-receipt.json": {
+        "sha256": "1345f7eced17053edc258e97df585aa8c93eb12f30b6366dde70936dc1559dd6",
+        "bytes": 31185
+      },
+      "app-bundle-receipt.json": {
+        "sha256": "97b566a3cc138e5f30f977d221972b3997ebf5c252980e59f061cf20fef931b3",
+        "bytes": 3074
+      },
+      "managed-instrumentation.json": {
+        "sha256": "92e8064e3f24007601649d9d6c8d685540a4df735c4179a4cbc932940ceaf77c",
+        "bytes": 664
+      },
+      "managed-trace-events.jsonl": {
+        "sha256": "e1dab7002ca6b62c597018176061f5e6748109ead66891e714bcffdfcbd553e7",
+        "bytes": 9342
+      },
+      "managed-trace-events.jsonl.exit.json": {
+        "sha256": "1017bd108c189209ddb00fdd00cc8c448317196c8833d7c3fc2a1e36c191f4ce",
+        "bytes": 165
+      },
+      "managed-debugger.log": {
+        "sha256": "a7a46b9616f9b688a6435263da08a7943b2c4f775936a58b88f9a4e0a07fdc05",
+        "bytes": 12060
+      },
+      "logs/native-host.log": {
+        "sha256": "c7585cdd4b0edba9ba3adf5861477c8e67031b3642054f9b1f1fada9ba6ca4a2",
+        "bytes": 65951
+      }
+    }
+  },
+  "private_source_and_reader_validation": {
+    "frozen_driver_relative_to_run": "managed-trace-code/run.py",
+    "frozen_driver_sha256": "56e1d7953670059b82278044825b067fdd8e1e02c9b7507504be58a3c5e8aae7",
+    "frozen_callbacks_relative_to_run": "managed-trace-code/callbacks.py",
+    "frozen_callbacks_sha256": "f26fe3e5cb301adce54a0c8572bb209d9071bf1ddc4d9f743483540047861a55",
+    "frozen_source_hashes_match_instrumentation_receipt": true,
+    "source_bytes_captured_before_target_spawn_and_imported_from_exclusive_snapshot": true,
+    "candidate_breakpoints_configured": 49,
+    "actual_breakpoint_hit_events": 29,
+    "distinct_hit_labels": 26,
+    "all_hit_PC_offsets_match_frozen_candidate_map": true,
+    "all_hit_caps_respected": true,
+    "setup_callback_or_bounded_memory_read_errors_observed": false,
+    "static_layout_scope": "The frozen reader was checked against the native-consumer/metadata offsets supplied by the independent static review. This audit did not rederive the complete IL2CPP metadata or infer a layout from a Unity version number.",
+    "checked_static_offsets": {
+      "object_class": "0x0",
+      "class_name": "0x10",
+      "class_namespace": "0x18",
+      "exception_message": "0x18",
+      "exception_inner": "0x28",
+      "managed_string_length": "0x10",
+      "managed_string_UTF16_data": "0x14",
+      "handle_internal_operation": "0x0",
+      "handle_version": "0x8",
+      "reference_operation_version": "0x30",
+      "reference_operation_status": "0x1c",
+      "reference_operation_exception": "0x20",
+      "scene_operation_version": "0x38",
+      "scene_operation_status": "0x24",
+      "scene_operation_exception": "0x28",
+      "initialization_runtime_data_handle": "0x98",
+      "initialization_catalog_handle": "0xb0"
+    },
+    "read_bounds": "Only SBProcess read APIs are used for these object observations. Class C-strings are limited to192 bytes, exception messages to1024 UTF-16 code units, inner traversal depth to3 with cycle detection; unreadable or implausible data produces an explicit bounded-read error.",
+    "privacy_modes": {
+      "run_directory": "0700",
+      "source_snapshot_directory": "0700",
+      "frozen_sources_primary_JSONL_and_debugger_log": "0600",
+      "exit_sidecar": "0644 inside the owned0700 run; not published or chmodded by this audit"
+    },
+    "no_guest_function_calls_or_forced_returns_in_reader": true
+  },
+  "runtime_data_failure": {
+    "checkpoint": "InitializationOperation.Execute",
+    "operation_class": "UnityEngine.ResourceManagement.AsyncOperations.ProviderOperation`1",
+    "handle_valid_by_version_match": true,
+    "raw_status": 2,
+    "decoded_status": "Failed",
+    "status_semantics": "Status2 is the failed state in the supplied static mapping; this is not a pending operation observation.",
+    "exception_class": "System.Exception",
+    "exception_message": "Invalid path in TextDataProvider : 'rom:/Data/StreamingAssets/aa/settings.json'.",
+    "message_truncated": false,
+    "mapped_NullRuntimeData_failure_edge_observed": true,
+    "catalog_dependency_at_this_checkpoint": {
+      "internal_operation_null": true,
+      "handle_valid": false,
+      "interpretation": "No separate failed catalog operation is inferred from an uncreated/null dependency handle."
+    }
+  },
+  "scene_operation_failure": {
+    "checkpoint": "BootLoader.OnSceneLoaded",
+    "operation_class": "CompletedOperation`1",
+    "handle_valid_by_version_match": true,
+    "raw_status": 2,
+    "decoded_status": "Failed",
+    "exception_class": "UnityEngine.AddressableAssets.InvalidKeyException",
+    "exception_message_captured": false,
+    "exact_invalid_scene_key_not_captured": true,
+    "observed_completion_sequence": [
+      "BootLoader.SceneCall",
+      "BootLoader.SceneReturned",
+      "Scene.CallWhenDone",
+      "Scene.IsDoneSlowResult",
+      "Scene.InvokeCallback",
+      "BootLoader.OnSceneLoaded"
+    ],
+    "interpretation": "The observed scene handle is a failed completed operation and the completion callback path executes. A merely pending scene request is not an adequate description of this witness. The exact key and complete causal propagation are not established by the captured class alone."
+  },
+  "separate_earlier_exception": {
+    "checkpoint": "IL2CPP.ExceptionRaise",
+    "exception_class": "System.IO.DirectoryNotFoundException",
+    "sanitized_message_shape": "Could not find a part of the path \"/rom:/ram:/CASESENSITIVETEST<random suffix elided>\".",
+    "message_truncated": false,
+    "random_case_probe_suffix_included": false,
+    "interpretation": "This resembles a case-sensitivity/directory probe and may be expected. It is retained separately; this observation does not establish a fatal exception or the cause of the Addressables failure."
+  },
+  "settings_file_presence_and_parse_root_attestation": {
+    "source": "Root supplied an independent bounded readback from the verified RomFS image in the current task; this auditor did not reread or copy its payload.",
+    "game_relative_path": "rom:/Data/StreamingAssets/aa/settings.json",
+    "image_range_offset": 3565858928,
+    "range_bytes": 1593,
+    "range_sha256": "e7a442300b06c69d6361d51a497947c6caa2879a1b53359b34c41c70b9285017",
+    "JSON_parse": "pass",
+    "build_target": "Switch",
+    "catalog_location_count": 1,
+    "proves": "The expected settings file is present and the read range parses as JSON.",
+    "does_not_prove": "The precise generic File.Exists/path-API bridge failure, complete catalog validity or subsequent asset availability."
+  },
+  "continued_activity_and_limits": {
+    "ResourceManager_Update_checkpoint_hits": 3,
+    "AFM_monitored_checkpoint_hits": 0,
+    "why_AFM_not_observed_proven": false,
+    "last_logged_nvn_frame_lower_bound": 1500,
+    "presentation_timing_instrumented_and_not_performance_proof": true,
+    "root_generic_File_Exists_path_bridge_investigation_separate": true,
+    "generic_path_API_root_cause_verified_by_this_audit": false,
+    "menu_verified": false,
+    "gameplay_verified": false
+  },
+  "termination_and_artifact_readback": {
+    "configured_timeout_seconds": 45,
+    "wrapper_seconds": 45.336,
+    "timed_out": true,
+    "wrapper_state": "bounded_experimental_host_run_finished",
+    "planned_SIGTERM_sent": true,
+    "wrapper_return_code": -15,
+    "LLDB_state_number": 10,
+    "LLDB_raw_exit_status": 15,
+    "LLDB_exit_description": "Terminated due to signal 15",
+    "LLDB_verified_return_code": -15,
+    "actual_parent_waitpid_terminal_return_code": -15,
+    "exit_evidence_mismatch": null,
+    "debugger_exit_code": 0,
+    "owned_cleanup_complete": true,
+    "host_wait_completed": true,
+    "remaining_owned_processes": [],
+    "forced_kill_sent": false,
+    "strict_app_main_and_both_helpers_after_run": "pass",
+    "all_three_signed_copy_and_original_source_executable_hashes_match": true,
+    "resource_proof_source_reuse_allowed": false,
+    "normal_uninstrumented_proof_claimed": false
+  },
+  "public_reference": {
+    "URL": "https://docs.unity3d.com/Packages/com.unity.addressables@1.21/api/UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.html",
+    "use": "Semantic corroboration that Failed differs from the in-progress None state; no owned-object field offsets or package-version pin are inferred from this public documentation."
+  },
+  "privacy_and_preservation": {
+    "live_object_addresses_or_register_payload_included": false,
+    "owner_device_account_team_signing_data_included": false,
+    "raw_logs_private_driver_game_or_shader_payload_included": false,
+    "historical_receipts_or_sources_modified": false,
+    "asset_rewrite_or_path_bypass_performed": false
+  },
+  "remaining": "Measure the concrete generic file/path API boundary that rejects the existing settings file, then implement and test a genuine bridge if that cause is confirmed. Do not force successful Addressables handles, inject callback success, fabricate scene keys or replace the settings asset based solely on this witness."
+}

@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "state": "actual_rtld_constructor_order_corrected_without_guest_execution",
+  "observed_at_utc": "2026-10-27T01:33:24.470723+00:00",
+  "source_rtld_sha256": "ebfbe916731d944870124b29e990f9647a9efdb3cca359790973db90f9bb399b",
+  "source_rtld_read_only": true,
+  "rtld_decompressed_text_size": 7872,
+  "static_instruction_evidence": [
+    {
+      "rtld_offset": "0x4b8",
+      "instruction": "stp x22, x22, [x22]"
+    },
+    {
+      "rtld_offset": "0x708",
+      "instruction": "adrp x10, #0x4000"
+    },
+    {
+      "rtld_offset": "0x70c",
+      "instruction": "add x10, x10, #0x30"
+    },
+    {
+      "rtld_offset": "0x710",
+      "instruction": "ldr x8, [x22]"
+    },
+    {
+      "rtld_offset": "0x714",
+      "instruction": "ldr x9, [x10]"
+    },
+    {
+      "rtld_offset": "0x718",
+      "instruction": "str x9, [x22]"
+    },
+    {
+      "rtld_offset": "0x71c",
+      "instruction": "str x10, [x8, #8]"
+    },
+    {
+      "rtld_offset": "0x728",
+      "instruction": "ldr x9, [x10, #0x30]"
+    },
+    {
+      "rtld_offset": "0x72c",
+      "instruction": "str x22, [x9, #8]"
+    },
+    {
+      "rtld_offset": "0x730",
+      "instruction": "str x8, [x10, #0x30]"
+    },
+    {
+      "rtld_offset": "0x1248",
+      "instruction": "ldr x20, [x21, #8]"
+    },
+    {
+      "rtld_offset": "0x1260",
+      "instruction": "ldr x20, [x20, #8]"
+    },
+    {
+      "rtld_offset": "0x12f4",
+      "instruction": "ldr x20, [x20]"
+    },
+    {
+      "rtld_offset": "0x1304",
+      "instruction": "ldr x9, [x20]"
+    },
+    {
+      "rtld_offset": "0x1308",
+      "instruction": "ldr x10, [x9, #0x40]"
+    },
+    {
+      "rtld_offset": "0x1390",
+      "instruction": "nop "
+    },
+    {
+      "rtld_offset": "0x1394",
+      "instruction": "adr x0, #0x12c0"
+    },
+    {
+      "rtld_offset": "0x1398",
+      "instruction": "ret "
+    }
+  ],
+  "linked_list_semantics": "Modules self-link, then append in physical+8 lookup/binding order. Head+8 is the first inserted module and each +8 advances in load order; head+0 is the last inserted module and each +0 advances in reverse order for DT_INIT. Conventional names are prev@+0 and next@+8; physical offsets are authoritative.",
+  "symbolic_list_evaluation": {
+    "includes_original_rtld_for_comparison": true,
+    "bind_traversal": [
+      "rtld",
+      "main",
+      "subsdk0",
+      "sdk"
+    ],
+    "constructor_traversal": [
+      "sdk",
+      "subsdk0",
+      "main",
+      "rtld"
+    ]
+  },
+  "host_runtime_load_and_bind_order_unchanged": [
+    "main",
+    "subsdk0",
+    "sdk"
+  ],
+  "host_constructor_order": [
+    "sdk",
+    "subsdk0",
+    "main"
+  ],
+  "host_finalizers_unimplemented": true,
+  "runtime_change": "only module_inits loop traversal/progress ordinal/comment; no module table, relocation or symbol binding change",
+  "loader_source_sha256": "e84b5da8229fa1a56b29ac2d0fa50f9d8d7c1b90bad1224e39392fdfd0ee3ed0",
+  "syntax_checks": [
+    {
+      "command": [
+        "/usr/bin/xcrun",
+        "clang",
+        "-arch",
+        "arm64",
+        "-std=gnu11",
+        "-fsyntax-only",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-deprecated-declarations",
+        "-DGAME_CASTLEVANIA=1",
+        "-DCASTLEVANIA_DIAGNOSTIC_BOOT=0",
+        "-Iruntime",
+        "-Ibuild",
+        "-Ithird_party/d2r_gfx/gfx/nvn/include",
+        "runtime/loader.c"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/usr/bin/xcrun",
+        "clang",
+        "-arch",
+        "arm64",
+        "-std=gnu11",
+        "-fsyntax-only",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-deprecated-declarations",
+        "-DGAME_CASTLEVANIA=1",
+        "-DCASTLEVANIA_DIAGNOSTIC_BOOT=1",
+        "-Iruntime",
+        "-Ibuild",
+        "-Ithird_party/d2r_gfx/gfx/nvn/include",
+        "runtime/loader.c"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "git_diff_check": "passed",
+  "guest_instructions_executed": false,
+  "dummy_guest_execution_used": false,
+  "constructors_executed": false,
+  "SDK_Start_executed": false,
+  "build_or_root_scripts_modified": false,
+  "limitations": [
+    "static bytes prove traversal; actual constructor state/ABI remains to be measured by the real diagnostic boot",
+    "Start x1 remains0 for empty process arguments rather than original rtld out-of-image argument region; current SDK validates the region before parsing",
+    "generic TLR/TLS initial allocation contract remains a runtime ABI observation, not a title offset claim"
+  ],
+  "evidence_storage": {
+    "scope": "sanitized source receipt; exact instruction bytes are owner-private evidence",
+    "full_private_receipt_sha256": "66dd2412ad741a7c6d6687876cde8859e1fae178e0eb95936529fc84db3b04d0",
+    "full_private_receipt_description": "Owner-private artifacts: castlevania-rtld-order-evidence-20261027 / RTLD_CONSTRUCTOR_ORDER_20261027.full.json",
+    "private_readback_sha256_verified": true
+  },
+  "link_naming_correction_20261027": {
+    "original_text_preserved": "modules self-link, then insert at head; binding traverses prev(+8), DT_INIT callback traverses next(+0)",
+    "reason": "Earlier receipt used reverse semantic labels prev(+8)/next(+0) and called insertion at head. It correctly measured traversal offsets and resulting orders; those historical labels conflict with conventional field names in the later RoModule proposal.",
+    "physical_offset_00": "head points to last inserted module; follow+0 for reverse load/DT_INIT traversal",
+    "physical_offset_08": "head points to first inserted module; follow+8 for load/lookup/binding traversal",
+    "behavior_change": false,
+    "measured_binding_and_constructor_orders_unchanged": true,
+    "old_private_evidence_receipt_unchanged": true
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "schema": "castlevania-il2cpp-metadata-control-flow-v1",
+  "recorded_at_utc": "2026-10-27T05:05:53.595167+00:00",
+  "title_id": "0100BA4026E94000",
+  "version": "1.1.0",
+  "scope": "Read-only static analysis and existing completed host-run receipt/log readback; no new guest execution, asset payload inspection, key use or runtime source edits.",
+  "repository_head_at_analysis": "3a4342c56e9b8a47e874f9ee6ee50fd6153a1d5e",
+  "inputs": {
+    "authenticated_prepared_flat_modules": {
+      "main": {
+        "sha256": "083ef231c464d02e04da549498ce8a66c7e20e8ce2e4059c52aae57131c51672",
+        "file_bytes": 121765888,
+        "virtual_address_to_file_offset_addend": 1114112,
+        "matches_runtime_layout": true,
+        "source_nso_sha256": "c71362eb3cc09826f209896d225de212863ed8bb261383893ee7555d52b46319"
+      },
+      "sdk": {
+        "sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+        "file_bytes": 14452808,
+        "virtual_address_to_file_offset_addend": 0,
+        "matches_runtime_layout": true,
+        "source_nso_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44"
+      }
+    },
+    "runtime_layout_json_sha256": "588b3b109e8e8b5d5c8155db0f961f4225656922c654a68e1026889a1beebe34",
+    "runtime_tables_sha256_in_compiled_receipt": "ec9dd59df9198e49e8712905928dbe956e86c6b87654273e1e670134b11f0c2c",
+    "compiled_runtime_sources": {
+      "runtime/fs_host.c": {
+        "inspected_current_sha256": "1e2a81bcb92aae4541f4ae4f6957cd9c2b95421b212b10f90fb3748498d2c66f",
+        "compiled_run_sha256": "1e2a81bcb92aae4541f4ae4f6957cd9c2b95421b212b10f90fb3748498d2c66f",
+        "current_matches_compiled_run": true
+      },
+      "runtime/romfs.c": {
+        "inspected_current_sha256": "af7ae8a55caea22b6ea13884b32fee1ed02507edc3e4ed4544c012e856849c9c",
+        "compiled_run_sha256": "af7ae8a55caea22b6ea13884b32fee1ed02507edc3e4ed4544c012e856849c9c",
+        "current_matches_compiled_run": true
+      },
+      "runtime/services.c": {
+        "inspected_current_sha256": "49f16c1198531df213c995b728d6590137fe58f3f05d5d3c1d7c9e2ed00e60a9",
+        "compiled_run_sha256": "49f16c1198531df213c995b728d6590137fe58f3f05d5d3c1d7c9e2ed00e60a9",
+        "current_matches_compiled_run": true
+      }
+    },
+    "romfs_index_json_sha256": "205fa149cb1c3da3be2c072bfcc9ec7a5ccc7e251474f90b256742e23797d273"
+  },
+  "actual_run": {
+    "run_directory_name": "host-3_pohjhr",
+    "log_relative_path": "logs/native-host.log",
+    "log_sha256": "e224a5615a50a7ff3eb3028a8ecd519acc694a8fbaaeb9b01bee1fc84baad7d2",
+    "log_bytes": 17220,
+    "log_matches_completed_run_receipt": true,
+    "completed_run_receipt_sha256": "59e47bb289fc528ebcc4151ac79315adc22555de89f13f9e6fddfcef1244e64c",
+    "compiled_build_receipt_sha256": "33c54e3529218d01e48b919f69753369507a0cc3d07a1e42966e79906c6a3574",
+    "binary_sha256_in_both_receipts": "8e0d169ff4e14ff9013864e4907725b94366c969d9d7fe22b8b943ca353d9216",
+    "same_binary_in_build_and_run_receipts": true,
+    "exit_code": 1,
+    "runtime_romfs_verification_mode": "reused_previous_C_full_hash_record",
+    "actual_frames_in_logged_order": [
+      "sdk+0xc8f858",
+      "main+0x5c95b8",
+      "main+0x596b18",
+      "main+0x55abf4",
+      "main+0x5ca298",
+      "main+0xc2a6f0",
+      "main+0xca9354",
+      "sdk+0x10daa4"
+    ],
+    "observed_request": {
+      "svc": "GetInfo",
+      "info_type": 24,
+      "process_handle_u32": "0xffff8001",
+      "sub_id": 0,
+      "svc_module": "sdk",
+      "svc_offset": "0x1701a0",
+      "unsupported_result_at_this_gate": true
+    },
+    "first_frame_verified": false,
+    "gameplay_verified": false
+  },
+  "current_stage": {
+    "classification": "Late IL2CPP runtime initialization, before creation of the GC finalizer thread.",
+    "thread_initializer": "main+0x596ad8",
+    "thread_entry": "main+0x596b40",
+    "thread_name_evidence": "Name assignment in thread entry identifies the GC finalizer.",
+    "platform_thread_start_helper": "main+0x5c9540",
+    "free_thread_count_call": "main+0x5c95b4",
+    "actual_return_frame": "main+0x5c95b8",
+    "following_create_thread_call": "main+0x5c9648",
+    "new_gc_finalizer_thread_created_at_observed_gate": false
+  },
+  "get_info_static_contract": {
+    "exported_sdk_function": "nn::os::GetFreeThreadCount()",
+    "function_offset": "0x13ff30",
+    "info_type_setup": "0x13ff40",
+    "current_process_handle_setup": "0x13ff48",
+    "sub_id_zero_setup": "0x13ff4c",
+    "svc_wrapper_call": "0x13ff50 -> 0x17019c",
+    "result_semantics": "A nonzero Result aborts; success returns the low 32 bits of the out-u64 free-thread count.",
+    "main_import": "_ZN2nn2os18GetFreeThreadCountEv",
+    "main_import_plt": "0x1b469b0",
+    "create_thread_import": "_ZN2nn2os12CreateThreadEPNS0_10ThreadTypeEPFvPvES3_S3_mi"
+  },
+  "metadata_control_flow": {
+    "metadata_success_inferred_from_verified_control_flow": true,
+    "actual_per_file_read_trace": false,
+    "byte_count_directly_logged": false,
+    "method": "Build an instruction-address intraprocedural normal-control-flow graph from the authenticated AOT main image. Calls are treated as returning to the next instruction; direct branches are followed; RET terminates. No instruction bytes or disassembly dump is stored.",
+    "entry": "main+0x559f80",
+    "exclusive_analysis_end": "main+0x55ae2c",
+    "target_call": "main+0x55abf0 -> 0x596ad8",
+    "actual_frame_after_target_call": "main+0x55abf4",
+    "metadata_initializer_call": "main+0x55a0e0 -> 0x564190",
+    "success_test": "main+0x55a0e4 tests bit 0 of the initializer return; zero branches to 0x55ac44 failure/return.",
+    "required_success_edge": [
+      "0x55a0e4",
+      "0x55a0e8"
+    ],
+    "target_reachable_with_original_graph": true,
+    "target_reachable_after_removing_success_edge": false,
+    "normal_graph_branch_targets_outside_analyzed_span": [],
+    "reachable_indirect_jumps": [],
+    "inference_limit": "This proves the successful metadata-loader/runtime-initializer control path was traversed in the observed run. It is not an independent per-file read log, metadata-content validation report, first-frame proof or proof that all later IL2CPP startup completed."
+  },
+  "checked_metadata_loader_semantics": {
+    "metadata_filename": "global-metadata.dat",
+    "expected_index_relative_path": "Data/Managed/Metadata/global-metadata.dat",
+    "expected_original_file_size": 16008508,
+    "rounded_page_allocation_size": "0xf45000",
+    "allocation_size_alone_is_proof_of_read": false,
+    "metadata_initialize": "main+0x564190 calls 0x59cd10; its boolean result is retained (including spill/restore while x24 is reused) and returned at 0x5645b4.",
+    "load_and_consume": "main+0x59cd34 calls 0x559b34; 0x59cd44 rejects NULL. The successful path reads metadata fields, including offsets 0xac, 0xb4, 0xa4 and 0x34, before returning true at 0x59ce90.",
+    "open": "main+0x559bb8 calls the real-file Open abstraction; an open error selects the NULL return path.",
+    "mapping": "main+0x559bf0 requests a whole-file read-only map via 0x5bcd24 -> 0x5bd0c0. The platform implementation has a real-file heap-copy path and a distinct internal registered-memory-mapping path. No separate actual-branch trace is present.",
+    "whole_file_size": "In the real-file heap-copy path, 0x5b8a9c calls GetLength when requested size is zero; 0x5e0ed0 calls nn::fs::GetFileSize. The returned size controls allocation and the requested read.",
+    "read": "0x5b8ac8 calls File::Read at 0x5e1040; 0x5e106c calls nn::fs::ReadFile(out-count, handle, offset, buffer, size).",
+    "exact_count_gate": "0x5b8acc..0x5b8adc compares requested u64 to sign-extended returned i32 and checks the error code. A short read or error frees the copy and returns NULL. Original metadata size 16008508 is below INT32_MAX.",
+    "close": "0x559c00 closes the original file via 0x5e1a3c; a close error frees/unmaps the copy and selects NULL. A successful close preserves the separate copied metadata buffer.",
+    "host_binding": "Compiled fs_host.c maps the exact imported OpenFile/GetFileSize/ReadFile/CloseFile symbols to real RomFS handle/index/image operations. Compiled romfs.c reads the verified image bytes and returns the completed byte count.",
+    "additional_direct_trace_if_required": "For explicit I/O evidence, record only the exact allowlisted metadata path plus successful open/size, read offset/requested/completed/result and close result. Existing CASTLEVANIA_FS_LOG records opens; CASTLEVANIA_FS_TIMING is aggregate and cannot alone bind byte count to this file. No payload bytes or buffer dumps are needed."
+  },
+  "privacy_and_mutation": {
+    "new_guest_execution": false,
+    "asset_payload_opened": false,
+    "romfs_image_opened_or_rehashed": false,
+    "instruction_bytes_stored": false,
+    "keys_used_or_logged": false,
+    "runtime_source_modified": false,
+    "output_allowlist": [
+      "native-target/provenance/IL2CPP_METADATA_CONTROL_FLOW_20261027.json"
+    ]
+  }
+}

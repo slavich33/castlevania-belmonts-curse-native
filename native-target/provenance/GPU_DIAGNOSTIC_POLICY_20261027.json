@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "title_id": "0100BA4026E94000",
+  "state": "explicit_GPU_runner_policy_native_fixture_tested_not_real_GPU_verified",
+  "scope": "Runner-only explicit diagnostic GPU policy; no C/backend/loader/window implementation or OS settings changes.",
+  "options": {
+    "--allow-gpu-submit": "Default false. Explicit opt-in must be paired with --with-window. Window alone does not enable submission.",
+    "--gpu-budget-mib": "Integer diagnostic budget256..4096MiB inclusive, default2048. Validated even when submission is off; only applied to child on explicit opt-in."
+  },
+  "direct_API": "run(args) validates GPU options before work/filesystem/process operations. getattr defaults allow existing Namespace callers without the new fields. CLI independently validates with the same helper before run.",
+  "child_environment": {
+    "default": "No TOTK_GPU_ALLOW_SUBMIT, TOTK_GPU_BUDGET_MB, TOTK_GPU_KEEPALIVE or TOTK_PROBE_GPU are inherited or sent. Existing backend nogpu() keeps actual game submission off.",
+    "explicit_opt_in": {
+      "TOTK_GPU_ALLOW_SUBMIT": "1",
+      "TOTK_GPU_BUDGET_MB": "validated integer MiB budget",
+      "TOTK_GPU_KEEPALIVE": "0"
+    },
+    "reason": "Allow the real existing backend command submission only when requested, bound diagnostic memory, and disable auxiliary keepalive spin kernels during bring-up.",
+    "isolation": "Known explicit child environment, fresh owned run, separate HOME/TMP/config/cache/profile/saves/logs and existing proof validation remain unchanged. No environment is written globally."
+  },
+  "receipt": {
+    "gpu_submit_requested": "Explicit user/runner option, not evidence of an actual command buffer or frame.",
+    "gpu_execution_verified": false,
+    "diagnostic_gpu_budget_mib": "Validated requested setting, recorded even when not applied.",
+    "gpu_budget_applied_to_child": "True only with explicit submission opt-in.",
+    "gpu_budget_is_measured_title_contract": false,
+    "gpu_keepalive_disabled_by_runner": "True only on explicit GPU runs; the child receives0.",
+    "first_frame_verified": false,
+    "gameplay_compatibility_verified": false
+  },
+  "existing_backend_reference": [
+    "third_party/d2r_gfx/gfx/nvn/nvn_mtl.m:nogpu() checks TOTK_GPU_ALLOW_SUBMIT/TOTK_PROBE_GPU and otherwise disables real game command submission.",
+    "Same backend GPU budget helper reads TOTK_GPU_BUDGET_MB; GPU keepalive startup returns early for TOTK_GPU_KEEPALIVE=0. Source was only read, not modified."
+  ],
+  "validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s native-target/tests -p 'test_host_runner*.py' -v",
+    "result": "22 tests passed in10.2s:7 GPU-policy tests and15 existing proof-reuse regressions.",
+    "fixture": "Original tiny actual C RomFS fixture, compiled and run in temporary owned diagnostic roots. It has no guest, Cocoa window, GPU or Metal implementation; the window/GPU options are only validated/captured as child environment and receipt data.",
+    "cases": [
+      "old direct API Namespace defaults to off",
+      "hostile parent GPU/probe environment is excluded",
+      "window alone stays off",
+      "explicit window opt-in sets exactly allow1/defaultbudget2048/keepalive0",
+      "256/4096 inclusive budgets applied verbatim",
+      "custom budget without opt-in is recorded but not applied",
+      "direct API rejects missing window/nonboolean opt-in/noninteger/out-of-range budget before IO",
+      "CLI rejects headless opt-in and invalid budgets",
+      "GPU execution/first-frame remain false and budget is never claimed a title contract",
+      "fresh isolated profile/saves and current C proof reuse preserved"
+    ],
+    "peer_review": "Independent focused read-only source/test review found no material issues. Peer confirmed backend budget is MiB<<20; peer ran no tests and made no edits.",
+    "boundary": "No real game, GPU submission, frame, or Cocoa window was executed or verified by this source-only stage."
+  },
+  "source_sha256": {
+    "scripts/run_experimental_host.py": "a9eeab248cc7536791011c354d9136244733cc6aeb877effb909b554ef5f35cd",
+    "tests/test_host_runner_gpu_policy.py": "cc7f378352b9a98ec0578b6ae610425ae21e535b7947dcc427274408e24cd1aa"
+  },
+  "unchanged_proof_regression_test_sha256": "69b94b32838c201090d13b6417dfdab252659b4e4acf424fb818eb6b465c73f2",
+  "owned_paths": [
+    "scripts/run_experimental_host.py",
+    "tests/test_host_runner_gpu_policy.py",
+    "provenance/GPU_DIAGNOSTIC_POLICY_20261027.json"
+  ],
+  "guest_or_GPU_execution_by_this_stage": false,
+  "backend_or_C_source_modified": false,
+  "remaining": "Root may run --with-window without GPU opt-in to measure actual VI, then explicitly opt in only for a later requested GPU diagnostic. Actual execution/frame evidence must be recorded separately."
+}

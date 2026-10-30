@@ -1,0 +1,253 @@
+{
+  "schema": "castlevania-native-managed-progress-v1",
+  "recorded_at_utc": "2026-10-27T06:48:39.177883+00:00",
+  "title_id": "0100BA4026E94000",
+  "version": "1.1.0",
+  "state": "actual_managed_entry_and_continuation_checkpoints_observed_loading_cause_unresolved",
+  "scope": "Independent read-only audit of two root-operated debugger experiments. Only this sanitized provenance file was written by this audit. Raw debugger logs, live addresses, pointer/register payloads and private driver source remain outside Git.",
+  "source_binding": {
+    "compiled_source_commit": "f39e2f4f5e27195ed0158a6b96fa69aae0dc6b22",
+    "compiled_translation_units": 74,
+    "compiled_source_manifest_paths": 155,
+    "compiled_reference": {
+      "path": "native-target/provenance/NATIVE_PRESENT_PROGRESS_20261027.json",
+      "sha256": "b6c13978eb6fb94343e01278b70e422f319b0b8ca825b61a3fe6eea3049090e3"
+    },
+    "normal_runner_source_commit": "6da63f0092919b936d3cfa0120798f4284a779d7",
+    "normal_runner_sha256": "b8584ffb55efbc6a89e653e2be38e0c51d57195f8357ddb9abda85bd4be4ec03",
+    "compiled_build_receipt_sha256": "1345f7eced17053edc258e97df585aa8c93eb12f30b6366dde70936dc1559dd6",
+    "original_compiled_binary_sha256": "6f8212d3020e3ee1caa35ef4ee6940203434cf564325475d1124eaf75db7018b",
+    "launched_signed_derivative_sha256": "3e059e5ad990b3c155f900312323d87c70c49def23e7409276fd807313e5da12",
+    "same_compiled_receipt_and_binary_in_both_experiments": true,
+    "no_new_C_build_or_source_change_claimed": true
+  },
+  "earlier_experiment": {
+    "run_relative_to_work": "runs/host-fo1o2meg",
+    "artifact_hashes": {
+      "receipt.json": {
+        "sha256": "6def4b9ed7fc549d853914d4a4862c1c409cba246f8ef7f66e4ca5d051461f73",
+        "bytes": 11490
+      },
+      "compiled-build-receipt.json": {
+        "sha256": "1345f7eced17053edc258e97df585aa8c93eb12f30b6366dde70936dc1559dd6",
+        "bytes": 31185
+      },
+      "managed-instrumentation.json": {
+        "sha256": "3fd7f570fbf53dfbf1cdd2c4b6f2a6bc35cef509a6984178c7557d30d9178598",
+        "bytes": 483
+      },
+      "managed-trace-events.jsonl": {
+        "sha256": "6c24ade4348286e13c7f8f508cb3e171cdef25218a3e4b5dc9b529b9f4470a6b",
+        "bytes": 2133
+      },
+      "managed-trace-events.jsonl.exit.json": {
+        "sha256": "82ecdc59685bf191012293a30aa3a5d008b7b8bdefb8f0e4f6df3a4cf41f68ae",
+        "bytes": 168
+      },
+      "logs/native-host.log": {
+        "sha256": "0dc0f6066992ae536b64c147ad6160f539cb515b530a6fd256998a1a6cf0fb83",
+        "bytes": 158659
+      }
+    },
+    "breakpoint_hit_events": 7,
+    "ordered_observed_checkpoints": [
+      "BootLoader.Awake",
+      "Addressables.LoadAssetAsync_shared",
+      "BootLoader.Load",
+      "PlatformsManager.OnEnable",
+      "EESwitchMain.Initialize",
+      "WaitUser.MoveNext",
+      "BootLoader.Start"
+    ],
+    "source_attribution": {
+      "driver_sha256_recorded_after_run": "81226b81b30a9fff18d1cf1db5be06e7535de4ad0408c30b226f639a3c0d9427",
+      "callbacks_sha256_recorded_after_run": "5c3f060f5b1e46345b4d7ff30799638b19cd9546a0199f7caa949556e942dfa8",
+      "post_run_source_hash_readback_matched_during_earlier_audit": true,
+      "prelaunch_immutable_source_snapshot_available": false,
+      "limit": "The earlier source hashes were recorded/read back after execution. They are not promoted to a prelaunch source snapshot. Its seven hit RVAs also match the same labels in the later frozen callback map, and all seven labels recur in the later experiment."
+    },
+    "terminal_debugger_evidence": {
+      "state": "exited",
+      "lldb_state_number": 10,
+      "raw_exit_status": 15,
+      "reported_signal_number": 15,
+      "verified_return_code": -15
+    },
+    "wrapper_receipt_state_preserved": "bounded_experimental_host_run_incomplete",
+    "wrapper_cleanup_complete_preserved": false,
+    "receipt_reconstructed_or_promoted": false,
+    "interpretation": "Actual hit events are retained as instrumented checkpoint evidence; the original then-nonempty group cleanup keeps this run incomplete. It supplies no normal-run or reusable-resource proof."
+  },
+  "refined_experiment": {
+    "run_relative_to_work": "runs/host-jz0pqn2y",
+    "artifact_hashes": {
+      "receipt.json": {
+        "sha256": "9ba50157883a2b8ea970ba2ad10f3ce7d326e9c8740eceb86fefabc658ddaf8f",
+        "bytes": 10004
+      },
+      "compiled-build-receipt.json": {
+        "sha256": "1345f7eced17053edc258e97df585aa8c93eb12f30b6366dde70936dc1559dd6",
+        "bytes": 31185
+      },
+      "managed-instrumentation.json": {
+        "sha256": "e58b3420d086564133cea9bd4db4659e072e50d4d4d33acb94131be977e8a004",
+        "bytes": 664
+      },
+      "managed-trace-events.jsonl": {
+        "sha256": "f57df0b31497196f99f016622a014e39d80136846ee7c4a39da700d0c2cda044",
+        "bytes": 4304
+      },
+      "managed-trace-events.jsonl.exit.json": {
+        "sha256": "8595d4e643f5d3d30aebb6f833ff074d7107f9585f48c906f7c658c5088a297e",
+        "bytes": 167
+      },
+      "logs/native-host.log": {
+        "sha256": "29fb83ac8fcd8d32b974377a746317178d2f444ea90e693fb63a2d04d5aa83b1",
+        "bytes": 70075
+      }
+    },
+    "frozen_private_source": {
+      "relative_to_run": "managed-trace-code",
+      "driver_sha256": "56e1d7953670059b82278044825b067fdd8e1e02c9b7507504be58a3c5e8aae7",
+      "callbacks_sha256": "6d02aebcf809a1c0f8bd6e346fc1bf429f025d924938a290a12cdfa4b2c38800",
+      "driver_bytes": 6552,
+      "callbacks_bytes": 4581,
+      "source_capture": "Driver/callback bytes were captured before target spawn; exclusive snapshots were written after the preboot stop and before debugger launch/import. The debugger command imports the frozen callback copy.",
+      "private_directory_mode": "0700",
+      "imported_frozen_callback_path_verified": true,
+      "private_source_and_primary_trace_file_modes": "0600",
+      "historical_exit_sidecar_mode": "0644 inside the private 0700 run directory; unchanged"
+    },
+    "debugger_setup": {
+      "owned_target_identity_checked": true,
+      "lldb_init_disabled": true,
+      "symbol_embedded_scripts_disabled": true,
+      "observed_main_host_gate_hit": true,
+      "typed_main_module_base_read_from_DWARF": true,
+      "candidate_breakpoints_configured": 34,
+      "candidate_configuration_is_not_itself_execution_proof": true
+    },
+    "breakpoint_hit_events": 17,
+    "distinct_checkpoint_labels": 16,
+    "ordered_observed_checkpoints": [
+      "BootLoader.Awake",
+      "Addressables.LoadAssetAsync_shared",
+      "BootLoader.Load",
+      "PlatformsManager.OnEnable",
+      "EESwitchMain.Initialize",
+      "EESwitchMain.Success",
+      "DependentServices.MoveNext",
+      "WaitUser.MoveNext",
+      "WaitUser.UIDResult",
+      "WaitUser.Completed",
+      "BootLoader.Start",
+      "DependentServices.MoveNext",
+      "DependentServices.Continuation",
+      "DependentServices.AccountCreate",
+      "DependentServices.BeforePrefsB",
+      "EEPlayerPrefs.Init",
+      "DependentServices.AfterPrefsB"
+    ],
+    "hit_counts_by_label": {
+      "BootLoader.Awake": 1,
+      "Addressables.LoadAssetAsync_shared": 1,
+      "BootLoader.Load": 1,
+      "PlatformsManager.OnEnable": 1,
+      "EESwitchMain.Initialize": 1,
+      "EESwitchMain.Success": 1,
+      "DependentServices.MoveNext": 2,
+      "WaitUser.MoveNext": 1,
+      "WaitUser.UIDResult": 1,
+      "WaitUser.Completed": 1,
+      "BootLoader.Start": 1,
+      "DependentServices.Continuation": 1,
+      "DependentServices.AccountCreate": 1,
+      "DependentServices.BeforePrefsB": 1,
+      "EEPlayerPrefs.Init": 1,
+      "DependentServices.AfterPrefsB": 1
+    },
+    "all_hit_PC_offsets_match_frozen_candidate_map": true,
+    "all_hit_caps_respected": true,
+    "setup_or_callback_errors_observed": false,
+    "checkpoint_semantics": "The event name managed_entry is used by the private driver for both method entries and intra-method/caller continuation checkpoints. These counts are breakpoint hit events, not 17 distinct managed function entries.",
+    "termination": {
+      "configured_timeout_seconds": 45,
+      "observed_wrapper_seconds": 46.339,
+      "timed_out": true,
+      "wrapper_state": "bounded_experimental_host_run_finished",
+      "wrapper_return_code": -15,
+      "lldb_state_number": 10,
+      "lldb_raw_exit_status": 15,
+      "lldb_exit_description": "Terminated due to signal 15",
+      "lldb_verified_return_code": -15,
+      "actual_parent_waitpid_terminal_return_code": -15,
+      "debugger_exit_code": 0,
+      "parent_also_observed_no_child_after_reap": true,
+      "exit_evidence_mismatch": null,
+      "planned_SIGTERM_sent": true,
+      "forced_kill_sent": false,
+      "owned_group_cleanup_complete": true,
+      "host_wait_completed": true,
+      "remaining_owned_processes": []
+    },
+    "signatures_and_code_readback": {
+      "strict_app_main_and_both_helpers_after_run": "pass",
+      "all_three_signed_copy_hashes_match_app_manifest": true,
+      "all_three_original_source_executable_hashes_unchanged": true
+    },
+    "native_presentation_context": {
+      "last_logged_nvn_frame_lower_bound": 1800,
+      "first_drawable_callback_elapsed_seconds": 4.667,
+      "positive_timestamp_cadence_windows": 3,
+      "timing_is_instrumented_and_not_performance_proof": true
+    }
+  },
+  "measured_continuation": {
+    "mapped_switch_success_checkpoint_reached": true,
+    "UID_result_checkpoint_scalar_value": 1,
+    "WaitUser_completed_checkpoint_reached": true,
+    "dependent_services_checkpoint_sequence": [
+      "DependentServices.Continuation",
+      "DependentServices.AccountCreate",
+      "DependentServices.BeforePrefsB",
+      "EEPlayerPrefs.Init",
+      "DependentServices.AfterPrefsB"
+    ],
+    "scalar_value_at_mapped_after_prefs_call_checkpoint": 2,
+    "scalar_interpretation": "Only the two explicitly relevant scalar values are retained. No real account identity, external authorization, profile result code or successful persistence semantics are inferred. AccountCreate is the observed checkpoint label, not proof of an externally created account.",
+    "AFM_monitored_hit_events": 0,
+    "absence_limit": "No AFM checkpoint hit is recorded in this bounded experiment. This does not prove why the path was not observed or establish a failing service, asset, coroutine or profile state."
+  },
+  "instrumentation_boundaries": {
+    "root_operator_only": true,
+    "preboot_SIGSTOP_and_debugger_breakpoints_used": true,
+    "software_breakpoints_temporarily_modify_instruction_memory_and_timing": true,
+    "callbacks_read_PC_and_selected_arguments_without_invoking_guest_functions": true,
+    "callbacks_auto_continue_and_disable_their_own_bounded_breakpoints": true,
+    "guest_returns_forced": false,
+    "guest_register_or_object_state_overrides": false,
+    "legitimate_SDK_signals_including_SIGUSR1_SIGUSR2_configured_pass_through": true,
+    "normal_frozen_runner_modified": false,
+    "resource_proof_source_reuse_allowed": false,
+    "normal_uninstrumented_run_proof_claimed": false,
+    "performance_or_unmodified_scheduling_claimed": false
+  },
+  "resource_and_gameplay_limits": {
+    "runtime_romfs_verification_mode": "reused_previous_C_full_hash_record",
+    "fresh_whole_image_hash_performed_by_this_audit": false,
+    "generic_runner_first_frame_verified_retained": false,
+    "generic_runner_gpu_execution_verified_retained": false,
+    "menu_verified": false,
+    "gameplay_verified": false,
+    "loading_cause_identified": false,
+    "pointer_register_payload_or_owner_paths_included": false,
+    "raw_logs_game_shader_payload_or_private_source_included": false,
+    "old_receipts_modified": false,
+    "new_target_attach_run_or_process_action_by_this_audit": false
+  },
+  "previous_normal_loading_trace_reference": {
+    "path": "native-target/provenance/NATIVE_FILE_TRACE_PROGRESS_20261027.json",
+    "sha256": "c1c03cc713872e09b3f805c7cfd2f2f978139898811e28a229171b9db8d9c360"
+  },
+  "remaining": "Determine the live managed state and the next continuation after the observed preferences-call checkpoint. The captured scalar2 and absent AFM hits are observations requiring interpretation, not permission to force a return, alter game state, fabricate an asset or bypass initialization."
+}

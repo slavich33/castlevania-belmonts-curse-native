@@ -1,0 +1,50 @@
+{
+  "recording": "transcribed from the completed tool process stdout, exit code 0; no new run after stop",
+  "command": [
+    "./build/castlevania-loader-probe",
+    "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/rewritten-v110"
+  ],
+  "completed_run_working_directory": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/native-target",
+  "observed_result": {
+    "status": "pass",
+    "phase": "native_loader_mapping_only",
+    "title_id": "0100BA4026E94000",
+    "version": "1.1.0",
+    "modules": [
+      {
+        "name": "main",
+        "sha256": "083ef231c464d02e04da549498ce8a66c7e20e8ce2e4059c52aae57131c51672",
+        "relative": 623907,
+        "symbolic": 2077,
+        "cross": 2071,
+        "weak_zero_relocations": 6
+      },
+      {
+        "name": "subsdk0",
+        "sha256": "c611526dfa8d58980c4b11ae4aa5980af030a00fb3dab6ae73a21528ee4a0507",
+        "relative": 3355,
+        "symbolic": 15924,
+        "cross": 6559,
+        "weak_zero_relocations": 0
+      },
+      {
+        "name": "sdk",
+        "sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+        "relative": 14684,
+        "symbolic": 19168,
+        "cross": 10,
+        "weak_zero_relocations": 0
+      }
+    ],
+    "relocations_readback": 679115,
+    "permission_regions_checked": 16,
+    "unresolved_weak_symbols": 3,
+    "guest_instructions_executed": false,
+    "constructors_executed": false,
+    "nnMain_executed": false,
+    "GPU_used": false,
+    "HLE_overrides_injected": false,
+    "profiles_or_saves_opened": false,
+    "scope": "actual SHA-verified native mappings, ELF bindings, relocation bytes, identity and page permissions; no service or gameplay compatibility claim"
+  }
+}

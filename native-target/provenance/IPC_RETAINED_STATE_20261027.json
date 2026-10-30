@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "native_retained_state_lifetime_regression_pass_awaiting_actual_host_build",
+  "reason": "The measured ldr:ro process registration must remain live until the last independently owning session or domain object closes; borrowed legacy clones cannot own a freed registration.",
+  "api": {
+    "optional": "runtime_ipc_register_retained(name, handler, open, retain, close)",
+    "required_hooks": "The optional API requires both retain and close. open yields its first owned reference.",
+    "legacy": "runtime_ipc_register and runtime_ipc_new_session preserve the previous API and borrowed clone behavior. Existing adapters are unchanged.",
+    "trailing_field": "IpcSession.retain defaults to NULL for legacy sessions."
+  },
+  "ownership": {
+    "sm_open": "The initial retained session gets its one reference from open; no redundant retain.",
+    "normal_clone_and_clone_ex": "A new independent session shares state, calls retain, and carries the same retain and close hooks.",
+    "domain_conversion": "The transport transfers its owned hooks/reference into domain root object1 and clears both transport hooks; no reference-count change.",
+    "domain_transport_clone": "Only IpcDomain.sessions is incremented; no extra state owner or close hook.",
+    "copy_from_domain": "The copied standalone session independently retains the target object state and carries its hooks.",
+    "domain_object_close": "Releases the object owner once; independently retained copies remain valid.",
+    "last_domain_transport_close": "Destroys remaining domain objects, releasing each real object owner once.",
+    "callback_contract": "The service callbacks implement synchronized reference counting and free state only on their last close; generic IPC does not call or interpret guest functions."
+  },
+  "validation": {
+    "new_native_tests": 15,
+    "existing_native_regressions": {
+      "ECTX": 16,
+      "APM": 21,
+      "LM": 19,
+      "applet": 32,
+      "PCTL": 20,
+      "AOC": 20
+    },
+    "total_tests_passed": 143,
+    "commands": [
+      "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_ipc_retained_state.py -v",
+      "Same unittest discovery command separately for test_ectx_ipc.py, test_apm_ipc.py, test_lm_ipc.py, test_applet_ipc.py, test_pctl_ipc.py, test_aoc_ipc.py"
+    ],
+    "fixture": "Independent tiny native services with real ipc.c CMIF control/data framing and threads.c handle closing; IPC allocations tracked through final free and all runtime handle slots checked empty. No game/SDK code, GPU or assets.",
+    "cases": [
+      "Initial and independent opens",
+      "Both non-domain clone close orders and CloneEx",
+      "Domain conversion transfers ownership without retain",
+      "Both domain transport clone close orders",
+      "CopyFromDomain survives complete domain destruction",
+      "CopyFromDomain survives explicit root-object close",
+      "Independent domains and copied sessions close in mixed order with final destruction exactly once",
+      "Legacy borrowed-clone behavior remains unchanged",
+      "Missing retained hooks fail before registration"
+    ],
+    "peer_review": "witcher_checkpoint independently read ipc.c/h diff and found no material issues; its separate 24 RO tests also passed against this API (not included in the143 reviewer-run count).",
+    "diff_check": "git diff --check passed"
+  },
+  "test_compatibility": {
+    "scope": "Six existing fixture-only positional IpcSession initializers in five files changed to designated initializers for the new trailing field and -Wextra -Werror. No adapter behavior or test expectation changed.",
+    "files": [
+      "tests/test_lm_ipc.py",
+      "tests/test_apm_ipc.py",
+      "tests/test_applet_ipc.py",
+      "tests/test_aoc_ipc.py",
+      "tests/test_pctl_ipc.py"
+    ]
+  },
+  "owned_source_sha256": {
+    "runtime/ipc.c": "0939cae53e983c71d7989ffea128beac314d87d3cb99853e9a51392c316f4658",
+    "runtime/ipc.h": "60c72d0a7b6b4eb82bff74797433a23bcc24298ae5b9f0ac3e4eeaf682881c32",
+    "tests/test_ipc_retained_state.py": "acce1ebabcf72342a1f85fbf15c218439638375ff1eb6c2e1c2d2d34e18a421d",
+    "tests/test_lm_ipc.py": "47e32eac867beb86b1f446f6321defee821c43c97dbe34ff58560c397b88ff7c",
+    "tests/test_apm_ipc.py": "9883e45a697e61fda501d7b7e955521de5a9a09f3008890d857c6120d2369f7d",
+    "tests/test_applet_ipc.py": "54e59aec41c61868e80240da304123bb54dff8bdc395469d727ee14f1dc52951",
+    "tests/test_aoc_ipc.py": "5087c5416ec8035da3eca3a3fa6f7cee5a517882cfeccd457d318ffd4f5f8f9a",
+    "tests/test_pctl_ipc.py": "a859c7a6ac3d8f5d2f54e2401666a51703cab72fae622b5f65a325f73a24dfcd"
+  },
+  "source_commit_or_guest_execution_by_this_stage": false,
+  "remaining": "Root review, commit, actual host build and diagnostic boot; this regression does not prove game execution or NRR/NRO loading."
+}

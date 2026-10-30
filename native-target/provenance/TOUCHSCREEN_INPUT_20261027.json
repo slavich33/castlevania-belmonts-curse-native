@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "STABLE_native_Mac_zero_contact_plural_touch_input_offline_verified_awaiting_actual_invocation",
+  "repository_head_at_preparation": "ecde08465b17112e04de828db146bba8628ba79b",
+  "actual_trigger": {
+    "source_evidence": "provenance/NATIVE_SSL_PROGRESS_20261027.json",
+    "compiled_source_commit": "a77b8cd0b8aa760626488e7f9fd63e9c650c851c",
+    "binary_sha256": "f0580bcbec8f939a611db60b9bb607fb69909e9eac3e0b0b4063ec6ebce58e4a",
+    "log_sha256": "74ec2d3ca54e35680d6704bacd0c99c398e8e1aad03c3a4350444bb9101a29a3",
+    "log_bytes": 23206,
+    "log_sha256_independently_read_back": true,
+    "private_run_description": "external host-build/runs/host-43uxfwwc",
+    "observed": "After real SSLcmd5 returned, a game thread entered the original plural TouchScreen reader and faulted at address0x18.",
+    "SDK_PC": "0x4ff0fc",
+    "SDK_LR": "0x4fdce8",
+    "SDK_caller": "0x502c40",
+    "main_callers": [
+      "0xd59ae4",
+      "0xd5da20",
+      "0xfdbd90",
+      "0xd2baa0"
+    ],
+    "cause": "SDK detail getter loads an unprepared HID ring pointer from0xc42d70; the faulting helper loads ring+0x18. Host InitializeTouchScreen was a no-op and only old singular<1> had a direct host getter.",
+    "not_supported_by_evidence": "No thread-quota, allocator, TLS or stack corruption was proven as the source of this NULL ring."
+  },
+  "local_primary_evidence": {
+    "sdk_nso_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "sdk_AOT_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+    "main_nso_sha256": "c71362eb3cc09826f209896d225de212863ed8bb261383893ee7555d52b46319",
+    "symbol": "_ZN2nn3hid20GetTouchScreenStatesILm16EEEiPNS0_16TouchScreenStateIXT_EEEi",
+    "ABI": "int(TouchScreenState<16> *out, int max_states)",
+    "public_wrapper": "SDK0x502c20,size64 moves the incoming pointer/count into the Result/out-count detail ABI; on success returns the sample count, on error aborts.",
+    "detail": "SDK0x4fdc30,size248: NULL output first returns0x58ca. Unsigned max comparison against16 at0x4fdc4c rejects negative and17+ counts with0x5aca. Accepted capacity is0..16, not a clamp.",
+    "ring_use": "SDK0x4fdcd8 loads ring from0xc42d70, calls0x4ff0f0;0x4ff0fc loads ring+0x18 and faults when ring is NULL.",
+    "main_output_contract": "Main zeroes16*0x290 bytes and requests16 states at0xd59adc.",
+    "initializer_route": "Exact imported InitializeTouchScreen PLT0x1b45e80 is called at main0x58 inside wrapper0x50. Direct callers of that wrapper were measured at0xd5dbf4 and0xd5dc64. It is not an init_array entry.",
+    "runtime_order_limit": "These static calls establish an initialization route, not its observed runtime order. The new ready flag is set only by an actual host initializer invocation; no automatic ready state is seeded."
+  },
+  "primary_public_layout": [
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/include/switch/services/hid.h#L605",
+      "fact": "HidTouchScreenState hasu64 sampling at0,s32 contact count at8,u32 reserved at12 and16 forty-byte touch entries at16: total656 bytes. The template touch-point capacity is distinct from the requested number of history states."
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/include/switch/services/hid.h#L1376",
+      "fact": "TouchScreen initialization is required before using the device; the read API returns the total output entries."
+    }
+  ],
+  "implemented_contract": {
+    "resolver": "One exact new plural<16> imported symbol; no guessed template aliases.",
+    "initializer": "Existing InitializeTouchScreen now records touchReady under inputLock. Repeated initialization is idempotent and does not reset sampling.",
+    "guards": "NULL output first; negative/17+ capacity next; then explicit ready state. Invalid public calls stop through the existing runtime fatal policy rather than fabricating a Result or continuing the fault.",
+    "zero_capacity": "After explicit initialization, capacity0 returns0 and writes no bytes or sample-counter state. A non-NULL pointer is still required.",
+    "positive_capacity": "For1..16, return exactly one current Mac no-contact state. Sampling is nonzero/monotonic; contact count, reserved field and every touch byte are zero. Exactly0x290 bytes are written; all unused output states remain untouched.",
+    "meaning": "One available no-contact sample is distinct from zero available samples. No finger, mouse-derived touch, connected touch device, iOS touch support or game-input event is invented.",
+    "counter": "Dedicatedu64 touch counter under existing inputLock; no Npad/keyboard/legacy singular sampling counter consumption. Counter exhaustion stops explicitly.",
+    "diagnostics": "Only when CASTLEVANIA_DIAGNOSTIC_BOOT is enabled: one first-initializer witness and one first-successful-plural-sample witness with sample/contact count and656-byte ABI. No per-frame logging or raw payload.",
+    "preserved": "Legacy singular<1> implementation and Npad, keyboard, mouse, gamepad, controller mapping/shortcut behavior are unchanged.",
+    "no_repair": "No SDK global/shared-memory write, signal continuation, null fallback, allocator/TLS modification, original module rewrite or alternate initializer call."
+  },
+  "native_validation": {
+    "test": "tests/test_touchscreen_input.py",
+    "passed": 19,
+    "compiler": "xcrun clang -arch arm64 -std=gnu11 -O1 -Wall -Wextra -Werror; diagnostic and normal binaries.",
+    "implementation": "Actual input.c and exact runtime_input_override resolver; authored native output buffers and native pthread readers. Unrelated SDK/GPU/frontend callbacks are fixture stubs that fail if invoked.",
+    "coverage": [
+      "Exact symbol/ABI and rejection of nearby unmeasured aliases.",
+      "Capacity1/16 returns one656-byte zero-contact sample with leading/trailing canaries and all15 unused slots untouched.",
+      "Zero capacity does not write or advance sampling.",
+      "NULL-first guard including zero/negative capacity; negative,17,INT_MAX/INT_MIN bounds; rejected calls preserve buffer and sample counter.",
+      "Readiness is required for positive and zero-capacity calls; no implicit initialization.",
+      "Repeated initialization preserves monotonic samples; four native initializer threads test concurrent idempotence after initial setup.",
+      "Four real native reader threads produce4000 unique contiguous samples with bounds/contact-byte checks.",
+      "Original singular1 remains56-byte/no-contact and preserves its prior pre-initialization behavior.",
+      "Real authored keyboard-key to Npad mapping, release, buttons/sticks/attributes and shared Npad/keyboard sampling remain unchanged with controlled no-gamepad fixture input.",
+      "Diagnostic witnesses are emitted exactly once under concurrent reads; normal compilation emits neither new diagnostic log.",
+      "Native input fixtures create no files."
+    ],
+    "independent_review": "Separate read-only source/test review clean; reviewer did not rerun tests or edit source.",
+    "actual_game_or_SDK_code_executed": false,
+    "actual_host_build_performed_by_author": false,
+    "GPU_or_hardware_input_generated": false,
+    "new_getter_actual_game_runtime_verified": false,
+    "physical_touch_or_iOS_support_verified": false,
+    "game_frame_or_gameplay_claim": false
+  },
+  "remaining": "Parent commit/build/actual run must observe explicit InitializeTouchScreen and plural sample witnesses. If initialization order is absent, readiness stops honestly instead of seeding state.",
+  "owned_paths": [
+    "runtime/input.c",
+    "tests/test_touchscreen_input.py",
+    "provenance/TOUCHSCREEN_INPUT_20261027.json"
+  ],
+  "source_sha256": {
+    "runtime/input.c": "2ebfd75ab323d849e05dda7e8a3c757453a57498ad27bd559eb26447492a4c8c",
+    "tests/test_touchscreen_input.py": "7c1e90fb94fd1fd005353ff3a99ea265b44d22d985e1e219dc723b070d123528"
+  },
+  "sanitization": "Source hashes, offsets and decoded semantics only. No owned instruction bytes, assets, keys, credentials or personal absolute paths."
+}

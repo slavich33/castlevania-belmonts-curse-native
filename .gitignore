@@ -1,0 +1,23 @@
+
+# Local inputs, generated artifacts and signing data
+*.nsp
+*.xci
+*.nso
+*.ipa
+*.p12
+*.mobileprovision
+prod.keys
+title.keys
+local.env
+.env
+input/
+inputs/
+build/
+Gen/
+*.d2s
+*.dmp
+*.metallib
+*.bin
+*.o
+*.a
+*.dSYM/

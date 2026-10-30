@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "status": "static_AOT_candidate_profile_native_host_pending",
+  "title": "Castlevania: Belmont's Curse",
+  "publisher": "KONAMI",
+  "title_id": "0100BA4026E94000",
+  "display_version": "1.1.0",
+  "engine": {
+    "name": "Unity",
+    "version": "2022.3.62f2",
+    "revision": "7670c08855a9",
+    "scripting_backend": "IL2CPP",
+    "evidence": "Verified main NSO rodata has Unity player version strings plus compiler IL2CPP editor paths and global-metadata.dat"
+  },
+  "source_ExeFS_directory": "../update-engine-discovery-20261026/update/exefs",
+  "runtime_load_order": [
+    "main",
+    "subsdk0",
+    "sdk"
+  ],
+  "source_modules": {
+    "main": {
+      "sha256": "c71362eb3cc09826f209896d225de212863ed8bb261383893ee7555d52b46319",
+      "build_id": "0f1169aa7d0fa4529c861f96adec306e00000000000000000000000000000000"
+    },
+    "rtld": {
+      "sha256": "ebfbe916731d944870124b29e990f9647a9efdb3cca359790973db90f9bb399b",
+      "build_id": "68ca7b0b37d8f020c0baa2b90ca51090bf57036c000000000000000000000000"
+    },
+    "sdk": {
+      "sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+      "build_id": "8af286d7bfb124125a15e96a39cb1ab7bb4c0180000000000000000000000000"
+    },
+    "subsdk0": {
+      "sha256": "4ca34bbd65029c76bff1b53969aceac8326de458df0eba14265f05e126183669",
+      "build_id": "8205ead9e1f93d8b2337feaddefac330fe6ace9e000000000000000000000000"
+    }
+  },
+  "NPDM": {
+    "is_64_bit": true,
+    "address_space_type": 3,
+    "name": "Application"
+  },
+  "reference_host": {
+    "path": "/Users/your-user/Games/MacNativeGames-personal/games/ori",
+    "repository_commit": "f5a03fead9c40c8fe23103abce6bfe505a80756a",
+    "architecture": "Native ahead-of-time ARM64 rewrite + Horizon service host + NVN on Metal",
+    "source_review_receipt": "../ori-host-review-20261026.json",
+    "source_modification_authorized": false
+  },
+  "static_import_closure": {
+    "strong_imports_missing_across_game_modules": 0,
+    "unresolved_weak_symbols": [
+      "_ZTH15gDeferredAction",
+      "nnProfilerInitialize",
+      "nnProfilerRecordHeartbeat"
+    ],
+    "limitation": "Static symbol closure does not establish service/ABI behavior or graphics compatibility"
+  },
+  "isolation": {
+    "new_profile_directory": "~/Library/Application Support/MacNativeGames/CastlevaniaBelmont",
+    "new_log": "~/Library/Logs/MacNativeGames/castlevania-belmont.log",
+    "existing_game_profiles_modified": false
+  },
+  "remaining_build_gates": [
+    {
+      "id": "AOT_rewrite",
+      "state": "static_rewrite_complete_native_execution_unverified",
+      "requirement": "Verify rewrite coverage and module tables/constructors/relocations for the measured code hashes; never use Ori tables or TOTK patches"
+    },
+    {
+      "id": "sparse_data_reader",
+      "state": "not_implemented",
+      "requirement": "Sparse-aware base NCA virtual storage + update BKTR merge with IVFC verification; current local hactool extraction is insufficient"
+    },
+    {
+      "id": "host_profile",
+      "state": "not_implemented",
+      "requirement": "Isolated title constants, module hashes/load order, service coverage, paths and app builder; preserve existing hosts"
+    },
+    {
+      "id": "GPU_and_audio",
+      "state": "unverified",
+      "requirement": "Measured NVN version/features, shader translations, texture formats, Unity lifecycle, input and sound"
+    },
+    {
+      "id": "app_validation",
+      "state": "not_built",
+      "requirement": "Build ARM64 Mach-O, verify codesign and dependencies, native first frame, then gameplay and profile readback"
+    }
+  ],
+  "installed": false,
+  "game_executed": false,
+  "emulator_used": false,
+  "full_RomFS_extracted": false,
+  "static_AOT_receipt": "../rewritten-v110/rewrite-receipt.json",
+  "graphics_static_gate": {
+    "NVN_compiled_major": 55,
+    "NVN_compiled_minor": 15,
+    "required_driver_major": 55,
+    "required_driver_minor_minimum": 15,
+    "static_evidence": "../update-engine-discovery-20261026/nvn-version-callsite-candidates.json",
+    "independent_check_offsets": [
+      "0x00d387dc",
+      "0x00d3960c"
+    ],
+    "SDK_NVN_string": "NintendoSDK_NVN-19_3_16-Release",
+    "ABI_features_compatible": false,
+    "runtime_execution_observed": false
+  }
+}

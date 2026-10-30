@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "inactive_proposal_native_fixture_pass_peer_review_clean_pending_loader_capture_integration",
+  "paths": [
+    "proposals/rtld_static_metadata.h",
+    "tests/test_rtld_static_metadata.py"
+  ],
+  "boundary": "No loader.c or runtime .c/.h integration. The candidate lives outside runtime so unfinished proposal edits do not change the active host build runtime source hash.",
+  "original_contract": {
+    "RTLD_source_sha256": "ebfbe916731d944870124b29e990f9647a9efdb3cca359790973db90f9bb399b",
+    "SDK_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "RoModule_bytes": 208,
+    "population": "Original RTLD0x4ac..0x700 derives MOD0.module_offset, initializes the0xd0 descriptor, parses ELF dynamic tags and appends each real module in original memory scan order. It also has its own RTLD descriptor; this native host cannot invent an unmapped RTLD module.",
+    "auto_callback": "RTLD0x1230 takes x0=const char* name; its0x1120 SysV-chain lookup returns Elf64Sym*, then0x1288..1290 returns module base+st_value or NULL. SDK0x14ac40..0x14ac4c passes one name and consumes the returned absolute address as a relocation value.",
+    "export_rules": "First defined non-STT_FILE matching symbol in each SysV chain, then global/weak binding; first provider in original module order wins, including weak before later strong. Current metadata rejects unsupported reserved sections/TLS/IFUNC/bindings. runtime_symbol cannot substitute because its hash also contains local definitions.",
+    "field_map_hex_offsets": {
+      "00": "previous RoModule/list-head address",
+      "08": "next RoModule/list-head address",
+      "10": "module base + DT_JMPREL (or0)",
+      "18": "module base + DT_RELA/DT_REL (or0)",
+      "20": "zero in original RTLD initialization, preserved opaque fresh-BSS field",
+      "28": "actual authenticated mapped module base",
+      "30": "MOD0-relative dynamic-table address",
+      "38": "DT_PLTRELSZ bytes",
+      "40": "module base + DT_INIT (or0); never called by candidate",
+      "48": "module base + DT_FINI (or0); never called by candidate",
+      "50": "SysV hash buckets pointer",
+      "58": "SysV hash chains pointer",
+      "60": "DT_STRTAB absolute address",
+      "68": "DT_SYMTAB absolute address",
+      "70": "DT_STRSZ bytes",
+      "78": "DT_PLTGOT absolute address (or0); not modified",
+      "80": "DT_RELASZ bytes",
+      "88": "DT_RELSZ bytes",
+      "90": "DT_RELCOUNT",
+      "98": "DT_RELACOUNT",
+      "a0": "SysV nchain count",
+      "a8": "SysV nbucket count",
+      "b0": "DT_SONAME string-table offset",
+      "b8": "MOD0 BSS end relative to module, rounded up to original4KiB mapping size",
+      "c0": "measured initial state byte0x13",
+      "c1-c2": "untouched fresh BSS zero bytes",
+      "c3": "bit1=DT_PLTREL==RELA; bit2=DT_BIND_NOW/DF_BIND_NOW/DF_1_NOW; bit3=existing unresolved-weak binding count nonzero",
+      "c4-c7": "untouched fresh BSS zero bytes",
+      "c8": "original common PLT lazy target, captured before native binding, plus actual module base"
+    }
+  },
+  "late_binding_capture": {
+    "reason": "RTLD0xc14..0xc6c records common pre-binding JUMP_SLOT target at descriptor+C8. Zero was an incomplete post-binding approximation and was removed before any activation.",
+    "API": "rtld_static_capture_binding_source(module,out) before existing native relocate(); rtld_static_metadata_prepare(state,modules,captures,count,wrapped_callback) after binding and before SDK Start.",
+    "authentication_precondition": "Capture must receive the existing loader-authenticated AOT mapping and its expected digest. A 64-character hex digest string/counters alone do not authenticate memory; the loader hash gate and reviewed call order remain mandatory external authority. No mutable file is reopened.",
+    "checks": "Fresh counters, full validated MOD0/dynamic/symbol metadata, every original JMPREL entry is JUMP_SLOT, aligned initialized-data target, all original words share one aligned in-text PLT offset. Later preparation binds the capture to the same module base/digest/file size and exact slot count.",
+    "static_readback": "Read-only authenticated AOT files contained one common original target per module: main has 679, subsdk0 has 4025 and sdk has 7962 JUMP_SLOT entries. No target addresses or counts are hardcoded.",
+    "mutation_boundary": "Capture never writes a relocation target. Preparation writes only fresh MOD0 RoModule BSS, five named alias objects and its own native state; it never restores the common lazy target into current HLE/GOT slots."
+  },
+  "owned_state": {
+    "Auto": "Real descriptor list for every actually loaded static module in caller-supplied authenticated original lookup order; never an empty stand-in.",
+    "Manual": "Real self-linked empty sentinel before any NRO is loaded, matching original RTLD0x128..0x130; the original SDK owns later insertions/removals.",
+    "Debug": "Owned zero byte matching original RTLD BSS default; a diagnostic flag, no synthetic system state.",
+    "Manual_callback": "Owned writable uintptr_t slot, initially zero; the SDK installs its own callback normally.",
+    "Auto_callback": "Caller must hand over a runtime_hle_wrap_named host-stack thunk for its exact one-argument callback; native tiny fixture uses an independent normal native callback, not a guest/HLE ABI test."
+  },
+  "SDK_Auto_list_consumers": {
+    "LoadModule": "SDK0x14ad80 iterates static descriptors and calls RoModule::BindVariables(newNRO) after mapping and descriptor/relocation setup; a callback alone is insufficient.",
+    "LookupSymbol": "0x14afd0 scans automatic providers before manual providers and supports module-address selection.",
+    "UnloadModule": "0x14b390 calls RevertReference on automatic descriptors.",
+    "FindDynamicSegment": "0x14b4c4 finds real module base/dynamic metadata.",
+    "ProtectFullRelroForAllModules": "0x14b5bc traverses every real static descriptor.",
+    "ProtectRelro": "0x14c230 inspects actual auto-list shape and flags."
+  },
+  "validation": {
+    "native_tests_passed": 7,
+    "independent_fixture_process_cases": 25,
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_rtld_static_metadata.py -v",
+    "fixture_scope": "Independent tiny native flat images/symbols only. No original NSO/SDK instructions, guest calls, GPU or assets.",
+    "positive": "Full measured descriptor fields, actual linked-list order, weak-before-strong export resolution, local exclusion, all five alias meanings, mandatory pre-binding baseline capture, preserved current HLE/ctor words.",
+    "negative": "Arguments, late/inconsistent/mismatched baseline capture, MOD0/BSS bounds, malformed last module, nonzero descriptor/alias, hash indices/cycles, raw/generated symbol mismatch, missing/overlapping/local/function aliases, TLS/unknown tags/flags/RELR and overlapping modules; every rejection is transactional.",
+    "independent_review": {
+      "reviewer": "conquest_checkpoint",
+      "scope": "Focused read-only candidate header/test/provenance source review; no material source findings. No tests rerun, guest/build executed or every original RTLD field independently rederived by that reviewer.",
+      "root_review": "Root read header and found no functional issue; physical +0/+8 naming clarification applied with preserved old proof history."
+    }
+  },
+  "remaining": [
+    "Independent focused source review is clean; root retains final authority before any integration or activation.",
+    "Root must integrate authenticated pre-relocation capture and post-binding/pre-SDK-Start prepare without calling SDK Bind/Initialize/constructors or rewriting current relocation slots.",
+    "Root must supply a real host-stack-wrapped callback and confirm genuine original static load order, not sort Darwin allocation addresses.",
+    "Any real host build/boot/new NRO mapping remains a separate gate."
+  ],
+  "source_sha256": {
+    "proposals/rtld_static_metadata.h": "5475d6571905807b3930339952f64116099520df0adbc451deffa73ad472ffee",
+    "tests/test_rtld_static_metadata.py": "68c6cd6d9ea3defb00dd71e6bf87fd0a882ee3537a493560033bbd799e2978da"
+  },
+  "actual_guest_or_SDK_execution_by_this_stage": false,
+  "runtime_integration_or_mapping_verified": false,
+  "physical_list_offsets": {
+    "00": "Backward link: head+0 is last inserted; DT_INIT follows+0 in reverse load order.",
+    "08": "Forward link: head+8 is first inserted; lookup and binding follow+8 in original load order.",
+    "native_static_order": "Caller passes authenticated main/subsdk0/sdk order; head+8=main, head+0=sdk. Do not sort Darwin allocation addresses.",
+    "older_proof_naming": "RTLD_CONSTRUCTOR_ORDER_20261027.json now preserves its original semantic labels in an explicit correction note. Measured offsets/orders and code behavior did not change."
+  }
+}

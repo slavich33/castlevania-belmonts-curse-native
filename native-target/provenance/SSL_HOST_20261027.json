@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "STABLE_ssl_system_interface_version_state_native_wire_tested_awaiting_actual_request",
+  "repository_head_at_preparation": "e8d3e45f2011c364d3206be38573028b5ea61f54",
+  "actual_trigger": {
+    "source_evidence": "provenance/NATIVE_THREAD_PROGRESS_20261027.json",
+    "source_commit": "f097b15924038dcdd5cf0fdc88916ea508767449",
+    "binary_sha256": "9ac7a099603e35db6966faf2bd4eb3fc569368e0fe56d490aac888c4121216eb",
+    "log_sha256": "608d4a601591f92d8efbc6265903c9d6240c6b41f843e035f832781eb5d80ea4",
+    "log_bytes": 21558,
+    "log_sha256_independently_read_back": true,
+    "private_run_description": "external host-build/runs/host-jy7m87e5",
+    "observed": "Original native execution passed GetInfo24 and created real threads, then stopped at missing SM ssl:s. No SSL service command or TLS operation was observed in that completed run.",
+    "SDK_callers": [
+      "0x424d68",
+      "0x424730",
+      "0x42490c",
+      "0x4209fc"
+    ]
+  },
+  "static_original_SDK_evidence": {
+    "sdk_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "sdk_AOT_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+    "entry": "nnsslInitialize at0x4209f0 calls nn::ssl::Initialize at0x4248c0.",
+    "service_selection": "ServiceSession::Initialize(count2,for_system1) selects ssl:s; its existing SDK fallback selects ssl on failure. This host registers only the observed ssl:s endpoint.",
+    "initial_command": "0x4247b4 supplies interface-version3 through vtable+0x48; system wrapper0x42529c dispatches cmd5 through encoder0xcc820.",
+    "wire": "HIPC type6, no special header/PID/buffers/handles; logical rawu32 version3. No domain input objects; response only Result.",
+    "exact_argument_bound": "0xcc86c supplies13 raw words;0xcc894 creates domain header data-size0x14, comprising16 CMIF bytes and4 argument bytes. Version is stored at domain+0x20 by0xcc884. Existing ipc.c strips the domain header and exposes exactly4 data bytes; outer alignment slack is outside that range.",
+    "continuation": "ServiceSession initialization returns after this version declaration; no Context/Connection/handshake method is on this measured initializer path.",
+    "independent_review": "Separate static SDK/protocol review corroborated the same endpoint, version, command and exact domain argument bound.",
+    "sanitization": "Offsets, source hashes and decoded semantics only; no original owned instruction bytes."
+  },
+  "primary_protocol": [
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/source/services/ssl.c#L262",
+      "fact": "SetInterfaceVersion uses service command5 with oneu32 version on the assumed-domain SSL service; this is an IPC interface revision rather than a TLS version."
+    }
+  ],
+  "implemented_contract": {
+    "endpoint": "ssl:s only; no unobserved ssl fallback service registration.",
+    "registration": "runtime_ipc_register_retained with real open/retain/close state callbacks; no shared runtime/loader/builder changes.",
+    "object": "Each independent SM open creates a genuine manager with references1 and undeclared interface_version0. Generic session clones/domain copies retain that same manager; independent opens have independent declaration state.",
+    "command5": "Require type6, exact4 raw bytes, no PID/COPY/MOVE/X/A/B/W/C descriptors. Only measured version3 is accepted; it is persisted under the manager mutex. Repeating3 is idempotent.",
+    "result": "Empty Result0 acknowledges the stored interface-version declaration only; no raw output, object, connection or certificate result.",
+    "lifetime": "Mutex-protected bounded references; final owner close frees the manager. Domain conversion transfers its existing ownership to the root object; domain transport clones retain the domain, while CopyFromDomain owns a separate retained session.",
+    "guard": "Constructor only registers the endpoint. Service open and every command require the existing diagnostic compile opt-in and private host scratch guard.",
+    "unsupported": "Every command except5 explicitly stops, including context factories0/100, context counts, certificate queries/imports, session cache, debug and connection/handshake-related methods. Unmeasured interface versions and type4/TIPC requests stop.",
+    "no_TLS_readiness": "Interface-version declaration does not initialize an Apple TLS context, open a socket, connect, accept a certificate, validate trust, perform a handshake, or complete TLS I/O. No SDK initializer is replaced.",
+    "no_legacy_bypass": "No lm3_hle ssl_initialize/context_ok/import fake stub is enabled or edited.",
+    "no_pre_main_or_request_IO": "No account identity, process lookup, profile creation, filesystem write, keychain, certificate store, network call or TLS API is invoked by this module."
+  },
+  "future_native_TLS_boundary": {
+    "state": "Design only; no implementation or claimed compatibility.",
+    "BSD": "The existing diagnostic BSD bridge does not expose actual native sockets. A Horizon socket number cannot be reinterpreted as a macOS descriptor.",
+    "API_selection": "Installed Apple SDK labels SecureTransport deprecated/unsupported and recommends Network.framework. A future backend must select an actual supported transport/protocol API and bind real typed socket ownership before acknowledging TLS methods.",
+    "trust": "No certificate acceptance or verification-disabled policy is introduced. Trust/hostname/protocol and connection errors require separate measured protocols and real host backing.",
+    "stateful_children": "Future context/connection objects require genuine retained child ownership. The current runtime_ipc_new_session helper has no retain parameter; no borrowed dynamic child or lifetime leak is added here."
+  },
+  "native_validation": {
+    "test": "tests/test_ssl_ipc.py",
+    "passed": 30,
+    "compiler": "xcrun clang -arch arm64 -std=gnu11 -O1 -Wall -Wextra -Werror; diagnostic-enabled and default-disabled binaries.",
+    "implementation_used": "Actual ipc.c SM/HIPC/CMIF/domain/control parsing and ownership, actual threads.c CloseHandle/handle slots, actual ssl_host.c. Original authored tiny wire fixtures; no game or SDK module.",
+    "positive": [
+      "Pre-main registration allocates no state/handles/files in either compile mode.",
+      "Real SM MOVE session and empty-version Result; exact4 ordinary CMIF and actual domain declaration state.",
+      "Repeated version3 remains idempotent; independent SM opens do not inherit declarations.",
+      "Non-domain clone before/after declaration, domain clone/CloneEx, CopyFromDomain and domain root/transport destruction preserve state only until final owner close.",
+      "1000 actual open/domain/version/clone/copy/close cycles reclaim every tracked manager/IPC allocation and handle slot."
+    ],
+    "negative": [
+      "Missing checked run/default-disabled gate.",
+      "Versions0/1/2/4/max, absent/truncated/oversized raw argument.",
+      "Type4/TIPC, PID, input COPY/MOVE and every X/A/B/W/C buffer family.",
+      "Domain input object and unknown object id.",
+      "Unknown control5 is not confused with service command5.",
+      "Context/certificate/cache/debug/count/connection-related and unknown commands remain explicit failures.",
+      "Unobserved ssl fallback endpoint is not registered."
+    ],
+    "files": "Checked run tree gains no adapter files; SSL module does not create logs/caches/profiles.",
+    "actual_original_guest_or_GPU_executed_by_author": false,
+    "actual_host_build_by_author": false,
+    "actual_SSL_service_command5_runtime_verified": false,
+    "TLS_connection_or_handshake_verified": false,
+    "game_frame_or_gameplay_claim": false
+  },
+  "owned_paths": [
+    "runtime/ssl_host.c",
+    "tests/test_ssl_ipc.py",
+    "provenance/SSL_HOST_20261027.json"
+  ],
+  "source_sha256": {
+    "runtime/ssl_host.c": "f32ca97c1cac4bd3de19ee39429098b547cc72ff73d01385f54911ca0aee0e40",
+    "tests/test_ssl_ipc.py": "d32930e175c822608a7dd5c1bb52f47bf068df285c82cc8f199028d88fd8f287"
+  }
+}

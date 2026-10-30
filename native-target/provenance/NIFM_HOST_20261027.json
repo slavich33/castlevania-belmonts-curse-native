@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "measured_nifm_user_factory_native_wire_lifetime_tested_awaiting_actual_factory_boot",
+  "actual_trigger": {
+    "source_commit_short": "f34d434",
+    "binary_sha256": "5678525bcffcece48869751a80dc712cde87e87ae37542bedf76cfcc937a6ed8",
+    "log_sha256": "2579f89d0bde5b40d61d1017403d2224208bb77ef7893922912ca556df9a8a93",
+    "private_run_description": "external host-build/runs/host-7z07nwqy",
+    "observed": "Actual boot15 completed genuine NRR registration, then reached the missing SM endpoint nifm:u. Call chain includes SDK0x3eb4e8/0x3eaf2c/0x3efa00 and main0xcb0ce8/0xca92e0. Native run1.572 seconds, exit1, no remaining owned processes. No nifm factory RPC or network query returned in this run"
+  },
+  "source_identity": {
+    "SDK_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "SDK_AOT_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+    "main_AOT_sha256": "083ef231c464d02e04da549498ce8a66c7e20e8ce2e4059c52aae57131c51672",
+    "original_AOT_comparison": "Read-only in-memory SDK comparison is identical over0x3eae38..0x3eaf68,0x3eb62c..0x3eb720,0x3eb834..0x3eb8d8,0x10be2c..0x10becc and0x3ef930..0x3efa6c",
+    "sanitization": "Only module hashes, offsets and decoded semantics; no original instruction bytes, payload, personal absolute path, network identity or credential"
+  },
+  "actual_SDK_evidence": [
+    "main0xcb0ce4 calls imported nn::nifm::Initialize through PLT0x1b47b50 and observes its Result at0xcb0ce8; nnMain calls that wrapper at0xca92dc and resumes at0xca92e0",
+    "SDK nn::nifm::Initialize0x3ef930 selects User mode1 and enters0x3ef940. The User branch calls the User service provider at0x3ef9fc and observes its result at0x3efa00",
+    "User provider0x3eae38 selects nifm:u string SDK0x99e89b, opens the real service via0x3eb4e4, then0x3eb660 calls the symbol-bound ConvertToDomain helper through PLT0x634690",
+    "The resulting IStaticService proxy installs runtime vptr0xb5dd88 via GOT0xb75458 at0x3eb6b4. Virtual slot+0x28 resolves through RELATIVE relocation0xb5ddb0 to0x3eb834. Caller0x3eaee4 supplies zero in x2",
+    "At0x3eb880 the adapter selects command5, preserves the zero raw value through0x3eb890, then calls domain encoder0x10be2c at0x3eb894. The encoder selects HIPC type6 at0x10be78..0x10be90, special header1 at0x10be94/0x10be98 (PID only), domain CMIF-plus-raw size0x18 at0x10beac/0x10beb0, and zero raw u64 via0x10bea8",
+    "One returned GeneralService interface is cached by the User provider. After that factory response, Initialize records its initialized User state at0x3efa40..0x3efa4c and returns at0x3efa6c; no GeneralService RPC is issued along this successful initialization path"
+  ],
+  "primary_reference": {
+    "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/source/services/nifm.c#L16-L39",
+    "factory_url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/source/services/nifm.c#L105-L116",
+    "fact": "The User endpoint is nifm:u, converted to a domain. Modern CreateGeneralService5 sends reserved u64zero with PID and returns one interface. Legacy command4 has a different no-input format and is intentionally not implemented here"
+  },
+  "implemented_contract": {
+    "endpoint": "Only nifm:u, with actual guarded SM transport. No nifm:a/nifm:s aliases or added capabilities",
+    "factory5": "Accept CMIF request4/6, PID descriptor, raw u64zero plus only alignment slack, no input COPY/MOVE handles or X/A/B/W/C buffers. Allocate one genuine GeneralService IpcSession. Generic IPC returns its MOVE handle or converts it into one domain object as required",
+    "state_and_lifetime": "The factory and GeneralService are stateless NULL-state objects because no network method is implemented. Session/domain allocations, clone/copy references and close/destruction are owned by actual generic IPC; no dummy state, permanent pool, borrowed heap state or new retain API is needed",
+    "network_policy": "The Horizon network bridge is unimplemented. Factory success states only that its transport object exists. No Mac connectivity, offline/online status, IP address, WiFi identity, client identity, accepted request or permission result is read, inferred, fabricated or returned",
+    "query_gate": "Every GeneralService RPC prints the explicit unsupported-bridge boundary then stops with the exact service and command through ipc_unimplemented. This includes ClientId1, CreateRequest4, IP12 and InternetConnectionStatus18; they are not preregistered blanket success stubs",
+    "PID_boundary": "The in-process IPC core preserves raw wire PID bits. Since this factory-only object implements no identity or process operation, those bits are not used as an authenticated identity or returned as state",
+    "guards": "Constructor only registers one endpoint. Opening and serving require the existing compile-time diagnostic opt-in and checked owned host-scratch paths. This module does no pre-main state allocation, profile/environment/process/network/file I/O",
+    "unchanged": "No SDK initializer override, loader, RO/NRR module, GFX, builder, runner, title data, prepared NRO or other agent source was changed"
+  },
+  "native_validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -p test_nifm_ipc.py -v",
+    "compiler": "xcrun clang -arch arm64 -std=gnu11 -O1 -Wall -Wextra -Werror",
+    "tests_passed": 25,
+    "boundary": "Independently authored tiny wire fixtures use actual runtime/ipc.c HIPC/CMIF/domain/control logic and threads.c handles/CloseHandle, plus actual nifm_host.c. No game/SDK instructions, real network query, GPU or guest execution",
+    "cases": [
+      "Default/diagnostic constructors register only, with no state allocations, handles or files; checked run and compile-time opt-in required for open",
+      "Real SM moved factory, modern cmd5 type4/type6, real moved child and real domain output object",
+      "Child survives factory close; distinct siblings survive each other's close; factory/child normal clones and child domain clone survive original close",
+      "Factory-domain clone/CloneEx retain real root/children; CopyFromDomain child survives entire factory/domain destruction; child domain-object close preserves usable factory",
+      "1000 actual open/domain/create/clone/copy/close cycles leave zero tracked IPC allocations and no remaining handle slots",
+      "Unknown admin/system endpoints, legacy/unknown factory commands, missing PID, input handles, every buffer family, TIPC, reserved nonzero, truncated/oversized domain raw arguments fail",
+      "All GeneralService client/IP/connectivity/request/unknown commands fail without fabricated network results; source-only tests create no network/config/profile files"
+    ]
+  },
+  "independent_review": "Peer independently decoded the original SDK and corroborated the cmd5/PID/raw0/domain contract and absence of a GeneralService RPC before Initialize returns. Focused source/test review clean; reviewer did not edit or run tests/build/guest",
+  "owned_paths": ["runtime/nifm_host.c", "tests/test_nifm_ipc.py", "provenance/NIFM_HOST_20261027.json"],
+  "actual_host_build_or_guest_execution_by_this_stage": false,
+  "remaining": "Root must build and run the actual host to observe the factory result and next real service/API requirement. No network request, NRO mapping, first game frame, menu or gameplay is claimed"
+}

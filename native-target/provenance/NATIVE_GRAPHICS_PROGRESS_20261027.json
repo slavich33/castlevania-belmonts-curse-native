@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "actual_touchscreen_binding_passes_graphics_reaches_first_two_shaders_then_child_file_size_limit",
+  "compiled_source_commit": "f39e2f4f5e27195ed0158a6b96fa69aae0dc6b22",
+  "runner_source_commit": "6d9c5c6d51aa738ab4c935b59d1971d50d3b9725",
+  "compiled_source_hashes_match_commit": true,
+  "compiled_source_files": 155,
+  "translation_units": 74,
+  "binary_sha256": "6f8212d3020e3ee1caa35ef4ee6940203434cf564325475d1124eaf75db7018b",
+  "compiled_build_receipt_sha256": "1345f7eced17053edc258e97df585aa8c93eb12f30b6366dde70936dc1559dd6",
+  "runner_sha256": "1aa93e57b5b2a0404e89750e9cb00b778fca2d36203ef6aab06ff8b80a59e66f",
+  "log_sha256": "d2b84de5ed398b57ae35d3fd9b0f4809b66fd02a3007b8857b975be0ac9b4238",
+  "run_receipt_sha256": "f09bfbdb25dc8b6bb76ba7ae53aa5d94524e33979d9fe85970e53ee33e1617d8",
+  "native_exit_code": -25,
+  "native_seconds": 4.159,
+  "actual_InitializeTouchScreen_observed": true,
+  "actual_native_plural16_read_observed": {
+    "samples_returned": 1,
+    "active_touches": 0,
+    "state_bytes": 656
+  },
+  "previous_null_HID_ring_fault_resolved": true,
+  "shader_manifest_counts": {
+    "S": 2,
+    "R": 0,
+    "C": 0
+  },
+  "shader_manifest_sha256": "291bc18644b6fc57f1731bd6e03ab92331a22b5d73d2a7469bf63a8f7e2713fb",
+  "shader_translation_success_observed": 2,
+  "render_pipeline_success_durably_recorded": 0,
+  "next_termination": {
+    "signal": 25,
+    "name": "SIGXFSZ",
+    "configured_child_RLIMIT_FSIZE_bytes": 67108864,
+    "fatal_host_stack_collected_without_continuation": true,
+    "exact_offending_file_or_syscall_proved": false,
+    "persistent_large_file_in_owned_run_found": false,
+    "existing_Metal_cache_larger_than_limit_observed_by_metadata": true,
+    "interpretation": "The child file-size resource limit terminates this run. Existing native Metal cache files exceed64MiB and are plausible conflicting writes, but the signal stack can reflect process-wide delivery rather than the original write thread."
+  },
+  "historical_incomplete_runs_not_backfilled": [
+    "host-72xhg4ce",
+    "host-sgu0b_dn"
+  ],
+  "instrumented_provisional_run_not_used_as_normal_proof": "host-u4mi8t4j",
+  "owned_group_cleanup": {
+    "process_group_id": 26596,
+    "phase": "post_wait",
+    "complete": true,
+    "snapshots": [
+      {
+        "phase": "post_wait.initial",
+        "inspection_ok": true,
+        "pids": []
+      }
+    ],
+    "signals": [],
+    "wait_errors": [],
+    "remaining_pids": [],
+    "forced_kill_sent": false,
+    "host_wait_completed": true
+  },
+  "runtime_RomFS_verification_mode": "reused_previous_C_full_hash_record",
+  "fresh_image_baseline_private_run": "host-x5bjs1z3",
+  "NRO_mapping_observed": false,
+  "actual_game_GPU_execution_verified": false,
+  "first_game_frame_verified": false,
+  "menu_verified": false,
+  "gameplay_verified": false,
+  "private_evidence_location": "external host-build/runs/host-vjtif_gu",
+  "boundary": "Original native input and graphics setup progressed to translating two original shaders. Pipeline creation, GPU submission/completion and a presented game frame remain unverified; no signal/fault bypass is used."
+}

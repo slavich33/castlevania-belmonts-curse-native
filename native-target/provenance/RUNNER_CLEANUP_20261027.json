@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "title_id": "0100BA4026E94000",
+  "state": "runner_owned_group_cleanup_evidence_offline_fixture_tested",
+  "base_source_commit": "9c1392f98a13ef564a5e9993859bedaaf1611b31",
+  "scope": "Runner cleanup and receipt observability only. No native runtime, graphics backend, builder, resource limit, game input, profile or historical receipt changes.",
+  "observed_trigger": {
+    "run_description": "Root diagnostic host-72xhg4ce, compiled add8051, reached native touch initialization and one no-contact sample, NVN window setup, and translation of two shaders.",
+    "runner_failure": "After process.wait had returned, unconditional os.killpg(host_pid, SIGTERM) raised PermissionError at the former post-wait cleanup site. The exception prevented saving the run receipt and hid the known native return code from the normal report.",
+    "historical_boundary": "Root's later process inventory showed no native host or translator. There was no independent membership snapshot at the historical EPERM instant. This change does not reconstruct, backfill, rewrite or qualify that historical incomplete run.",
+    "later_root_diagnostic": "While this source candidate was under review, root's separately instrumented diagnostic reported actual wait return -25 (SIGXFSZ), with the owned group empty. That provisional observation motivates preserving real wait status; this source stage does not claim an ordinary validated game run or first frame."
+  },
+  "cleanup_contract": {
+    "group_ownership": "Only the exact Popen PID used as PGID by this runner's start_new_session=True child. Reject noninteger, nonpositive, PID1 and the current runner process group before inspection/signals.",
+    "independent_inspection": "Use bounded /bin/ps -axo pid=,pgid= with a2-second subprocess timeout. Record successful member PID lists separately from inspection errors. Unknown membership remains null, never an empty list.",
+    "initial_empty": "A successful empty initial snapshot skips every signal. A completed host wait is also required for complete cleanup.",
+    "signal_evidence": "Each TERM/KILL attempt records phase, signal name/number, successful-send status and exception type/errno if any. No command output, environment or arbitrary exception path is copied into these error snapshots.",
+    "error_handling": "A signal error, including EPERM or ESRCH, is not evidence that a group is gone. Poll only the same owned PGID; completion requires an independent successful empty membership snapshot and an actual completed host wait. If members remain after a failed signal, stop escalation and report incomplete.",
+    "escalation": "After a successful TERM only, poll for3 seconds; if the group still exists, attempt KILL and poll for1 second. Poll interval0.1 seconds, each ps invocation separately bounded. Inspection failure stops signaling immediately. No name/path/global/PID fallback, Apple XPC targeting, permission workaround or OS setting change.",
+    "reaping": "Nonblocking Popen.poll during observations collects the actual leader status and prevents an un-reaped host zombie from being mistaken for active execution. No exit code is synthesized from the signal requested by cleanup.",
+    "forced_kill": "forced_kill_of_owned_group is true only if SIGKILL was successfully sent. EPERM/ESRCH on KILL is recorded and does not fabricate a -9 return code.",
+    "limitations": "This is a bounded owned-process-group snapshot model, not a general process ancestry or system XPC manager. An un-reaped leader, persisting members or failed inspection remains explicit incomplete cleanup. No broader descendant/name-based termination is attempted."
+  },
+  "receipt_contract": {
+    "finished": "bounded_experimental_host_run_finished requires independently empty owned group, actual host wait completion and stable bounded log/proof reads where reached. A native nonzero exit or timeout termination can still be a fully observed finished diagnostic; it is not game success.",
+    "incomplete": "bounded_experimental_host_run_incomplete preserves known actual exit_code, command/build/marker bindings, cleanup snapshots/signals/errors, stable log hash and bytes if available, and existing diagnostic fields. CLI exits2 for this state.",
+    "log_read_failure": "If an owned log cannot be read stably, save the cleanup evidence with null log digest/size and explicit log_snapshot_error. Do not credit an empty synthetic log or recompute a racing second hash.",
+    "proof_failure": "A failed stable C-proof read is separately recorded and keeps the receipt incomplete. The C verifier, expected image/index/resource bindings and current-file fstat authority are unchanged.",
+    "proof_reuse": "New incomplete receipts are rejected by the existing finished-state check. Explicit new proof_reuse_eligible and cleanup.complete fields are also enforced when present, so merely relabeling a partial state does not qualify it. Eligibility requires a real reached C verification and read proof in addition to complete cleanup. Historical completed receipts lacking the new cleanup field retain the already approved strict legacy binding policy; historical incomplete receipts are not upgraded."
+  },
+  "validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s native-target/tests -p 'test_host_runner*.py' -v",
+    "result": "42 tests PASS in11.405 seconds:20 cleanup,7 GPU policy,15 existing proof regressions.",
+    "cleanup_cases": [
+      "successful empty inspection produces zero signal calls",
+      "EPERM followed by independently empty group preserves real status and complete evidence",
+      "EPERM with live members stays incomplete, with no KILL escalation",
+      "EPERM group can drain during bounded same-PGID polling",
+      "ps permission, timeout, parse and IO failures stay unknown and block broader cleanup",
+      "TERM and KILL ESRCH races require successful empty reinspection",
+      "forced-kill field denotes actual successful KILL send only",
+      "empty group without an actual collected host status does not invent a return code",
+      "invalid and runner PGIDs are never inspected or signaled",
+      "real original host Python sleeper is terminated through its new owned group and reaped with actual -SIGTERM status",
+      "real tiny C RomFS fixture saves exact actual exit0/log/proof after fault-injected cleanup EPERM",
+      "real same-size mutated tiny RomFS produces actual native exit2 and integrity-failure log, with no proof eligibility",
+      "partial receipt retains real exit/log, distinguishes unknown from empty, and cannot supply reused proof",
+      "relabeling partial state while explicit cleanup evidence remains false cannot qualify proof",
+      "unstable log read still saves partial cleanup evidence without a fictitious log digest"
+    ],
+    "fixture_boundary": "The native fixture uses the existing authored20-byte image and actual runtime/romfs.c compiled for arm64. The sleeper and fault-injected process observations are original offline test cases. No owned game, guest SDK, Cocoa window, Metal/GPU work, external service or network activity was launched by this source stage.",
+    "peer_review": "Independent focused read-only review of runner and new test source found no material issue. Reviewer ran no tests and made no edits.",
+    "diff_check": "git diff --check PASS"
+  },
+  "source_sha256": {
+    "scripts/run_experimental_host.py": "1aa93e57b5b2a0404e89750e9cb00b778fca2d36203ef6aab06ff8b80a59e66f",
+    "tests/test_host_runner_cleanup.py": "0893a614ce81ecd8a76b79562b4fcafda7ad4755649e51c43ac8d6ecb373c004"
+  },
+  "owned_paths": [
+    "scripts/run_experimental_host.py",
+    "tests/test_host_runner_cleanup.py",
+    "provenance/RUNNER_CLEANUP_20261027.json"
+  ],
+  "runtime_or_backend_modified": false,
+  "resource_limits_changed": false,
+  "historical_run_artifacts_modified": false,
+  "guest_or_GPU_execution_by_this_stage": false,
+  "first_frame_verified": false,
+  "remaining": "Root owns subsequent actual diagnostic runs and SIGXFSZ file-limit investigation. This change preserves their outcome and cleanup evidence; it does not remove limits or establish graphical compatibility."
+}

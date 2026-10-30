@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "native_applet_focus_and_GPU_event_requests_return_AOC_service_opens_next_missing_ectx_aw",
+  "compiled_source_commit": "f76e23004e42d5ccdcfce824e37b9eca6e50aa89",
+  "compiled_source_hashes_match_commit": true,
+  "compiled_source_files": 146,
+  "translation_units": 68,
+  "binary_sha256": "b438a92c4cac00ac27002fba66db9e9e5d78655c3ffd7c0fa5f06d807aee0455",
+  "full_build_receipt_sha256": "cb4dc956b7f6cfe0be9172216907a58b9fca479cd20a3a0db4821e0d17fce57d",
+  "private_run_receipt_sha256": "9742a9aad7c1590ca4af097cc6963ad0e9eab3c06f2e5f08bb76c663e6471a52",
+  "log_sha256": "0108c475b1ec765ad96210718e785fa42d03beb154de63cf72a8f894aeec0f6c",
+  "exit_code": 1,
+  "seconds": 2.284,
+  "opened_services": [
+    "lm",
+    "apm",
+    "appletOE",
+    "aoc:u"
+  ],
+  "actual_applet_requests_returned": [
+    "ApplicationFunctions130 COPY GPU error event",
+    "CommonStateGetter0 COPY focus queue event",
+    "CommonStateGetter1 u32 message",
+    "CommonStateGetter9 u8 focus",
+    "WindowController10 foreground rights",
+    "SelfController13/16 policy preferences"
+  ],
+  "AOC_service_requests_observed": false,
+  "actual_AOC_scope": "service acquired only; Count/List/Event paths remain native-wire tested, not actual-game observed",
+  "next_unsupported_service": "ectx:aw",
+  "no_SM_error_injection": true,
+  "no_SDK_initializer_bypass": true,
+  "nnMain_reached": false,
+  "first_game_frame_verified": false,
+  "runtime_RomFS_read_reached": false,
+  "actual_GPU_work_reached": false,
+  "remaining_owned_processes": [],
+  "image_bytes_rehashed_in_build": false,
+  "image_digest_reuse_mode": "inherited_expected_digest",
+  "private_evidence_location": "external host-build/runs/host-keeeacmk"
+}

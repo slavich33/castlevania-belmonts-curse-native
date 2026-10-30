@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "STABLE_native_thread_quota_and_GetInfo24_offline_verified_awaiting_parent_build",
+  "repository_head_before_checkpoint": "5c4a2de5ef29717b44cef6c2425b5a1632028d38",
+  "observed_trigger": {
+    "existing_source_evidence": "provenance/IL2CPP_METADATA_CONTROL_FLOW_20261027.json",
+    "private_run_description": "external host-build/runs/host-3_pohjhr",
+    "binary_sha256": "8e0d169ff4e14ff9013864e4907725b94366c969d9d7fe22b8b943ca353d9216",
+    "log_sha256": "e224a5615a50a7ff3eb3028a8ecd519acc694a8fbaaeb9b01bee1fc84baad7d2",
+    "request": {
+      "svc": "0x29 GetInfo",
+      "InfoType_u64": 24,
+      "process_handle_u32": "0xffff8001",
+      "subtype_u64": 0,
+      "SDK_SVC_offset": "0x1701a0"
+    },
+    "sdk_function": "_ZN2nn2os18GetFreeThreadCountEv at0x13ff30,size68",
+    "source_sdk_nso_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "main_nso_sha256": "c71362eb3cc09826f209896d225de212863ed8bb261383893ee7555d52b46319",
+    "main_call": "0x5c95b4 calls SDK through PLT0x1b469b0; 0x5c95b8 compares result against1 before allocating the GC-finalizer thread.",
+    "scope": "Existing completed run and authenticated decoded metadata; this stage does not run original SDK/game code."
+  },
+  "primary_contract": [
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libmesosphere/source/svc/kern_svc_info.cpp#L95",
+      "fact": "FreeThreadCount is process resource limit minus its current thread count. Nonzero subtype is rejected before resolving the process handle."
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libmesosphere/source/svc/kern_svc_thread.cpp#L36",
+      "fact": "CreateThread reserves one thread resource before object allocation. Reservation failure is LimitReached; object allocation failure is OutOfResource. Start does not reserve again."
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libmesosphere/source/kern_k_thread.cpp#L351",
+      "fact": "PostDestroy releases one current thread resource. Exit releases only a reservation hint; an exited object with an open handle still consumes current count."
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libmesosphere/source/kern_k_resource_limit.cpp#L198",
+      "fact": "Current-value and hint-value release accounting are distinct."
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libmesosphere/source/kern_k_process.cpp#L842",
+      "fact": "Main-thread startup reserves a thread resource before initialization."
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libmesosphere/source/kern_k_handle_table.cpp#L69",
+      "fact": "Shared handle-table exhaustion returns OutOfHandles."
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libvapours/include/vapours/results/svc_results.hpp#L35",
+      "fact": "Kernel module1: LimitReached132=0x10801; OutOfResource103=0xce01; OutOfHandles105=0xd201; InvalidCombination116=0xe801; InvalidHandle114=0xe401."
+    }
+  ],
+  "model": {
+    "kind": "Explicit diagnostic-host per-process guest-thread object quota, not a measured Switch budget or available macOS thread count.",
+    "limit": 128,
+    "configurability": "Compile-time source constant; no environment or production test knob.",
+    "rationale": "The inherited backend allocates an8MiB native stack for each created guest thread.128 retained objects bounds that diagnostic object population at roughly1GiB of stack-address reservation at steady state; main uses its existing native stack. This is not a resident-memory guarantee or a promise that native allocation cannot fail earlier.",
+    "counted": [
+      "Main initialization reserves one object.",
+      "Every valid CreateThread reserves before calloc/condition/pthread allocation.",
+      "Created-not-started and started/live objects retain one reservation.",
+      "Exited objects with an open handle retain their reservation.",
+      "Closed-handle live objects retain their reservation until real host-thread exit/finalization."
+    ],
+    "release": "thr_free under the existing global G lock unlinks the object, releases exactly one reservation and frees its condition/object. Native detached pthread and TLS cleanup then complete normally.",
+    "not_counted": "Auxiliary native frontend/Metal/preemption/diagnostic pthreads are outside the guest-thread namespace.",
+    "atomicity": "Quota admission, publication/handle reservation, cleanup and free-count observation use G. Capacity checks keep the unsigned counter in0..128; no unbounded arithmetic or free-handle substitution.",
+    "close_before_start": "CloseHandle marks closed and signals the existing worker condition. The actual detached worker observes !started&&closed and performs host-only exit/finalization without entering the authored/native or game entry.",
+    "native_failure": "Allocation/condition/attribute/pthread failures return OutOfResource and roll back reservation, list and handle. No partial handle is published on failure.",
+    "shared_handle_failure": "OutOfHandles is separate from thread quota and rolls back its pending reservation.",
+    "quota_failure": "LimitReached before allocation; immediate diagnostic refusal rather than the kernel100ms reservation-wait/hint policy."
+  },
+  "dispatch": {
+    "owner": "runtime/threads.c svc_thread, already dispatched before generic services.c memory handling.",
+    "exact_match": "Only SVC0x29 with exact64-bit InfoType24 is consumed. Other InfoType values, including high-bit0x100000018, return unhandled with their registers unchanged.",
+    "guards": "Subtype must be0, otherwise InvalidCombination first. The supported process handle is current-process pseudo handle0xffff8001 afteru32 Handle conversion; other handles return InvalidHandle.",
+    "success": "Result0, out-u64 remaining quota in x1.",
+    "error": "Only Result is meaningful. Output x1 is unspecified; no valid count is claimed on error.",
+    "other_GetInfo_semantics": "Unchanged and delegated to the existing generic backend."
+  },
+  "validation": {
+    "new_test": "tests/test_thread_budget.py",
+    "new_tests_passed": 15,
+    "compiler": "xcrun clang -arch arm64 -std=gnu11 -O1 -Wall -Wextra -Werror",
+    "native_fixture": "Actual threads.c CreateThread/StartThread/ExitThread/CloseHandle/GetInfo dispatch, actual pthreads and conditions. Only original authored host fixture C executes; no original game, SDK, AOT or GPU code.",
+    "fixture_prerequisites": "Allocates eight ordinary Darwin pthread keys as the real loader does before svc_thread_main_init; virtual-core scheduler is disabled inside this standalone original fixture.",
+    "fixture_failure_injection": "Fixture-only link substitutions for calloc, pthread_cond_init and pthread_create. Successful paths invoke actual native APIs; no production test hooks were added.",
+    "coverage": [
+      "Main counts once per actual initialization; not-started object counts before Start.",
+      "Exact64 InfoType dispatch, subtype-before-handle guards and unchanged unrelated request registers.",
+      "Exit/open-handle and close/running lifetimes retain quota.",
+      "Main live object survives its handle close.",
+      "Close before worker wait finalizes on host without entry.",
+      "127 actual blocked workers plus main reach128; overflow returns0x10801 before allocator access and leaves all state unchanged.",
+      "Eight concurrent native creators cannot over-reserve; all127 worker objects finalize.",
+      "Native allocation, condition and pthread-creation failure roll back reservation/list/handle and permit later reuse.",
+      "4095 occupied shared handle slots reject a thread with0xd201 while its quota remains available and unchanged.",
+      "1000 actual unstarted pthread lifecycles reclaim objects/handles;100 Start/Close races serialize entry and finalization."
+    ],
+    "regressions": [
+      {
+        "test": "tests/test_applet_queue_event.py",
+        "passed": 13
+      },
+      {
+        "test": "tests/test_ipc_retained_state.py",
+        "passed": 15
+      },
+      {
+        "test": "tests/test_bsd_ipc.py",
+        "passed": 30
+      },
+      {
+        "test": "tests/test_ro_ipc.py",
+        "passed": 37
+      }
+    ],
+    "regression_tests_passed": 95,
+    "total_tests_passed": 110,
+    "production_diff_peer_review": "Independent read-only source/test review clean; no tests or source edits by the reviewer.",
+    "actual_host_build_or_original_guest_execution_by_author": false,
+    "new_GetInfo24_actual_game_runtime_verified": false,
+    "game_frame_or_gameplay_claim": false
+  },
+  "limits": [
+    "128 is explicit enforced host diagnostic policy, not a Switch title resource-contract measurement.",
+    "Only the current native process pseudo handle is supported; no foreign process capability is fabricated.",
+    "Immediate quota exhaustion does not implement Horizon100ms reservation waits/hints.",
+    "The inherited g_keythr==0 sentinel remains unchanged; actual loader allocates runtime_keys[8] first. Generic zero-key-safe standalone initialization is not claimed.",
+    "Existing StartThread activity, scheduler/event behavior and all other SVC semantics are outside this change.",
+    "A released guest object may finish native pthread/TLS teardown immediately afterward; this object quota is not a global macOS thread or resident-memory cap."
+  ],
+  "owned_paths": [
+    "runtime/threads.c",
+    "tests/test_thread_budget.py",
+    "provenance/THREAD_BUDGET_20261027.json"
+  ],
+  "source_sha256": {
+    "runtime/threads.c": "3d5f8bc2fc3502fe2bed38fb8f05e3ebd8468ddb15037e33adfb9acb22cacadb",
+    "tests/test_thread_budget.py": "a7a784bdd9adcf5b153bcb2c628303abf00a05dacf1fe7d136986e9b8160f81a"
+  },
+  "sanitization": "Only source/module hashes, offsets and decoded semantics; no owned instruction bytes, payloads, keys or personal absolute paths."
+}

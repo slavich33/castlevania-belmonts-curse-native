@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "state": "diagnostic_host_policy_verified_without_boot",
+  "observed_at_utc": "2026-10-27T01:12:38.959411+00:00",
+  "checkout": "/Users/your-user/Games/CastlevaniaBelmont-native-research",
+  "branch": "codex/resume-native-loader",
+  "source_hashes": {
+    "runtime/castlevania_policy.h": "5e57fd25b1507750314ddb932116942aed19eacf5ac42ada898a48f69d721077",
+    "runtime/castlevania_paths.h": "aff8bc5c986f6de70563086cac95704315f948956a39895bf09c027f926b7564",
+    "runtime/loader.c": "d2147de04adc407e76a7817574da3756f753a9e96e0b70533db62b64ba3cf176",
+    "runtime/romfs.c": "67ffc41188087b1744b9e922f286fbe901b70c3af285336cba6c91e65e551e98",
+    "runtime/services.c": "c4d085eb704953527208b982ea769ff3cb22f4d225d1740c87977624c7cf59a6",
+    "runtime/game_slot.c": "9eb8c31c00f11b9122b661caa891bf1f862f950fdf50f70510ed89a1e994f045",
+    "tests/test_host_policy.py": "236b9da103e27c56f05f24ff7d18d17489d7b42859ce73ae15c65f76e8f033c9"
+  },
+  "sources_unchanged_during_checks": true,
+  "tests_passed": 19,
+  "new_native_guard_romfs_slot_tests": 9,
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "/Users/your-user/Games/CastlevaniaBelmont-native-research/native-target/analysis/host-policy-20261027/check-0.log",
+      "log_sha256": "7725b1616ee38e2eac817df940288e665c791d191a8c3ab2af7299f8974223c8"
+    },
+    {
+      "command": [
+        "/usr/bin/xcrun",
+        "clang",
+        "-arch",
+        "arm64",
+        "-std=gnu11",
+        "-fsyntax-only",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-deprecated-declarations",
+        "-DGAME_CASTLEVANIA=1",
+        "-Iruntime",
+        "-Ibuild",
+        "-Ithird_party/d2r_gfx/gfx/nvn/include",
+        "-DCASTLEVANIA_DIAGNOSTIC_BOOT=0",
+        "runtime/loader.c",
+        "runtime/services.c",
+        "runtime/game_slot.c"
+      ],
+      "exit_code": 0,
+      "log": "/Users/your-user/Games/CastlevaniaBelmont-native-research/native-target/analysis/host-policy-20261027/check-1.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/usr/bin/xcrun",
+        "clang",
+        "-arch",
+        "arm64",
+        "-std=gnu11",
+        "-fsyntax-only",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-deprecated-declarations",
+        "-DGAME_CASTLEVANIA=1",
+        "-Iruntime",
+        "-Ibuild",
+        "-Ithird_party/d2r_gfx/gfx/nvn/include",
+        "-DCASTLEVANIA_DIAGNOSTIC_BOOT=1",
+        "runtime/loader.c",
+        "runtime/services.c",
+        "runtime/game_slot.c"
+      ],
+      "exit_code": 0,
+      "log": "/Users/your-user/Games/CastlevaniaBelmont-native-research/native-target/analysis/host-policy-20261027/check-2.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "/Users/your-user/Games/CastlevaniaBelmont-native-research/native-target/analysis/host-policy-20261027/check-3.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "default_diagnostic_boot": 0,
+  "explicit_opt_in": "CASTLEVANIA_DIAGNOSTIC_BOOT=1",
+  "direct_service_overrides": [
+    "GetDesiredLanguage: configured locale selection",
+    "GetCurrentFocusState: actual frontend state",
+    "InitializeForApplication: verified read-only RomFS"
+  ],
+  "removed_title_overrides": [
+    "LM3/Ori SDK7 network, SSL, profanity filter and fabricated DLC/pctl initialization",
+    "TOTK output-resolution memory-pool increment",
+    "automatic patch/mod/HeapDef overlays"
+  ],
+  "run_contract": {
+    "marker": ".castlevania-host-run",
+    "marker_contents": "0100BA4026E94000 <32-lowerhex-token>\n",
+    "directory_mode": "0700",
+    "marker_log_mode": "0600",
+    "log": "logs/native-host.log",
+    "stderr_same_log_inode": true,
+    "cwd": "runroot",
+    "argv": "<runroot>/rewritten/v110 boot",
+    "read_only_data_view": [
+      "extracted",
+      "build",
+      "rewritten"
+    ],
+    "machine_slot": "explicit owned canonical0700 outside individual run; lock0600/flock nonblocking; no preemption",
+    "memory_budget": "CASTLEVANIA_APP_POOL explicit bytes, 256MiB..8GiB, 2MiB aligned"
+  },
+  "NVN_static_gate": "55.15, no GAME_ORI define or title heuristics enabled",
+  "full_host_built_by_this_stage": false,
+  "guest_instructions_executed": false,
+  "constructors_or_nnMain_executed": false,
+  "gpu_calls_executed": false,
+  "original_external_source_or_backup_mutated": false,
+  "remaining": [
+    "parent-owned fullhost builder/runner and verified data staging",
+    "measure actual original SDK/service/ABI failures through a separately authorized diagnostic boot",
+    "actual NVN/shader/audio/input compatibility; no gameplay claim"
+  ],
+  "loader_only_build_receipt": "/Users/your-user/Games/CastlevaniaBelmont-native-research/native-target/build/loader-probe-build.json",
+  "note": "Earlier mapping receipt remains historical; the mapper was recompiled for current headers, but not rerun on modules in this stage."
+}

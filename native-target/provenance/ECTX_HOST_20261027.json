@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "title_id": "0100BA4026E94000",
+  "display_version": "1.1.0",
+  "state": "native_ectx_session_domain_adapter_offline_tested_not_boot_verified",
+  "trigger": {
+    "observed_boot": "host-keeeacmk",
+    "log_relative": "host-build/runs/host-keeeacmk/logs/native-host.log",
+    "log_sha256": "0108c475b1ec765ad96210718e785fa42d03beb154de63cf72a8f894aeec0f6c",
+    "observed": "Boot6 opened aoc:u without AOC requests, then service-manager request25 stopped on ectx:aw. SDK initialization had not returned.",
+    "sdk_return_offsets": [
+      "0xc8f768",
+      "0x363bac",
+      "0x361ed4",
+      "0x10da00",
+      "0x10da94"
+    ]
+  },
+  "actual_sdk_evidence": {
+    "module": "sdk",
+    "source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "aot_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+    "decoded_only": true,
+    "initializer": "nn::err::InitializeContextWriterApi at0x361e00, called from nninitInitializeSdkModule at0x10d9fc.",
+    "service": "Exact service string ectx:aw at SDK rodata0x980fa8; InitializeContextWriterApi passes it to factory0x3639f8, which calls ConnectToHipcService at0x363ba8 (return0x363bac).",
+    "domain": "After a successful connection, factory0x363cf0 calls HipcClientSessionManager::ConvertToDomainImpl at0x363d24 and saves the resulting object/session. No context-writer service request is sent by this initializer; its remaining work initializes local context storage and the HIPC error callback.",
+    "error_handling": "Failure path0x361ed4..0x361f24 cleans up and returns only if (result &0x3fffff)==0x1015. Other failures branch to AbortImpl at0x361f5c.0x1015 is SM NotAllowed, not missing-service NotRegistered0xe15. The initializer byte is set only on success at0x361ebc. This adapter injects neither error and preserves actual SDK control flow.",
+    "privacy": "No raw instructions, game bytes, generated modules/tables, private absolute paths, credentials, or device data in this receipt."
+  },
+  "implementation": {
+    "service": "ectx:aw registered with the existing real in-process service manager, returning an actual MOVE IpcSession when opened.",
+    "state": "No writer/context data state is fabricated. Session state and close callback are NULL; ordinary IpcSession/domain allocations and handle ownership are managed by existing ipc.c/threads.c.",
+    "transport": "Existing CMIF control0 ConvertToDomain, control1 CopyFromCurrentDomain, controls2/4 CloneCurrentObject(Ex), control3 QueryPointerBufferSize and domain-close/CloseHandle remain unchanged.",
+    "service_commands": "None implemented. Every service request, including command0 and command1, reaches guarded ipc_unimplemented with exact service/command diagnostics. No request returns fabricated success.",
+    "guards": "C-side checked diagnostic host scratch required at service open and service requests. Default diagnostic0 rejects opening. Constructor only registers the service, with no environment, profile, handles, events or IO before main.",
+    "io": "No context files, separate logs, fabricated records, event signals, or context writes. Existing service-manager diagnostics may report the actual service opening."
+  },
+  "validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s native-target/tests -p test_ectx_ipc.py -v",
+    "result": "16 tests passed",
+    "native_sources": [
+      "runtime/ipc.c",
+      "runtime/threads.c",
+      "runtime/ectx_host.c"
+    ],
+    "compile": "Actual arm64 clang native fixture in default0 and diagnostic1 builds; -Wall -Wextra -Werror. Separate standalone syntax checks for both configurations also passed.",
+    "coverage": [
+      "pre-main registration without handles/allocations/IO",
+      "guarded real SM moved session open and close",
+      "ConvertToDomain returns real root object1",
+      "domain root close before transport close",
+      "non-domain clone survives original close",
+      "domain clone/cloneEx retain domain/root until last transport close",
+      "CopyFromDomain survives original domain destruction",
+      "1000 open/domain/clone/close cycles leave zero tracked actual IPC allocations and zero live handle slots",
+      "unknown service commands0/999, TIPC and domain requests fail explicitly",
+      "unknown control, repeated conversion and invalid object fail",
+      "default compile gate and missing checked run reject open",
+      "no extra context files/logs created"
+    ],
+    "tracking": "Only calloc/free within the actual ipc.c translation unit are wrapped for allocation accounting; the allocator and all session/domain control/close logic execute normally. Actual threads.c handles and CloseHandle are used.",
+    "no_guest": "Guest symbol lookup, TLS setup, guest entry and guest exit abort if reached. None ran; no SDK/game/GPU inputs are executed by these tests.",
+    "peer_review": "Independent read-only source/test review found no material issues; reviewer made no changes and ran no tests."
+  },
+  "primary_references": [
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/include/switch/sf/cmif.h#L284-L344",
+      "used_for": "Pinned primary CMIF controls: real ConvertToDomain result is u32 object ID; CopyFromDomain and clone/cloneEx return MOVE session handles; QueryPointerBufferSize returns u16."
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/include/switch/sf/cmif.h#L164-L180",
+      "used_for": "Pinned primary domain object close versus session close framing."
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libvapours/include/vapours/results/sm_results.hpp#L18-L29",
+      "used_for": "SM module21 defines NotRegistered7 and NotAllowed8; prevents mislabeling SDK-optional access-denial result0x1015 as an absent service."
+    }
+  ],
+  "SDK_initializer_bypass": false,
+  "SM_error_code_injection": false,
+  "guest_or_GPU_execution_by_this_stage": false,
+  "shared_source_modified": false,
+  "owned_paths": [
+    "runtime/ectx_host.c",
+    "tests/test_ectx_ipc.py",
+    "provenance/ECTX_HOST_20261027.json"
+  ],
+  "remaining": "Root rebuild/actual boot must measure whether context-writer initialization completes and whether a first service RPC is attempted. Future context-writer RPCs require measured protocol and real host backing before implementation. No SDK init completion, first frame or gameplay claimed.",
+  "source_sha256": {
+    "runtime/ectx_host.c": "14f37ffe194b44be3a8f94379ff47db8b14db73ec934fea111293d44b506588f",
+    "tests/test_ectx_ipc.py": "7040361d7c4b0e0b08eeab04264a9fa36f569541f36a3dccea77451f54a3c97b"
+  }
+}

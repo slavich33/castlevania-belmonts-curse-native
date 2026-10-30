@@ -1,0 +1,59 @@
+{
+  "state": "resumed_loader_policy_verified",
+  "observed_at_utc": "2026-10-27T01:01:33.349166+00:00",
+  "checkout": "/Users/your-user/Games/CastlevaniaBelmont-native-research",
+  "branch": "codex/resume-native-loader",
+  "base_commit": "8a4eb77c6de4d51258b57df6d50eab0d1a77cbd6",
+  "scope": "native loader mapping only; no guest or full host build",
+  "build_receipt": "/Users/your-user/Games/CastlevaniaBelmont-native-research/native-target/build/loader-probe-build.json",
+  "mapping_receipt": "/Users/your-user/Games/CastlevaniaBelmont-native-research/native-target/analysis/loader-runs/mapping-ku7rge7q/receipt.json",
+  "mapping_receipt_sha256": "2dacc68f5187235d393df4d24caeb0c27043a5dd087dd30fc115cd8a07455b53",
+  "mapping_cwd": "/Users/your-user/Games/CastlevaniaBelmont-native-research/native-target/analysis/loader-runs/mapping-ku7rge7q",
+  "mapping_relocations_readback": 679115,
+  "mapping_permission_regions": 16,
+  "input_modules_before_after_unchanged": true,
+  "test_result": {
+    "tests_passed": 10,
+    "native_negative_guards_passed": 3,
+    "guest_instructions_executed": false
+  },
+  "focused_syntax_checks": [
+    "runtime/game_patches.c",
+    "runtime/account.c",
+    "runtime/fs_host.c",
+    "runtime/world_survey.c",
+    "runtime/frontend.m"
+  ],
+  "git_diff_check": "passed",
+  "full_host_built": false,
+  "guest_entry_attempted": false,
+  "remaining_host_review": [
+    "real sparse/base/update RomFS data view and removal of inherited automatic donor overlays",
+    "services memory-pool defaults, title/SDK override allowlists and unsupported operation behavior",
+    "game slot path/lock ownership and experimental host runner environment",
+    "graphics/FPS/presentation heuristics and actual NVN/shader/audio/input behavior",
+    "real startup/constructor/nnMain execution only in a later explicit diagnostic host phase"
+  ],
+  "shared_api": {
+    "required_define": "GAME_CASTLEVANIA=1",
+    "entry_implemented_macro": "CASTLEVANIA_GUEST_ENTRY_IMPLEMENTED=0",
+    "title_patches_macro": "CASTLEVANIA_TITLE_PATCHES_IMPLEMENTED=0",
+    "required_paths": [
+      "CASTLEVANIA_RUN_ROOT",
+      "CASTLEVANIA_RUN_TOKEN",
+      "HOME",
+      "TMPDIR",
+      "XDG_CONFIG_HOME",
+      "XDG_CACHE_HOME",
+      "CASTLEVANIA_PROFILE_DIR",
+      "CASTLEVANIA_SAVE_DIR",
+      "CASTLEVANIA_LOG_DIR",
+      "CASTLEVANIA_LOG_FILE"
+    ],
+    "all_current_paths": "owned unique scratch run; no inherited game environment",
+    "guest_boot_not_enabled_by_this_receipt": true
+  },
+  "mirror_mutated": false,
+  "common_Games_worktrees_mutated": false,
+  "GitHub_push_performed": false
+}

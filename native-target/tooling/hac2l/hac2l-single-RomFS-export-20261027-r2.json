@@ -1,0 +1,61 @@
+{
+  "state": "READY_verified_single_RomFS_image_and_source_preservation",
+  "image_bytes": 3600101664,
+  "metadata_receipt": "hac2l-bounded-merged-listromfs-20261027-r3.json",
+  "metadata_receipt_sha256": "e074e456727ef8f72d70807d0fc3096fca940495c34e09eb3cbbdf43e0382040",
+  "original_export_status": "All tool/signature/budget/completion and original source-before/after checks passed before entering image SHA/index branch; original wrapper then raised on one interleaved stdout/stderr metadata filename.",
+  "original_export_checks_recovered_from_executed_control_flow": true,
+  "original_source_before_after_SHA_equality_verified": true,
+  "original_source_SHA_values_not_persisted_due_to_wrapper_exception": true,
+  "original_export_scalar_values_not_persisted_due_to_wrapper_exception": true,
+  "export_was_not_repeated": true,
+  "IVFC_all_image_bytes_checked": true,
+  "PrintBytes_and_PrintKeys_disabled": true,
+  "key_values_or_paths_saved": false,
+  "raw_tool_output_saved": false,
+  "game_executed": false,
+  "GPU_executed": false,
+  "image_sha256": "2ba74cc0e68efc9202880b6ea92d2e9cc5193069a7bbc17e85d1ffb68fa77247",
+  "image": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/prepared-v110/romfs/romfs.bin",
+  "index": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/prepared-v110/romfs/index.json",
+  "index_bytes": 583590,
+  "index_sha256": "205fa149cb1c3da3be2c072bfcc9ec7a5ccc7e251474f90b256742e23797d273",
+  "RomFS_file_count": 3101,
+  "all_paths_relative": true,
+  "image_same_inode_after_no_overwrite_hardlink": true,
+  "source_audit_first_pass": [
+    {
+      "path": "/Volumes/YOUR_WORKSPACE/Castlevania Belmont's Curse [NSP]/Castlevania Belmonts Curse [0100BA4026E94000][v0].nsp",
+      "bytes": 560321310,
+      "sha256": "fbbbdb235818aed009e2a9db4d5fb17dbd8f35aa66e775438a4a108ba26e11f5"
+    },
+    {
+      "path": "/Volumes/YOUR_WORKSPACE/Castlevania Belmont's Curse [NSP]/Castlevania Belmonts Curse [0100BA4026E94800][v65536].nsp",
+      "bytes": 3182299415,
+      "sha256": "05ca01a30d6ee77510918d4f1743d16d6e1d967e90f753a38747d64e72cbaa3b"
+    }
+  ],
+  "source_packages": [
+    {
+      "path": "/Volumes/YOUR_WORKSPACE/Castlevania Belmont's Curse [NSP]/Castlevania Belmonts Curse [0100BA4026E94000][v0].nsp",
+      "bytes": 560321310,
+      "sha256_before": "fbbbdb235818aed009e2a9db4d5fb17dbd8f35aa66e775438a4a108ba26e11f5",
+      "sha256_after": "fbbbdb235818aed009e2a9db4d5fb17dbd8f35aa66e775438a4a108ba26e11f5",
+      "unchanged": true
+    },
+    {
+      "path": "/Volumes/YOUR_WORKSPACE/Castlevania Belmont's Curse [NSP]/Castlevania Belmonts Curse [0100BA4026E94800][v65536].nsp",
+      "bytes": 3182299415,
+      "sha256_before": "05ca01a30d6ee77510918d4f1743d16d6e1d967e90f753a38747d64e72cbaa3b",
+      "sha256_after": "05ca01a30d6ee77510918d4f1743d16d6e1d967e90f753a38747d64e72cbaa3b",
+      "unchanged": true
+    }
+  ],
+  "fresh_source_SHA_audit_scope": "Two fresh full-package SHA passes after ASSET_READY; original pre-export/post-export SHA equality already passed but scalar values were lost at the index comparison exception.",
+  "source_audit_pending": false,
+  "full_RomFS_image_exported": true,
+  "asset_file_tree_exported": false,
+  "all_26_standard_export_destinations_rejected": true,
+  "admitted_read_cap_bytes": 7348649984,
+  "file_write_cap_bytes": 3600101664
+}

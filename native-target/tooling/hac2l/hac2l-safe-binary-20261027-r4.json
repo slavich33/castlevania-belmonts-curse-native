@@ -1,0 +1,86 @@
+{
+  "state": "audited_bounded_probe_binary_controls_passed",
+  "tool_sha256": "48be3fc19a407741abf1828db97c17ea8d0e519ff5581ba15b281b1eb8b16121",
+  "binary_bytes": 1103064,
+  "controls": [
+    {
+      "name": "no_arguments",
+      "exit_code": 0,
+      "Usage_seen": true,
+      "captured_bytes": 3243,
+      "termination_reason": null,
+      "seconds": 1.775
+    },
+    {
+      "name": "help",
+      "exit_code": 0,
+      "Usage_seen": true,
+      "captured_bytes": 3302,
+      "termination_reason": null,
+      "seconds": 0.008
+    },
+    {
+      "name": "key_export_rejected",
+      "exit_code": 0,
+      "Usage_seen": true,
+      "captured_bytes": 3243,
+      "termination_reason": null,
+      "seconds": 0.006
+    },
+    {
+      "name": "asset_export_rejected",
+      "exit_code": 0,
+      "Usage_seen": true,
+      "captured_bytes": 3243,
+      "termination_reason": null,
+      "seconds": 0.005
+    },
+    {
+      "name": "probe_export_missing_verification_rejected",
+      "exit_code": 0,
+      "Usage_seen": true,
+      "captured_bytes": 3243,
+      "termination_reason": null,
+      "seconds": 0.005
+    },
+    {
+      "name": "probe_export_raw_rejected",
+      "exit_code": 0,
+      "Usage_seen": true,
+      "captured_bytes": 3243,
+      "termination_reason": null,
+      "seconds": 0.005
+    },
+    {
+      "name": "probe_export_arbitrary_destination_rejected",
+      "exit_code": 0,
+      "Usage_seen": true,
+      "captured_bytes": 3243,
+      "termination_reason": null,
+      "seconds": 0.005
+    },
+    {
+      "name": "probe_export_keygen_rejected",
+      "exit_code": 0,
+      "Usage_seen": true,
+      "captured_bytes": 3243,
+      "termination_reason": null,
+      "seconds": 0.006
+    }
+  ],
+  "single_image_export_allowlist_negative_controls_passed": true,
+  "fixed_image_destination_absent": true,
+  "PrintBytes_disabled": true,
+  "PrintKeys_disabled": true,
+  "all_26_export_destinations_rejected": true,
+  "physical_input_read_limit_bytes": 134217728,
+  "bignum_assembly_text_unchanged_by_symbol_patch": true,
+  "raw_tool_output_saved": false,
+  "game_or_key_inputs_used": false,
+  "storage_or_integrity_bypass_added": false,
+  "derived_from_completed_controls_receipt_sha256": "ac1acef5f1cf81c7d537290524c08fb4052e0e5251e6163b3b8e6c0db2cc8333",
+  "default_metadata_input_read_cap_bytes": 134217728,
+  "fixed_image_export_input_read_cap_bytes": 7348649984,
+  "fixed_image_destination": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/prepared-v110/romfs/romfs.bin.partial",
+  "note": "Mode label clarified after export support was added; all eight control results are the already completed r3 results, no new control run implied."
+}

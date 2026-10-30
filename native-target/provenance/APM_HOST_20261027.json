@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "state": "logical_APM_IPC_adapter_offline_verified",
+  "observed_at_utc": "2026-10-27T02:18:40.410039+00:00",
+  "source_hashes": {
+    "runtime/apm_host.c": "a1cccb0ab3938c8aa132cfae386ffc27a20672b16522002c8bf64f9dde0b9a13",
+    "tests/test_apm_ipc.py": "f75052f99b8c5ee2275ff77a3716c7637b60d7820cf78be26259a5e5024f3324"
+  },
+  "actual_boot_trigger": {
+    "observation": "native boot2 opened lm and created real guest-lm.log; nninitInitializeSdkModule then stopped on missing service apm",
+    "sdk_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "observed_sdk_return_offsets": [
+      "0x3f9664",
+      "0x3f91f8",
+      "0x3f65a4"
+    ],
+    "decoded_SDK_facts": [
+      "oe initialization sdk+0x3f65a4 invokes ApmInitialize path",
+      "ApmSetPerformanceConfiguration sdk+0x3f9300 lazily opens a session then passes mode/config u32 parameters to virtual slot+0x20",
+      "ApmGetPerformanceConfiguration sdk+0x3f93e0 uses session virtual slot+0x28 with output u32 and input mode",
+      "ApmCheckPerformanceList sdk+0x3f9c70 compares known token families 0x10000..0x10002,0x20000..0x20006,0x92220007..0x9222000c"
+    ]
+  },
+  "implemented": {
+    "service": "apm only",
+    "IManager": "cmd0 OpenSession no args -> real moved ISession; cmd1 GetPerformanceMode no args ->u32",
+    "ISession": "cmd0 SetPerformanceConfiguration (u32 mode,u32 token) ->stored logical state; cmd1 GetPerformanceConfiguration(u32 mode) -> stored token",
+    "mode": "Normal0 if existing runtime_handheld_mode() is true, otherwise Boost1; uses the same CASTLEVANIA_OPERATION_MODE policy as input",
+    "state": "one native process shares two independently configured mode profiles across sessions and generic clones; Set inactive profile does not change current mode",
+    "unset": "GetConfiguration before Set stops explicitly; no donor/default clock token invented",
+    "validation": "CMIF request4/6, no PID/handles/buffers, bounded command payload/alignment slack, modes0/1, known token families; invalid0/unknown token fails",
+    "pre_main": "constructor only registers handler, without environment/profile/log I/O; state and policy queries are lazy after an actual checked host request"
+  },
+  "unsupported": [
+    "manager other commands including6 IsCpuOverclockEnabled",
+    "session other commands including2 SetCpuOverclockEnabled",
+    "apm:sys/power control/events/clock changes",
+    "physical CPU/GPU/voltage policy; token state is advisory host metadata only"
+  ],
+  "validation": {
+    "focused_native_wire_tests_passed": 21,
+    "command": "python3 -m unittest discover -s tests -p test_apm_ipc.py -v",
+    "tests_link_actual_services_c_mode_helper": true,
+    "cases": [
+      "pre-main registration with no run/env produces no files",
+      "real moved session",
+      "docked boost and handheld normal",
+      "per-mode set/get roundtrip",
+      "new session shares process configuration",
+      "generic clone survives original session close",
+      "inactive boost profile does not change handheld current mode",
+      "Get-before-Set gate",
+      "invalid operation policy",
+      "invalid/negative mode",
+      "unknown/zero config",
+      "unknown manager/session and overclock commands",
+      "extra PID/unsupported transport rejected",
+      "CMIF control3 stays generic QueryPointerBufferSize"
+    ],
+    "focused_syntax_checks": [
+      {
+        "command": [
+          "/usr/bin/xcrun",
+          "clang",
+          "-arch",
+          "arm64",
+          "-std=gnu11",
+          "-fsyntax-only",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-Wno-deprecated-declarations",
+          "-DGAME_CASTLEVANIA=1",
+          "-DCASTLEVANIA_DIAGNOSTIC_BOOT=0",
+          "-Iruntime",
+          "-Ithird_party/d2r_gfx/gfx/nvn/include",
+          "runtime/apm_host.c"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "/usr/bin/xcrun",
+          "clang",
+          "-arch",
+          "arm64",
+          "-std=gnu11",
+          "-fsyntax-only",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-Wno-deprecated-declarations",
+          "-DGAME_CASTLEVANIA=1",
+          "-DCASTLEVANIA_DIAGNOSTIC_BOOT=1",
+          "-Iruntime",
+          "-Ithird_party/d2r_gfx/gfx/nvn/include",
+          "runtime/apm_host.c"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "git_diff_check": "passed"
+  },
+  "primary_references": [
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/master/nx/source/services/apm.c",
+      "used_for": "exact manager/session command ids, fields and real interface output"
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/master/nx/include/switch/services/apm.h",
+      "used_for": "Normal0/Boost1 enums and distinction from CPU boost modes"
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/master/nx/include/switch/sf/service.h",
+      "used_for": "MOVE output service and domain-object behavior"
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/master/nx/include/switch/sf/cmif.h",
+      "used_for": "generic control requests separate from APM requests"
+    }
+  ],
+  "independent_peer_review": "castlevania_probe verified primary command/field/handle/mode semantics and inactive-mode state pitfall; source review pending",
+  "SDK_initializer_bypass": false,
+  "physical_clock_or_overclock_success_claimed": false,
+  "guest_or_GPU_execution_by_this_stage": false,
+  "LM_loader_builder_GFX_modified": false,
+  "remaining": "root rebuild/run must observe actual APM requests and subsequent service/ABI gates; no successful post-adapter boot claimed"
+}

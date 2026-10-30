@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "title_id": "0100BA4026E94000",
+  "state": "explicit_child_file_limit_native_fixture_tested",
+  "base_source_commit": "c65b45aa8e0abdf84b496f77dc5b5dee41aa80db",
+  "scope": "Runner-only explicit per-file resource limit. No native runtime, graphics backend, builder, cache deletion, system configuration or global limit changes.",
+  "observed_trigger": {
+    "description": "Root's normal host-vjtif_gu diagnostic produced a completed receipt with actual return code -25 (SIGXFSZ). Earlier shader-start diagnostics failed during cleanup without preserving their native exit status.",
+    "cause_boundary": "A64MiB child RLIMIT_FSIZE was inherited from the original runner. Root/peer metadata found existing Metal library cache files larger than64MiB, but the precise file descriptor causing this signal has not been established. This option does not claim to identify that descriptor or fix graphical compatibility."
+  },
+  "option": {
+    "name": "--file-size-limit-mib",
+    "default": 64,
+    "inclusive_range_mib": [64, 2048],
+    "validation": "Exact Python int required; bool, float, string, null, negative and out-of-range values fail. run(args) validates before work/path IO. CLI validates through the same helper after argparse integer parsing.",
+    "legacy_API": "A Namespace lacking the new field keeps64MiB through getattr; explicit null is invalid.",
+    "application": "functools.partial passes the validated MiB setting to child_limits only as Popen.preexec_fn. RLIMIT_FSIZE soft and hard are both limitMiB<<20. The runner parent's limits are never set.",
+    "explicit_policy": "No environment override, automatic cache-size detection, unbounded limit or automatic escalation. Root may explicitly request1024MiB for a subsequent diagnostic.",
+    "unchanged": "RLIMIT_CORE remains0. Existing run timeout, owned-group cleanup, GPU opt-in/budget, known child environment and private scratch/profile/save isolation are unchanged. Stable log reads remain independently bounded to64MiB."
+  },
+  "receipt": {
+    "diagnostic_file_size_limit_mib": "The validated setting used for this child, including the default64.",
+    "child_rlimit_fsize_bytes": "The exact soft/hard byte limit passed to child preexec.",
+    "file_size_limit_is_measured_title_contract": false,
+    "meaning": "Configured diagnostic host resource policy, not a measured Switch limit, file allocation, GPU execution or frame result. Actual exit status and cleanup evidence are still recorded by the preceding cleanup fix."
+  },
+  "validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s native-target/tests -p 'test_host_runner*.py' -v",
+    "result": "48 tests PASS in13.699 seconds:6 new file-limit tests plus20 cleanup,7 GPU-policy and15 proof regressions.",
+    "actual_native_fixture": "Authored small arm64 C program in a temporary owned directory. It reads actual RLIMIT_FSIZE/RLIMIT_CORE, restores default SIGXFSZ handling, opens one new0600 fixture file and writes one byte at offset65MiB-1. Sparse allocation stays below1MiB; no large payload is copied.",
+    "actual_results": [
+      "default child_limits() reports soft/hard64MiB and core0/0, then really terminates with -SIGXFSZ before growing beyond64MiB",
+      "explicit128 reports soft/hard128MiB and core0/0, successfully creates an actual65MiB sparse file and exits0",
+      "parent FSIZE and CORE tuples are unchanged across both native subprocess tests",
+      "existing actual tiny C RomFS fixture verifies receipt serialization and Popen preexec binding at default64 and explicit64/128/1024/2048",
+      "legacy Namespace default and direct/CLI invalid-value guards pass before work IO",
+      "proof reuse, actual C integrity failure, GPU defaults, timeout/cleanup evidence regressions remain passing"
+    ],
+    "boundary": "Only original native fixtures and ordinary host test processes execute. No game, guest SDK, Cocoa window, Metal/GPU work, user Metal-cache payload or live profile was used by these tests.",
+    "diff_check": "git diff --check PASS",
+    "peer_review": "Independent focused read-only source/test review found no material issue. Reviewer confirmed exact validation, child-only limits, native sparse tests and unchanged adjacent policies; ran no tests and made no edits."
+  },
+  "source_sha256": {
+    "scripts/run_experimental_host.py": "61d34476f56947629bc7c98812080c1a346fa37f582b0f4502405111d80af640",
+    "tests/test_host_runner_file_limit.py": "b00ca2e1272ab2dfc5d03c404e474f4e9ccf6a8b4bc706842364df19b2f451ed"
+  },
+  "owned_paths": [
+    "scripts/run_experimental_host.py",
+    "tests/test_host_runner_file_limit.py",
+    "provenance/FILE_SIZE_LIMIT_20261027.json"
+  ],
+  "runtime_or_backend_modified": false,
+  "global_limits_or_cache_settings_modified": false,
+  "guest_or_GPU_execution_by_this_stage": false,
+  "first_frame_verified": false,
+  "remaining": "Root owns the next actual opt-in diagnostic and comparison of real native outcomes. Precise SIGXFSZ descriptor and graphical progress remain unproven until measured."
+}

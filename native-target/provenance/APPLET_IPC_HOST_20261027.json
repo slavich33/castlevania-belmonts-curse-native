@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "title_id": "0100BA4026E94000",
+  "display_version": "1.1.0",
+  "state": "native_applet_IPC_through_measured_ResumeNotification14_tested_not_post_cmd14_boot_verified",
+  "trigger": {
+    "observed_boot_log": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/host-build/runs/host-v799l7vo/logs/native-host.log",
+    "observed": "Native nnosInitialize returned, modules linked, nninitInitializeSdkModule opened lm and apm, then stopped at the unimplemented appletOE service",
+    "SDK_return_offsets": [
+      "0xc8f768",
+      "0x1d7910",
+      "0x1c984c",
+      "0x3f6e88",
+      "0x3f65a8",
+      "0x10d9f8",
+      "0x10da94"
+    ],
+    "SDK_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "SDK_AOT_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1"
+  },
+  "independent_static_SDK_checks": [
+    "OpenApplicationProxy0 carries reserved u64=0, ClientProcessId and one input process COPY handle, and returns one interface",
+    "oe InitializeApplet at sdk+0x3f6e50 opens ApplicationFunctions20 and proxy factories11/0/1/2/3/4/1000 through helper sdk+0x1c7270",
+    "CommonStateGetter virtual+0x1b8 resolves to sdk+0x1cba3c command900, no raw IO/buffers/handles",
+    "SelfController virtual+0x188 resolves to sdk+0x1cc840 command91, no raw IO and one readable COPY event; SDK attaches it with autoclear1",
+    "WindowController virtual+0x38 resolves to sdk+0x1cdd44 command10 AcquireForegroundRights, no IO",
+    "sdk+0x3f6f30 waits on the Common event before sdk+0x3f6f4c ReceiveMessage; it needs message15 and then focus u8=1 at sdk+0x3f6f80; Common event attaches with manual clear",
+    "IApplicationFunctions command130 is GetGpuErrorDetectedSystemEvent; sdk+0x3f8a94 passes autoclear0 into AttachSystemEvent at sdk+0x3f8a98. Its callback at sdk+0x3f8af0 tests the event via TryWait at sdk+0x636910 and calls Abort at sdk+0x62f850 when signaled",
+    "CommonStateGetter virtual0x130 resolves via vtable0xb50870/slot0xb509b0 to SDK0x1cb8cc;0x1cb8d4 selects command66 and0x1cb8d8 branches to transfer helper0xcc820, which writes one raw u32 and uses no input PID, buffers or handles and no output data",
+    "OE SetCpuBoostMode wrapper SDK0x3f75c0 and applet wrapper0x1e15f0 both require unsigned mode<2;0x1e15fc cmp w0,2 and0x1e1600 b.hs Abort reject2 and larger values. Main0xca8c50 requests1 before its SetCpuBoostMode call",
+    "SDK _ZN2nn2oe28SetResumeNotificationEnabledEb at0x3f7460 calls SelfController virtual0x70 -> vtable slot0xb50df0 -> wrapper0x1cc644, which canonicalizes bool with and x1,1, selects command14 and branches to transfer helper0xd205c. Helper0xd20c0 writes one raw byte; no PID/input handles/buffers or output. The pinned public libnx name for this same wire command is appletSetRestartMessageEnabled(bool)"
+  ],
+  "implemented": {
+    "service": "appletOE only; pre-main constructor only registers the service",
+    "OpenApplicationProxy0": "reserved u64=0, required PID and one current-process input COPY handle; real ApplicationProxy MOVE session",
+    "ApplicationProxy": "real interface factories0 CommonStateGetter,1 SelfController,2 WindowController,3 AudioController,4 DisplayController,11 LibraryAppletCreator,20 ApplicationFunctions,1000 DebugFunctions",
+    "domain_and_clone": "existing generic ipc.c converts moved sessions to domain object IDs and clones borrow the single process-lifetime application state",
+    "CommonStateGetter": "cmd0 returns a new readable COPY handle to the existing shared message queue; cmd1 pops u32 or returns result0x680 when empty; cmd5 operation u8,cmd6 performance u32,cmd9 focus u8; cmd900 records the future ExecuteNextProgram notification preference; cmd66 accepts raw u32 Normal0/FastLoad1 only and records process-local advisory requested mode with an explicit valid flag under the existing applet mutex; no output data or handles",
+    "SelfController": "cmd11/12 persist u8 operation/performance notification preferences; cmd13 persists three consecutive u8 focus-policy bools; cmd16 persists the u8 out-of-focus suspension preference; cmd91 returns COPY handles to a separate initially unsignaled suspended-tick event; cmd14 persists a u8 resume-notification preference0/1 under the existing mutex with no output data or handles (public libnx calls the same wire setter RestartMessageEnabled)",
+    "WindowController": "cmd1 returns the existing one-process ARUID1; cmd10 records foreground ownership only when existing host focus policy is InFocus1",
+    "ApplicationFunctions": "cmd40 records the native process running notification and returns u8 true; cmd130 takes no raw input, buffers or handles and returns one fresh readable COPY handle to the separate manual-clear GPU-error event",
+    "policy": "runtime_front_focus() supplies the existing logical keep-active FocusState1; runtime_handheld_mode() supplies operation0/performance0 for handheld and operation1/performance1 for docked. No Cocoa focus state, OS suspension or clock transition is invented",
+    "queue_bridge": "runtime_oe_message_event/runtime_oe_try_pop_message share applet_host.c's original mutex queue with direct SDK host adapters and frontend runtime_oe_push_message. The bridge publishes initial focus15 once, signals while messages exist, and clears when the queue drains",
+    "suspended_event": "separate process-lifetime writable event, initially unsignaled; Common focus messages do not signal it. No logical suspension transition is implemented or claimed",
+    "guards": "actual checked host scratch required; CMIF4/6 only, bounded raw arguments with unspecified alignment slack, exact PID/process COPY shape for OpenProxy, no buffers/extra handles for listed commands, protocol enum/bool checks; unknown methods fail explicitly",
+    "GPU_error_event": "Initially unsignaled and independent of Common/suspended-tick events. runtime_applet_signal_gpu_error() is a mutex-protected host-thread-safe notifier that latches actual GPU failure before event creation and signals all existing readable copies. No successful submission, focus message or fake device-loss toggle signals it; the service retains its writable event for process lifetime",
+    "CPU_boost_request": "No request is invented before the first setter. FastLoad1 and Normal0 only update the process logical request. macOS retains CPU/GPU clock management; no overclock, achieved performance, GPU throttling, operation/performance-mode change, APM profile-bank change or notification event is claimed or fabricated",
+    "resume_notification_preference": "Enabling/disabling records only the SDK requested bool. No Resume16 message, focus signal, suspended-tick signal, GPU-error signal, logical suspend/resume transition or clock change is fabricated; other notification preferences remain independent"
+  },
+  "unsupported": [
+    "all other applet service/proxy/subinterface commands, including arbitrary library applet launching or ExecuteProgram",
+    "audio/display/library/debug operations beyond opening their real named interface objects",
+    "OS-level applet manager, physical suspend/sleep transitions and suspended-clock counters",
+    "continuing native execution after newly implemented cmd14, first frame, frontend compatibility and gameplay",
+    "CommonStateGetter CancelCpuBoostMode67 and all other unmeasured CPU/power-management operations; ApmCpuBoostMode Type2 is not accepted by applet command66"
+  ],
+  "validation": {
+    "focused_native_wire_tests_passed": 32,
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_applet_ipc.py -v",
+    "actual_native_sources": [
+      "runtime/ipc.c",
+      "runtime/threads.c",
+      "runtime/applet_host.c",
+      "runtime/applet_ipc_host.c"
+    ],
+    "test_boundaries": "CMIF/handles/events/queue are actual C implementations. Focus and operation policy providers are controlled fixture APIs; guest entry/TLS/symbol calls abort if reached. No game input or SDK binary is executed",
+    "cases": [
+      "pre-main registration without environment or event creation",
+      "PID/current-process COPY input and real MOVE proxy/interface sessions",
+      "all measured proxy factories",
+      "domain conversion/subobjects with COPY event output",
+      "generic clone remains valid after actual CloseHandle on original session",
+      "actual WaitSynchronization observes initial focus message and manual level signal",
+      "queue drain clears event and empty ReceiveMessage returns0x680",
+      "fresh read copies share event and survive another copy close",
+      "direct host pop and IPC pop consume the same queue/event",
+      "separate suspended event remains unsignaled when Common focus event signals",
+      "logical mode fields and exact u8/u32/u64 response widths",
+      "bool and transport validation, truncated three-bool input, invalid focus and foreground refusal",
+      "unknown service/proxy/subinterface operations fail",
+      "ApplicationFunctions130 has exactly one COPY and no raw output, with a separate initially unsignaled event",
+      "actual host callback thread signals both readable copies; repeated native waits remain ready until explicit clear and closing one copy preserves the service event",
+      "GPU failure before cmd130 is latched without eager event allocation and observed by a later query",
+      "domain ApplicationFunctions130 preserves COPY handle semantics; GPU failure does not signal Common or suspended events",
+      "GPU event command rejects unmeasured input buffers and handles",
+      "CommonStateGetter66 Normal0 and FastLoad1 through actual CMIF preserve the advisory requested state and exact empty response; no initial request is invented",
+      "cmd66 works through a domain object and does not signal or enqueue Common notifications, change operation/performance mode, or signal independent suspended/GPU-error events",
+      "Type2,3,0x100 and UINT32_MAX CPU modes fail; full u32 value is checked",
+      "cmd66 rejects truncated/oversized raw input, extra PID/input handles/buffers and unsupported transport",
+      "SelfController14 bool1 and bool0 through actual CMIF and domain objects persist the resume preference, with exact empty response and independent operation/performance preferences",
+      "cmd14 leaves Common queue empty with ReceiveMessage0x680 and leaves focus, suspended-tick and GPU-error events unsignaled; no Resume16 or transition is invented",
+      "cmd14 rejects noncanonical bool2/255, truncated raw0/oversized22 bytes, extra PID/input handles/buffers and unsupported transport"
+    ],
+    "standalone_syntax_default0": "clang -fsyntax-only -Wall -Wextra -Werror passed",
+    "standalone_syntax_diagnostic1": "clang -fsyntax-only -Wall -Wextra -Werror passed",
+    "independent_peer_review": "Focused read-only source/test review through cmd14 found no material issue; peer did not execute tests or edit files"
+  },
+  "primary_references": [
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/source/services/applet.c",
+      "used_for": "command IDs, exact raw widths, OpenProxy PID/process handle, COPY event output and startup interface factories; ApplicationFunctions130 returns _appletCmdGetEvent(...false,130), whose handle helper uses SfOutHandleAttr_HipcCopy; appletSetCpuBoostMode sends one u32 to CommonStateGetter66 and expects no output; SelfController14 appletSetRestartMessageEnabled uses InBoolNoOut -> one canonical u8 and no output, matching actual SDK SetResumeNotificationEnabled wire shape"
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/include/switch/services/applet.h",
+      "used_for": "FocusState1/2/3, message15/30/31, operation0/1 and notification semantics; GPU-error event is manual-clear, user closes its copy, official software waits and aborts when signaled"
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/include/switch/sf/service.h",
+      "used_for": "MOVE output interfaces, COPY event handles and domain object conversion"
+    },
+    {
+      "url": "https://switchbrew.org/wiki/Applet_Manager_services#ICommonStateGetter",
+      "used_for": "message-available event and ReceiveMessage empty result0x680, cross-checked against libnx caller handling"
+    },
+    {
+      "url": "https://switchbrew.org/wiki/Applet_Manager_services#GetGpuErrorDetectedSystemEvent",
+      "used_for": "independent primary protocol research identifying ApplicationFunctions130 as the GPU-error detected system event"
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/include/switch/services/apm.h#L18-L23",
+      "used_for": "ApmCpuBoostMode Normal0/FastLoad1 names and explicit note that appletSetCpuBoostMode only permits0/1; Type2 belongs to the broader APM enum and is unavailable to this applet setter"
+    },
+    {
+      "url": "https://switchbrew.org/wiki/Applet_Manager_services#SetRestartMessageEnabled",
+      "used_for": "Primary protocol research identifies SelfController14 as SetRestartMessageEnabled with u8 bool input and no output; this verified SDK exposes the same wire setter as SetResumeNotificationEnabled"
+    }
+  ],
+  "SDK_initializer_bypass": false,
+  "guest_or_GPU_execution_by_this_stage": false,
+  "loader_services_builder_GFX_modified_by_this_stage": false,
+  "remaining": "root must rebuild and run the real native host after cmd14 extension. Boot11 proves Common66 accepted and native VI display initialized after nnMain entry; no post-cmd14 progress, fabricated resume transition, first frame, actual guest GPU submission or gameplay is claimed",
+  "cmd130_trigger": {
+    "observed_boot_log": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/host-build/runs/host-2tyj5bpq/logs/native-host.log",
+    "observed": "Actual native boot opened lm, apm, appletOE and ApplicationProxy, then stopped at IApplicationFunctions command130: CMIF type6, no raw data, buffers or input handles",
+    "SDK_return_offsets": [
+      "0xc8f768",
+      "0xd3018",
+      "0x3f8a78",
+      "0x3f6eec",
+      "0x3f65a8",
+      "0x10d9f8",
+      "0x10da94"
+    ]
+  },
+  "GPU_failure_bridge": {
+    "adapter_API": "void runtime_applet_signal_gpu_error(void)",
+    "integration_owner": "root-owned runtime/runtime.h and third_party/d2r_gfx/gfx/nvn/nvn_mtl.m; outside this adapter edit scope",
+    "integration_design": "root reports implementation at centralized q4_commit, legacy cb_commit, and direct keepalive completion callbacks; only real Metal command-buffer errors notify the adapter",
+    "integration_validation": "not claimed by this adapter stage; root handles hook review/build and final source hashes",
+    "limit": "The native fixture validates host-thread notification and actual runtime events, not a real Metal failure. No guest/GPU run or failure injection was performed by this stage; complete driver/GPU fault coverage is not claimed"
+  },
+  "cmd66_trigger": {
+    "observed_boot_log": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/host-build/runs/host-6bcdxjxy/logs/native-host.log",
+    "observed": "Actual boot10 completed original module initializer phases with final main/subsdk0/sdk registration results2/1/1, entered nnMain, then stopped at CommonStateGetter command66: CMIF type6, raw4 bytes, no buffers or input handles",
+    "SDK_return_offsets": [
+      "0xc8f768",
+      "0xcc8bc",
+      "0x1e161c",
+      "0x10daa4"
+    ],
+    "main_return_offset": "0xca8c58",
+    "supplied_mode": "Static main+0xca8c50 moves w0=1 immediately before call at0xca8c54: FastLoad1"
+  },
+  "cmd14_trigger": {
+    "observed_boot_log": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/host-build/runs/host-mihrdmbs/logs/native-host.log",
+    "binary_sha256": "f6351ad950ab234d13bce27214fbdc23beafe38b0ebb36c07e4f40311ab3457f",
+    "source_commit": "c9bfb1b",
+    "observed": "Actual boot11 entered nnMain, CommonStateGetter66 returned success, native VI display initialized, then SelfController14 stopped as unimplemented: CMIF type6, raw1 byte, no PID/input handles/buffers. VI initialization is not a frame or actual guest GPU submission proof",
+    "SDK_return_offsets": [
+      "0xc8f768",
+      "0xd20f8",
+      "0x3f7484",
+      "0x10daa4"
+    ],
+    "main_return_offset": "0xca8d3c",
+    "supplied_preference": "Static main+0xca8d34 moves w0=1 before the SetResumeNotificationEnabled call at0xca8d38"
+  }
+}

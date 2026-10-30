@@ -1,0 +1,743 @@
+{
+  "repository": "/Users/your-user/Games/MacNativeGames-personal",
+  "commit": "f5a03fead9c40c8fe23103abce6bfe505a80756a",
+  "source_subtree": "games/ori",
+  "extracted_source_files": {
+    ".gitignore": {
+      "sha256": "082eb9b1f32a99e04564ed7a6779cfe0702db81e1c5741ff373d4236d63f5a48",
+      "bytes": 272
+    },
+    "Makefile": {
+      "sha256": "faee2369042053d36a2900b428651780d3ab76376b5bc179606f5b9016e26911",
+      "bytes": 4715
+    },
+    "README.md": {
+      "sha256": "53bed084b105ef8844c7909c49fed04bad9ca670942b5cc6a9b29023e4888761",
+      "bytes": 4975
+    },
+    "requirements.txt": {
+      "sha256": "1a10752c19f85892ff054f7d63e374d65cd0f963680f116308f3cc6433230227",
+      "bytes": 327
+    },
+    "runtime/account.c": {
+      "sha256": "7ece3143c24fcb9397760ad4338243817cef5eaa2d2b73afc2b274324a819711",
+      "bytes": 5653
+    },
+    "runtime/applet_host.c": {
+      "sha256": "01640fca144e80735d58f051e2a47f1ca6fc9c50f2cb7c6a06a689e9cf6c3573",
+      "bytes": 7581
+    },
+    "runtime/aspect_patch.h": {
+      "sha256": "ca6e40acde2cbe1b0e83129c6a5ef1584337caffe43145ad9e9ec5f4d1d972ab",
+      "bytes": 6778
+    },
+    "runtime/audio_effects.c": {
+      "sha256": "c99aa0df5b0b0511a55f6acff139a77f6a8559566833b6090d687eb780b860a1",
+      "bytes": 12044
+    },
+    "runtime/audio_effects.h": {
+      "sha256": "d3da6198cc38a38c59902f0705022a218baab6c6bc1d543165711479554d5e50",
+      "bytes": 2275
+    },
+    "runtime/audio_mixer.c": {
+      "sha256": "2fbee121e70fb60dcdf9039c13e1717a5c2be015a9e8709555adc978a3b634c6",
+      "bytes": 52149
+    },
+    "runtime/audio_mixer.h": {
+      "sha256": "6f5a83b9f35ca9fbfe70b1fa4fa6b290ab07f76da79cf042bf8e9eb67f454cbc",
+      "bytes": 2714
+    },
+    "runtime/audio_renderer.c": {
+      "sha256": "9d54534ca451667d2cd312c024c956dc8f8c1c9753c0c6dc418d6f5714413421",
+      "bytes": 44807
+    },
+    "runtime/audio_renderer.h": {
+      "sha256": "a8316fb1861701c8a9b7b750982b08fffd52481af589eb8f60bd361f74ed0ab7",
+      "bytes": 4915
+    },
+    "runtime/audio_reverb.c": {
+      "sha256": "bae0cc25820b7b2b3294c4f73198af84f8f45f59b4a14a22b05645325ccfe5a5",
+      "bytes": 6613
+    },
+    "runtime/audio_reverb.h": {
+      "sha256": "cb7eb70ef0c19256c6a11f378b5af7baff6d7a40cdd92364e738a0d22028f624",
+      "bytes": 790
+    },
+    "runtime/autoload.c": {
+      "sha256": "55987e04004528d9e600e268bca7ab128927ea212fa7de549b2377036c79a63c",
+      "bytes": 4386
+    },
+    "runtime/autoload.h": {
+      "sha256": "371c17681aa48ab4378b46f8f275b54f9dc050cbd0ac7fb449859cdf82dc7ec0",
+      "bytes": 576
+    },
+    "runtime/bsd_host.c": {
+      "sha256": "05ceca92ce41f44c1e47cff83eb01856a54a768dce4b76f437b350bd22d9007c",
+      "bytes": 1329
+    },
+    "runtime/cheat_vm.c": {
+      "sha256": "8c01190b8edebd8697071fc2634062814af6d4816002e3a86df4bdd1f78c2faf",
+      "bytes": 12497
+    },
+    "runtime/cheat_vm.h": {
+      "sha256": "0761df82be2f4030f530dd598b95075404d1d530febe394f0117b91dc8c93138",
+      "bytes": 1548
+    },
+    "runtime/cheats.c": {
+      "sha256": "d6ff6dc99a88b1122b8fe8d4c760c1b30f126dabf391d3538f97854f1402a373",
+      "bytes": 15255
+    },
+    "runtime/control_policy.h": {
+      "sha256": "63e9f63efe9ef4852bf39d83b016bb19f4d89183b0c89a6a386b7036113cc99a",
+      "bytes": 649
+    },
+    "runtime/controller_map.h": {
+      "sha256": "46f29729959c3271f0ddb074655dc3788d0258fb2107838a3ed1fd7b3bd8cd29",
+      "bytes": 7685
+    },
+    "runtime/csrng.c": {
+      "sha256": "ff8c9a4f9e8db00f095ef3996413aad261c60895ad0ca6b44e55556b39ebc411",
+      "bytes": 998
+    },
+    "runtime/display_settings.h": {
+      "sha256": "ce36e8d9e8d1ea36de214d67985054b80caad3fb36b2cfb9bf05eb50a04c73d7",
+      "bytes": 18748
+    },
+    "runtime/frontend.m": {
+      "sha256": "02f51a263da9c37a7b5135f73f18099222c563969ae608abd97fcb136c0a97fb",
+      "bytes": 43367
+    },
+    "runtime/fs_host.c": {
+      "sha256": "816a7fc57a7db8624f353c1cffe5300845fe3b9a13a34d9533d6f646e4760095",
+      "bytes": 31670
+    },
+    "runtime/fs_host.h": {
+      "sha256": "4e5abb5b21afe6af06ee708aabde7d0ffb612176504652d85aa15bf38bc47834",
+      "bytes": 691
+    },
+    "runtime/game_patches.c": {
+      "sha256": "1bc3d1ee1fc13ae6ef38bad23096a3e851de48d40bfd85fdf0e8a346f1772c0a",
+      "bytes": 32768
+    },
+    "runtime/game_patches.h": {
+      "sha256": "28c3d21b81852deba7be60c13b390ba5b299d84f65c9c39c00e07427842ed069",
+      "bytes": 309
+    },
+    "runtime/game_slot.c": {
+      "sha256": "8518f3f559535e1cf0e0b199d518bca965a1ef3e640440d1ce763246b35b140e",
+      "bytes": 18904
+    },
+    "runtime/game_version.h": {
+      "sha256": "e8d11ab3747d386b7f5f1e701e21a963456fdccdbc20ef104b97922301b6635f",
+      "bytes": 5731
+    },
+    "runtime/gamepad.m": {
+      "sha256": "5ac90c313db96d9d442de0697269e677872d57d59e294e955cc84155bd0df877",
+      "bytes": 12075
+    },
+    "runtime/gamepad_feedback.m": {
+      "sha256": "502fa3fe2dfdfa1b2583531fa640185934bba50e30094bf8a5d543cb1261bbff",
+      "bytes": 21576
+    },
+    "runtime/gamepad_layout.h": {
+      "sha256": "80876703b4150b20b82345e159eb510aebf5df8a5248304e11c1eca6918faa2a",
+      "bytes": 3177
+    },
+    "runtime/gate.S": {
+      "sha256": "dfef36ae8eb177379f931852566533ef2311e2e01ec1e21eb37fd27d07894b1c",
+      "bytes": 4198
+    },
+    "runtime/gfx_bridge.c": {
+      "sha256": "29a5612ffcede876b3db528143e71eee6eadf997c5ddfc1e2c50548c410f2623",
+      "bytes": 8157
+    },
+    "runtime/gfx_probe.c": {
+      "sha256": "357aab981b6fab5968163f8bfc224a99275663910fbaa3be94997cdb151725ae",
+      "bytes": 9613
+    },
+    "runtime/gpu_path_probe.m": {
+      "sha256": "42e7088d9cf4a0ea3a958411601c1fc0480146db37c176804b44d07a8729e98f",
+      "bytes": 6982
+    },
+    "runtime/hid_feedback.c": {
+      "sha256": "43c8b8449dbded6506261fc1b39ddb111e1e28faf1aa7dd3b65e309f4f78bff8",
+      "bytes": 11189
+    },
+    "runtime/hle_stack.S": {
+      "sha256": "d9cb0a815d7dce2b38e15672631a3ff5a7feaf054410c56fd9b3a5197831c12d",
+      "bytes": 3296
+    },
+    "runtime/hle_stack.c": {
+      "sha256": "7ab1eb024031ad4d11bb5988e979f367a10d94519374ab52bd2d34964254c361",
+      "bytes": 5819
+    },
+    "runtime/input.c": {
+      "sha256": "798a33d29bd48cf641bed8f1a225ba70936d62f7100d6d109a63e08416224329",
+      "bytes": 28283
+    },
+    "runtime/ipc.c": {
+      "sha256": "a366d25a1a53b4f788d99ab4e20772adbbeab36c359a295b3704a499c5f0e8b3",
+      "bytes": 17715
+    },
+    "runtime/ipc.h": {
+      "sha256": "3ce231727014a3c18616a7606c9b1d430e91e4e9247ac5a6850b4475f4cc163c",
+      "bytes": 3054
+    },
+    "runtime/lm3_audout.c": {
+      "sha256": "0e696ff653d456120d55126c4ec3602236567e4356c76de93bac2591f0717c3c",
+      "bytes": 8966
+    },
+    "runtime/lm3_hle.c": {
+      "sha256": "612fc5451934090dab6b2b661ab27be57353f39ea08e7d142f719cfff0ccb779",
+      "bytes": 10980
+    },
+    "runtime/loader.c": {
+      "sha256": "659712e6e0f082567befe1041d767f9b32f63f83ad491d5d703d113b60b8ae0b",
+      "bytes": 45700
+    },
+    "runtime/memory_probe.c": {
+      "sha256": "aa2effdd3221a86ec464adad837069a4ae0f8ac794ecf85b6a846e20f37268f7",
+      "bytes": 7237
+    },
+    "runtime/motion_fusion.c": {
+      "sha256": "c2d65a9a2333a519d99e89f650f6eb0457e43fa2b46b385630563cc2acedaefd",
+      "bytes": 9224
+    },
+    "runtime/movie_host.c": {
+      "sha256": "7ba6cb9f3448c135b206fb9395514254be281e7cd46598777629b2ef6064e0ae",
+      "bytes": 32074
+    },
+    "runtime/movie_host.h": {
+      "sha256": "c7e69c9e364f10e507e03c8ff373477ae79fd1082268cc63ba2a267251132eff",
+      "bytes": 2341
+    },
+    "runtime/opus_codec.c": {
+      "sha256": "c42038a8eda3743222b4e8fb199a43945e2372491288b6de15d15a84e3f84b95",
+      "bytes": 10344
+    },
+    "runtime/romfs.c": {
+      "sha256": "260722e38c9e3fe9e2c133bd214d285508bfb653e17e29bd121859d9b2ed0912",
+      "bytes": 31281
+    },
+    "runtime/romfs_path.h": {
+      "sha256": "b40395d8504f9b3a8debab8a3368e7e44024e9fc33056ba10c19f0f8c30e011a",
+      "bytes": 1235
+    },
+    "runtime/runtime.h": {
+      "sha256": "19e79f0112ff60ba44b5da1528101e348e35d040b27b1c2e50ac0705b812c9fb",
+      "bytes": 11215
+    },
+    "runtime/services.c": {
+      "sha256": "66169ab1703f9cfdfa39eb5b45bba5eda9e0cc7737c607eb4cbcf9f5acc8c687",
+      "bytes": 31990
+    },
+    "runtime/settings_host.c": {
+      "sha256": "332bfa4011f5d53320a71b63efb2d0d1c0139f825d73b0bcd99f0a9df1c2a911",
+      "bytes": 3914
+    },
+    "runtime/shared_font.c": {
+      "sha256": "f0092d97d42b454a0e1c614bc3d79cf54749f9d47302c7a617c2d20fe9b26751",
+      "bytes": 2741
+    },
+    "runtime/swkbd_host.c": {
+      "sha256": "e79bf820d1b8f3a4d137a2bf867239699b81494323997f1fabf8e905add04bab",
+      "bytes": 17047
+    },
+    "runtime/thread_compat.h": {
+      "sha256": "dbc5e6511a4fc092127be4bc8792cf5e637a12bebd436aa8002e005f6fd6d440",
+      "bytes": 558
+    },
+    "runtime/thread_enter.S": {
+      "sha256": "ece4e27fdee5eeada072fab1e00f6a1823ce28a556286b623a1dd2e6d5c7c904",
+      "bytes": 481
+    },
+    "runtime/threads.c": {
+      "sha256": "cfa0dd16005e2b749528b2e1e2000b3504e28b163e48129649c58264e76110ef",
+      "bytes": 63744
+    },
+    "runtime/time_host.c": {
+      "sha256": "62e5685403437ea5a3d9758042bc0bf08481c19c1d0fd6afbf0b26d876202766",
+      "bytes": 7204
+    },
+    "runtime/vpool_probe.m": {
+      "sha256": "b959b54cd69933f3e18bf25cbf6ad8bf07d350a1540d3ca97f57e8bb203c5436",
+      "bytes": 5669
+    },
+    "runtime/world_survey.c": {
+      "sha256": "cbcbb53a3b92230d643270fd99d39843526f8eff26975baa6e92d754cc7229c9",
+      "bytes": 9833
+    },
+    "runtime/world_survey.h": {
+      "sha256": "847172d7d53e3f88e687f5cc72440319d233daa4c3dad3d45cb68c8e3780b8dd",
+      "bytes": 414
+    },
+    "scripts/extract_app_icon.py": {
+      "sha256": "52a55d28f81d966f95d0f14bb7b3df181a180308ac2f913dcae352ae92c7eeeb",
+      "bytes": 4430
+    },
+    "scripts/extract_exefs.py": {
+      "sha256": "f3b02f4927dc585df75c2d5fa12a5e0a98e6639cfdf4f7018fcd85bdb537c1e6",
+      "bytes": 12820
+    },
+    "scripts/extract_romfs.py": {
+      "sha256": "5b3ba3689ad6beef3d5b8d23073f154c9de279b89353b3710218298924aaac24",
+      "bytes": 5986
+    },
+    "scripts/extract_shared_fonts.py": {
+      "sha256": "682a225b7149bca0dec3f3dd934d19c7c9253811704e29f6cb95c53f0f7d3351",
+      "bytes": 10008
+    },
+    "scripts/extract_update_romfs.py": {
+      "sha256": "ba09dc8a99b765f51286af0875bb5588232ea71c3681b50efd734b5b2b651d52",
+      "bytes": 7657
+    },
+    "scripts/prepare_modules.py": {
+      "sha256": "c254e557dbec32c851cd98de0ce28d43ddbd7fe0abf6ab5241b3115ca65fc055",
+      "bytes": 12011
+    },
+    "scripts/prepare_romfs_backend.py": {
+      "sha256": "0f13aba81b928e9bca2143710fa514bfb664c7396fb0039889ff4a4cea2007b5",
+      "bytes": 1206
+    },
+    "scripts/prepare_runtime.py": {
+      "sha256": "e142bb1dc6e4961f950251ddd466c15258131b36058ef2d5aa08dfb2f9a817a0",
+      "bytes": 8717
+    },
+    "scripts/prepare_shared_fonts.py": {
+      "sha256": "67fee4631f8a153d311703a36fc16cea530d00a6aa045ba93424e9ce3478284e",
+      "bytes": 796
+    },
+    "third_party/d2r/LICENSE": {
+      "sha256": "5811600bb8fc4522d3310e8e0e637a1bb14b7c64412f8cfc6234872eb53129b9",
+      "bytes": 1065
+    },
+    "third_party/d2r/README.md": {
+      "sha256": "111525c65bfb0857800ad6de167387aa3dd492748225baf7b30378a0687e7a81",
+      "bytes": 2142
+    },
+    "third_party/d2r/call_window.py": {
+      "sha256": "a51c5350eeef1ae27934d4732f001b9d217db8495c0d97e44cd9ce2c2f191a4f",
+      "bytes": 2680
+    },
+    "third_party/d2r/equiv.py": {
+      "sha256": "a3e2041c513ba7b3ef2eeff87afb66145221d514da05425f9c321260d0289062",
+      "bytes": 17993
+    },
+    "third_party/d2r/nsoimg.py": {
+      "sha256": "3c82a5393f3445c23293e090c1af054d934de7524c04e19bd7f165cc9b708050",
+      "bytes": 4602
+    },
+    "third_party/d2r/patch_nso.py": {
+      "sha256": "1239f34af30030c942d8c4147ead6c1531101da08c7efd958b83f37c5d032c32",
+      "bytes": 102318
+    },
+    "third_party/d2r/relr.py": {
+      "sha256": "afa0b371c494af7814ba0aa34c40f6376381269cd70895f24e61426e35129f44",
+      "bytes": 1720
+    },
+    "third_party/d2r/structck.py": {
+      "sha256": "dbac7d2d5fbd07ba1851e3d27274cadd40b4a8de60bbb1bed2ede0d845c054bc",
+      "bytes": 47853
+    },
+    "third_party/d2r_gfx/LICENSE": {
+      "sha256": "5811600bb8fc4522d3310e8e0e637a1bb14b7c64412f8cfc6234872eb53129b9",
+      "bytes": 1065
+    },
+    "third_party/d2r_gfx/LICENSE.deko3d": {
+      "sha256": "a0b4cee8af79009481c8dd619bf51c1c909f92893b44c51e0b6dfb27fb7edd83",
+      "bytes": 853
+    },
+    "third_party/d2r_gfx/README.md": {
+      "sha256": "6d6967dff4892fa2132dc269d6ff208412dda21d5b759f6cd096fa9160b4469b",
+      "bytes": 982
+    },
+    "third_party/d2r_gfx/gfx/nvn/dmsh_chain.h": {
+      "sha256": "00e34e345347b0dc0fb78a0d20639024fc25d822811328891532166e0f0dfc9a",
+      "bytes": 125
+    },
+    "third_party/d2r_gfx/gfx/nvn/fps_overlay.c": {
+      "sha256": "a4064c95f4a77a35c9562ddba374316b24e7e69ea4d45fa07496a4c144da1adf",
+      "bytes": 12754
+    },
+    "third_party/d2r_gfx/gfx/nvn/fps_overlay.h": {
+      "sha256": "2fb5b6589563524537d20130284a8bb236bc4029d6ab2d8eb38565a1cbbefbc4",
+      "bytes": 4068
+    },
+    "third_party/d2r_gfx/gfx/nvn/hle_nvn.c": {
+      "sha256": "cb94505947cf6c35d9ca80031df93f528b960cde672e0b7924e4b4d47818297c",
+      "bytes": 247688
+    },
+    "third_party/d2r_gfx/gfx/nvn/include/mach_vm_compat.h": {
+      "sha256": "b681c0778caf4b37993d983963cf725808da53a33e1dff358b575bc7ebac4ce7",
+      "bytes": 2485
+    },
+    "third_party/d2r_gfx/gfx/nvn/include/nvn.h": {
+      "sha256": "410af0a7d111f4753b285a8984b3e19227b77dbe40e230b5ab709a15f95a80f0",
+      "bytes": 88884
+    },
+    "third_party/d2r_gfx/gfx/nvn/include/totk_ui_lang.h": {
+      "sha256": "161ff964a975022af3186c4c06f1e5db7910b1f08d2cf60d34dff90869b147b5",
+      "bytes": 1035
+    },
+    "third_party/d2r_gfx/gfx/nvn/names.txt": {
+      "sha256": "f4df8ad6c749b69d22a890e639105aeb46e07e443a3c0e6edb65192f8ef4bb8f",
+      "bytes": 15840
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_arg_address_cache.h": {
+      "sha256": "64d062b5bc3aeb234fea3a9e68e51ccc904c3b815e8a75f839368e27802b3211",
+      "bytes": 975
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_copy_alias_probe.h": {
+      "sha256": "5082665414f9b471e1fc08c842a8ef6092ad619cd4fe6f09efa4876b5695d389",
+      "bytes": 4480
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_count.h": {
+      "sha256": "bf9139519e016e6bf177a51ab012864c87068395cd73f090a1f9b5f46a564ed6",
+      "bytes": 93
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_cover.h": {
+      "sha256": "1a69dd6ac3a5fa465b048f4b97733fd408ef3aa2921896f016417391c8b4e862",
+      "bytes": 3579
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_cube_group.h": {
+      "sha256": "1a7029ad394136c6b7068bcf7a9f553443cc343c98e84c8eee130f27ddb1ebe5",
+      "bytes": 20487
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_cube_group_probe.h": {
+      "sha256": "4c93ba7ddf72f7a122a9016452ecfd0ef430dd7d3871b81bc9c9c6e279a7f8a3",
+      "bytes": 12041
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_depth_clear.h": {
+      "sha256": "a464a82b54632bef8b4f3d83a75e631941665be66d31e68dec787f173a9c2b18",
+      "bytes": 855
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_diag_range.h": {
+      "sha256": "8700bb5c9ec7e74cda21a3f2630811913331a2be84281f4dc19c0b4d8263288c",
+      "bytes": 1442
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_dirty.c": {
+      "sha256": "715dca954598d13646930d864cad624051e15c757245ae7ea2ac561c5ab1c945",
+      "bytes": 21099
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_dirty.h": {
+      "sha256": "ff8e0775dd609b4c0b984d7efc054025b8f0eb1cd17e96fdd1129f773f5a55ce",
+      "bytes": 2540
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_encode_fifo.h": {
+      "sha256": "83a71bc25b69e0d7f2f7d38d9ae67736b7c4972f0fae6c8f8b2e72994602cc05",
+      "bytes": 2084
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_entry.S": {
+      "sha256": "950360254152f5338c1eb6bf065fedc1dd4b1c91e33032648a046f630c3c001b",
+      "bytes": 3140
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_hmap.h": {
+      "sha256": "ef7797bd44d9cc3e47010c9913dd3e1972e64c206ddd05f8beeecb643784c55e",
+      "bytes": 4502
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_impl.h": {
+      "sha256": "7bf5309bca0f3856345cc6a238352e5a86a84da171f246b484cdae9f1754ee86",
+      "bytes": 2002
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_mtl.h": {
+      "sha256": "3da7e11ebb53add76c3c528aa600ca2b21d61879b623d6e7c4531eb93f845bff",
+      "bytes": 6152
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_mtl.m": {
+      "sha256": "07536c39dd60de5aaedc99e0defd47e3e3c48873ed2c517ed8985a4b7741aaa0",
+      "bytes": 1294392
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_obj.h": {
+      "sha256": "9336bc470bf12b9d57a4a43badc7f231820e686a285b626f1c065c2407c427d1",
+      "bytes": 20690
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_pace.h": {
+      "sha256": "9a2e8bf3494f62166db3311fb47d6ee375d03ec79d1876240b8522b7a85a04ba",
+      "bytes": 1554
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_pool_index.h": {
+      "sha256": "eb09c1aeb334469421495880c68e8e3b7e795d582abe1fcaa1330734f923670b",
+      "bytes": 4817
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_pool_retire_probe.h": {
+      "sha256": "ed5ae8f7f084561c0b233d1138ba6f6aa52e3ead7c654dbba76dc406b72ff9bf",
+      "bytes": 3725
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_protos.h": {
+      "sha256": "547b6c48d9424600bb16686767b9965427fff233de04b7eb4ffc74a9266cfa76",
+      "bytes": 47502
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_pso_skey.h": {
+      "sha256": "df596c28204173e9aa77562c49cda3770a6f6ff928e55eeb13d254cf22a1138a",
+      "bytes": 2658
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_refl.h": {
+      "sha256": "9d17003da1a97d35ef4fd26eff96f1698b7c3a3a99edf3fe59199a415458ca30",
+      "bytes": 7358
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_refl.m": {
+      "sha256": "6fa7da1d56d500b803ac3498b9e1a684883a6c69aeb1acd5ea6a9296114dd895",
+      "bytes": 11004
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_registry_lock.h": {
+      "sha256": "a08d389ae0bfd67de7358afa630b89954fe6c6698998de7b5cc7eeeca32bad69",
+      "bytes": 728
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_render_stream.h": {
+      "sha256": "2f879e390947a954f99dbc4cf8a815b0e5fa7237e8ad31eb20a7f7697ed335fa",
+      "bytes": 15911
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_rtex.inc": {
+      "sha256": "7660c7fd7a015eb6aaaf3c9a01c70935c417141900b033465be1db84616713de",
+      "bytes": 19839
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_tex.c": {
+      "sha256": "fb444290b7e1244fe5902206aba86f239cb6fccfee384df4760e94d9162d4cad",
+      "bytes": 9632
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_tex.h": {
+      "sha256": "037b47e1f262026c6a08e0deb688a7176eb8fa530adf7f4cdc40b7155975caf3",
+      "bytes": 2469
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_tex_slots_probe.h": {
+      "sha256": "a392489f5f92fc9c64ec09ae6873b82b3e1c89207c469369b94e4a975349b05d",
+      "bytes": 9948
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_texture_plan.h": {
+      "sha256": "f98e1d292434098d1baa45b7fe53f2f616ccf902e55fcde2c500a502f51a0c38",
+      "bytes": 695
+    },
+    "third_party/d2r_gfx/gfx/nvn/nvn_thunks.S": {
+      "sha256": "9796bc8a116b067892f315114696fb84edecf2c10eef3e3dfaf4dcd8fbfb2d1f",
+      "bytes": 153877
+    },
+    "third_party/d2r_gfx/gfx/nvn/rt_range_check.inc": {
+      "sha256": "5ea5738eac7ef458bf08783bb751077f43cf8382492503327d564cafb20ff580",
+      "bytes": 11111
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_lifelog.c": {
+      "sha256": "27955576ebb4dd8a5d67eb70c61ccb5c935902dfdf86c945475773cca2c6a064",
+      "bytes": 3538
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_lifelog.h": {
+      "sha256": "0d26fafff76d372cdbf21f5afb77e228da8d83651c910dd7565a7a91c131b561",
+      "bytes": 1338
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_mfx.h": {
+      "sha256": "14940e37b699e96820e4ba14d8825d45f016e2dca0ffdbe7b4b9f721c6ae6784",
+      "bytes": 3260
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_mfx.m": {
+      "sha256": "27023215160b45479bffc1383561c5580ca61bbee2f115727504831e0bc3eaab",
+      "bytes": 28219
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_mfx_mode.h": {
+      "sha256": "f005ff3fb6984eeb9b0000aa1245a2d689cb52799f0c5ecdec642480ebd0fe44",
+      "bytes": 365
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_mfx_up.h": {
+      "sha256": "25b4ce159245a9c8e1b55d4b84cb281cacabb8be1cfde5f2b6d6828a471cb70e",
+      "bytes": 2829
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_mfx_up.m": {
+      "sha256": "89242ad9183836009072e550dc7e22820eb6b92b10b8f90d658bd58ffbc8b603",
+      "bytes": 16523
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_nvn_ext.c": {
+      "sha256": "4b1580bc6df2a2c09e2ac62b7032880ca5b4f74f569494aa0bd93faf1b5a90ad",
+      "bytes": 27342
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_present_policy.h": {
+      "sha256": "acbb22bb8aff902a14945cad202213e04a0b4311aa39dab711489e0eaca63cba",
+      "bytes": 492
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_serial_set.h": {
+      "sha256": "89a6bb8bd58d2eb8d5d24a812204878bef5faa77ebad602ea9422eb56a5fc761",
+      "bytes": 3115
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_shader_contrib.h": {
+      "sha256": "c09c9d131b447d854093710db2251ba5513cf03a32f4e46cfaa3c0869c9d2d73",
+      "bytes": 5658
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_shader_rt.h": {
+      "sha256": "9682bc15344c44fe67e461aae972f11d9659abe2f6e13cdfbdcf615dd5ab65bf",
+      "bytes": 1046
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_shader_rt.m": {
+      "sha256": "026bac4476e3dada08d53d471959d1f90e5b8b697eac17d6ae8fc72556e61180",
+      "bytes": 24277
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_shader_seed.h": {
+      "sha256": "c9f236de4c5dc2a5c0d1b0ff3e053b24a2c862ec6174ba984ef29d9cc361ea4c",
+      "bytes": 11101
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_sysload.c": {
+      "sha256": "1f6160b2991fe85e53603e22be0b7afd7628a7da69cc4d6724be0d70bbc37227",
+      "bytes": 10734
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_sysload.h": {
+      "sha256": "b4a7f0cd1d2c2f1c27fe0710e28f60a6f088b559c5fb8fcee3bf168fac959df6",
+      "bytes": 1751
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_timeline.c": {
+      "sha256": "3e178f29e21dd275b27f96843d67582b245659551dab192a98affc09c0e7f90e",
+      "bytes": 3641
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_timeline.h": {
+      "sha256": "185d07e8de2ed92e10aefe7f0f03d4c9a77c6a48d6af22bfcddfa5ac6f2956fa",
+      "bytes": 2149
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_vpool.c": {
+      "sha256": "6f84e825a6c5c5fc39906ee2ae502cab5913fe37e05ea8412740d7305d5487ab",
+      "bytes": 7202
+    },
+    "third_party/d2r_gfx/gfx/nvn/totk_vpool.h": {
+      "sha256": "c74ba1124c02d74ef2a3993455b73de547ed11f63d39ff8f3e81e0cd3233b2f2",
+      "bytes": 1232
+    },
+    "third_party/d2r_gfx/gfx/tex/README.md": {
+      "sha256": "568fe33882fcaac024ece8980fec754bdea773091dfd360cc154b6067de7c60d",
+      "bytes": 7241
+    },
+    "third_party/d2r_gfx/gfx/tex/README.zh-CN.md": {
+      "sha256": "08902cd6ef5288e942e8572b6930539f1ea249533d7b4ad600b9cb204340acc8",
+      "bytes": 5723
+    },
+    "third_party/d2r_gfx/gfx/tex/gen_bctc_msl.py": {
+      "sha256": "361764b1934bc7d6c6721e9b2954817fd008aa444b59f089caa2eaea6c4fe154",
+      "bytes": 696
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_bc1astc.c": {
+      "sha256": "29bd97bdda8e4a58aa619767a40495aaaf9fa0892f8c0a473af424558ba801ae",
+      "bytes": 7975
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_bc1astc.h": {
+      "sha256": "9442d3763dcefb9693aeb398cc52e431c1ef1fa42f1509ce2ab294f1bb5fa816",
+      "bytes": 1581
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_bc1astc_msl.h": {
+      "sha256": "c602ee0305b73c21ebb64789dbdf7c2db74a873f64e314428bdde6a2617bcfad",
+      "bytes": 5875
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_bcdec.c": {
+      "sha256": "6760286c7d5ff3a38aeceee70155d86945ccdd15811a36e23c2f26fabbdb1d00",
+      "bytes": 3696
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_bcdec.h": {
+      "sha256": "e83efd39966eeae2d6b34de5b916b25f674bee7d1f5c4b7abd50d47b72e0c5aa",
+      "bytes": 1458
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_bctc.metal": {
+      "sha256": "2851ca07566b82167f066eb75c68a4ca80bebcb97ebceae5b5a8470d9473459d",
+      "bytes": 23499
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_bctc_msl.h": {
+      "sha256": "2b295a4d98471f25a6c5e08462b546a0c95de96984c5011906f36ca00785f866",
+      "bytes": 25238
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_deswizzle.c": {
+      "sha256": "d8f66514592c5a52bd8772b4c8f76e7d19ee42786de2c447302aa33edb1ab95a",
+      "bytes": 5596
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_deswizzle.h": {
+      "sha256": "fd3088bcec285f3ad4bce2773ca7b7f578380a1fbde9a4f10c32f423449834a8",
+      "bytes": 2792
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_deswizzle_gpu.h": {
+      "sha256": "b828e3bd428af26e15af34a0654034138d97daa8dbf7d4667aab996d1c3030cd",
+      "bytes": 768
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_deswizzle_gpu.m": {
+      "sha256": "6f4484c234443e6531618a7de12bb1ca7784e458ddaf9f8d99489ee3e62d2e32",
+      "bytes": 4504
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_fmt_mtl.c": {
+      "sha256": "18ee829ebdc60a0cacbca318969038218c3b7ba51ab1903e8d30ed113bd96f1f",
+      "bytes": 9177
+    },
+    "third_party/d2r_gfx/gfx/tex/nvn_fmt_mtl.h": {
+      "sha256": "319cde963160339299bbab763f18dbe73847ae616d9c4fd324387e48982dd944",
+      "bytes": 1604
+    },
+    "third_party/d2r_gfx/host/dm.h": {
+      "sha256": "690c5972c4be9ac6bf9af97b2f5174f52dfc3fa4378c5a0dcc96404d93413720",
+      "bytes": 824
+    },
+    "third_party/d2r_gfx/host/front.h": {
+      "sha256": "5e12801663df9f5f540617c64a44dedfcdd8f5b5ae7e390ee237a2eae9066bde",
+      "bytes": 135
+    },
+    "third_party/d2r_gfx/host/hle.h": {
+      "sha256": "393e4f489670965da42969ca51c6a80c48452ea3309d3038a0997fa0c3ba97df",
+      "bytes": 332
+    },
+    "third_party/d2r_gfx/third_party/bcdec/LICENSE": {
+      "sha256": "2414c782587f6e96661cb0d19d752432ddecfcc1a221b4cb12bc2253a54dc5ac",
+      "bytes": 2564
+    },
+    "third_party/d2r_gfx/third_party/bcdec/README.md": {
+      "sha256": "b4d5a194d96dd642799ec2564b52a52da77010debfd3306d24880e2791ce6c20",
+      "bytes": 264
+    },
+    "third_party/d2r_gfx/third_party/bcdec/bcdec.h": {
+      "sha256": "ac03ea22dbe24074dc4152cb6a899e6ea548e84c58496c9b1c09dc68f9174143",
+      "bytes": 79429
+    },
+    "third_party/licenses/Ryujinx-Audio.txt": {
+      "sha256": "781bbdf040b7d0286c47cca6bffdb9148dfe751c0c9cabdf1a1752412a2e56b4",
+      "bytes": 1081
+    },
+    "tools/hactool.patch": {
+      "sha256": "5336dc97874a26dd1c3291af4b60a948fb72a01f9a849792936fd673338a74a7",
+      "bytes": 5142
+    },
+    "tools/totk_xlate/LICENSE": {
+      "sha256": "5811600bb8fc4522d3310e8e0e637a1bb14b7c64412f8cfc6234872eb53129b9",
+      "bytes": 1065
+    },
+    "tools/totk_xlate/Program.cs": {
+      "sha256": "d543fbaede2021c30d144e58fd56077cee4fe3d48c287f35977d6394f1875c72",
+      "bytes": 18826
+    },
+    "tools/totk_xlate/Service.cs": {
+      "sha256": "66f756f4bd9ec2cdf03061313c63656101045d0f6d3ad257dda52da5869f7239",
+      "bytes": 28000
+    },
+    "tools/totk_xlate/VertexCounterLowering.cs": {
+      "sha256": "4321fb219bc0567d7e1b24b1aa02950b091f577e5713a82704a75bf9be50182e",
+      "bytes": 3700
+    },
+    "tools/totk_xlate/patches/0001-keep-call-arguments-in-variables.patch": {
+      "sha256": "246a50e4b0151a945fbae6146d847f88a7375be442ae2c89372ef07df1c782e1",
+      "bytes": 937
+    },
+    "tools/totk_xlate/patches/0002-keep-live-call-sources-when-removing-dead-node.patch": {
+      "sha256": "2bb6529c1347e24fea3ed8cf4688353abaf8acf069c359a9ee66db929c1f6c58",
+      "bytes": 1217
+    },
+    "tools/totk_xlate/patches/0003-keep-side-effect-assignments-in-the-ast-optimizer.patch": {
+      "sha256": "e304f113e108656286ad5c02a92315a8927eca821842450a72a0d731acd75f62",
+      "bytes": 2906
+    },
+    "tools/totk_xlate/patches/0004-no-else-if-flattening.patch": {
+      "sha256": "8fe6fe33aa30b10aeff74f7a3471a58ba655cac5db5fb28a14e528bc357e73a9",
+      "bytes": 1469
+    },
+    "tools/totk_xlate/publish_native.sh": {
+      "sha256": "0fdc04bbfb0a86bb5d58da93c826cdb98db548ebc2869580860a897c1aed0234",
+      "bytes": 1624
+    },
+    "tools/totk_xlate/totk_xlate.csproj": {
+      "sha256": "cee5760b673729e2348b8df87c7a9f6c47530fadd9d9247d15f715312bb91288",
+      "bytes": 709
+    }
+  },
+  "excluded_ori_identity_builder_and_prebuilt_tool": [
+    "assets/expected-v101.json",
+    "prebuilt/macos-arm64/README.md",
+    "prebuilt/macos-arm64/totk_xlate",
+    "prebuilt/macos-arm64/totk_xlate.sha256",
+    "scripts/build_ori.py"
+  ],
+  "existing_worktrees_mutated": false
+}

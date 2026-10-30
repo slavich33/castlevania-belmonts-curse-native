@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "title_id": "0100BA4026E94000",
+  "state": "explicit_runtime_C_proof_reuse_offline_native_tested_not_real_game_boot_verified",
+  "scope": "Runner-only explicit performance shortcut between owned diagnostic runs; C RomFS verification, backend, builders, profiles and saves unchanged.",
+  "option": "--reuse-romfs-proof-from PRIOR_RUN",
+  "default": "Without this option every fresh run has an empty private cache and performs the existing full C image SHA256 verification before RomFS ready.",
+  "prior_validation": [
+    "Canonical direct host-* child of the same work/runs; prior run/cache/logs mode0700 owned directories without symlink aliases.",
+    "Owned regular no-hardlink/no-symlink files, bounded O_NOFOLLOW reads; marker/log/compiled sidecar/proof require0600. Existing receipt.json may be0600 or0644, never group/other writable.",
+    "Exact title and marker format; completed run receipt binds canonical run/log/command, exact logSHA+size, prior binarySHA and no remaining owned process-group pids. Prior log must contain actual matching C verification and RomFS-ready lines.",
+    "Exact prior compiled-build-receipt.json must exist and bind the old run binary hash, work/title/diagnostic status, same runtime/romfs.c sourceSHA and expected canonical image path/size/hash, file count, indexSHA and configSHA as current build.",
+    "Current binary digest and codesign verification remain mandatory. Current RomFS C source/config/index digests and staged canonical image path/size are checked independently; Python never reads the whole image in reuse mode.",
+    "Source proof must be exactly160B with actual C magic, expected imageSHA+NUL and image size. Recorded marker/compiled/proofSHA fields are enforced when present."
+  ],
+  "copy_and_authority": [
+    "Only byte-exact C-produced cache/.romfs-verified-v1 is copied into a distinct fresh run private cache using O_EXCL|O_NOFOLLOW0600, fsync and independent readback. No stat fields are rewritten, and builder expected-digest records never become runtime proofs.",
+    "The original unchanged C fstat/proof_equal compares actual current device/inode/size/mtime/ctime/birthtime and expected digest. Any mismatch requires a full C image SHA256 check; the C verifier is final authority.",
+    "Index bytes are always independently hashed by C. Metadata reuse is not a fresh content hash or a claim against adversarial metadata forgery."
+  ],
+  "new_run_receipt": {
+    "compiled_build_receipt": "Exact source build-receipt bytes saved0600 as compiled-build-receipt.json before launch, even when reuse is not requested.",
+    "bindings": "run markerSHA, compiled sidecarSHA, output runtime proofSHA when ready, prior receipt/log/sidecar/proofSHA and source paths for requested reuse.",
+    "actual_C_modes": [
+      "fresh_full_sha256",
+      "reused_previous_C_full_hash_record",
+      "not_reached_or_incomplete"
+    ],
+    "classification": "Only exact C log sequence followed by matching native read-only RomFS ready grants a verification mode; starting a hash, copying a proof, or failing before ready earns no completed-hash credit."
+  },
+  "approved_baseline": {
+    "run": "host-7k1zc30r",
+    "receipt_sha256": "c031822dd3db41ad5caa632ee3f57cd05ddd0e02c3e2259171dae2c10306f9e7",
+    "compiled_build_receipt_sha256": "b4eb52d9f0e32ef9bf90bea710ed6dcf07cf9d9d49e2878711d87a58e794c96a",
+    "log_sha256": "fe1f96bae72e06fb0220f0136b07f15ce3e9860417cc9d28a3e007e744bada7c",
+    "C_proof_sha256": "4ac4a3a64fed51368cc149745a3e96d5b0ffc3bdb38ee34784fb9998022eb60b"
+  },
+  "validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s native-target/tests -p test_host_runner_proof.py -v",
+    "result": "15 focused tests passed in9.1s",
+    "native_fixture": "Real arm64 C runtime/romfs.c with a20B image and one real binary index entry; strict scratch guard and actual unchanged SHA256/proof_equal code. Fixture executes no guest or GPU instructions.",
+    "end_to_end": [
+      "Default actual runner performs full C hash and saves exact compiled receipt",
+      "Unchanged actual image accepts byte-exact copied160B C proof in a separate run",
+      "Same-size mutated image misses actual C metadata check, performs full SHA and fails RomFS integrity before ready"
+    ],
+    "negative_coverage": [
+      "whole-image Python read forbidden in reuse helper",
+      "missing sidecar",
+      "wrong title/state/run/logSHA/size/binary/markerSHA/sidecarSHA/process-group state",
+      "different prior compiled work/title/source/resources",
+      "changed actual config/index",
+      "wrong expected imageSHA/file count",
+      "non160B/wrong magic/digest/proof modes",
+      "symlink/hardlink proof",
+      "symlink/outside/unsafe-mode prior run",
+      "log missing matching ready line",
+      "existing destination not overwritten",
+      "approved historical extra-bindings explicitly marked absent"
+    ],
+    "independent_peer_review": "Root and probe read-only source/test reviews found no material issues; peer made no edits and ran no tests.",
+    "remaining": "First real game diagnostic run with this runner option remains for root. No fresh real3.6GB image hash or real-game proof-reuse success is claimed by this source-only stage."
+  },
+  "source_sha256": {
+    "scripts/run_experimental_host.py": "7d0880d972410e83495f134210ec5a3643f340f794001e3d7a8b533831fe7437",
+    "tests/test_host_runner_proof.py": "69b94b32838c201090d13b6417dfdab252659b4e4acf424fb818eb6b465c73f2"
+  },
+  "unchanged_C_romfs_sha256": "67ffc41188087b1744b9e922f286fbe901b70c3af285336cba6c91e65e551e98",
+  "owned_paths": [
+    "scripts/run_experimental_host.py",
+    "tests/test_host_runner_proof.py",
+    "provenance/RUNTIME_ROMFS_PROOF_REUSE_20261027.json"
+  ],
+  "guest_or_GPU_execution_by_this_stage": false,
+  "backend_or_C_source_modified": false
+}

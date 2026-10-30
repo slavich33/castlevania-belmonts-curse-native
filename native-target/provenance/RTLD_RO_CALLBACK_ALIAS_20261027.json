@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "measured_single_RTLD_callback_slot_alias_native_fixture_tested_awaiting_actual_boot",
+  "trigger": {
+    "source_commit": "9b9f82e755a05ce0cfb68c2c016df7f67f6071e4",
+    "binary_sha256": "d5900409e48ba1210e96c0304606226dc914db1f3c5a58b560f3fe6fa37b334f",
+    "log_sha256": "ce467a4aae371a498b4a6b0c2f0371d964d7fc95074dbad46b5f17212910e6d9",
+    "private_run_description": "external host-build/runs/host-l1h88532",
+    "fault": "Original nn::ro::InitializeWithPortName stores its LookupGlobalManual callback through an uninitialized RTLD-owned alias at SDK0x14a04c; the pointed-to callback-slot address is zero",
+    "caller": "main0xd5f9e4 calls the imported nn::ro::Initialize(); frame LR is main0xd5f9e8, reached from nnMain0xca8db8",
+    "argument_boundary": "x4 is incidental. nn::ro::Initialize takes no arguments and SDK0x14a1a0 loads its own static port name before tail-calling InitializeWithPortName. No caller-argument change or fault skip is justified"
+  },
+  "source_identity": {
+    "SDK_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "SDK_AOT_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+    "RTLD_source_sha256": "ebfbe916731d944870124b29e990f9647a9efdb3cca359790973db90f9bb399b",
+    "original_AOT_comparison": "SDK0x149ff0..0x14a0b0 were compared in memory and are byte-identical; no original instruction bytes are retained in this public-source receipt",
+    "method": "Read-only decompression and bounded static disassembly of verified local NSOs/AOT outputs; exact dynamic symbol/relocation metadata; independent main-caller confirmation. Owned images remain private"
+  },
+  "sanitized_instruction_evidence": [
+    "SDK InitializeWithPortName starts0x149ff0. GOT0xb74148 resolves g_RoBusyMutex (defined OBJECT4 at SDK0xb9c480); the call at0x14a028 initializes that mutex through SDK0x143440 and does not populate any RO pointer",
+    "At SDK0x14a040 the GOT entry0xb74158 resolves the address of defined OBJECT8 g_pLookupGlobalManualFunctionPointer at SDK0xb9c490. The load at0x14a044 reads its pointer value. SDK0x14a048 loads LookupGlobalManual through GOT0xb74150, and0x14a04c stores that callback address into the pointed-to slot",
+    "LookupGlobalManual is the defined SDK function0x14cac0, mangled _ZN2nn2ro6detail18LookupGlobalManualEPKNS1_8RoModuleEPKc. The loader never calls it or assumes a C return type; it owns only an opaque 64-bit address slot",
+    "Real RTLD loads the exact manual alias symbol name at0x784/0x788 and computes the writable slot address RTLD0x4018 at0x78c/0x790. Per-module lookup occurs at0x864..0x86c. On a returned global/weak definition,0x880/0x884 load module base and symbol value;0x888 stores RTLD0x4018 into that module's exported alias global",
+    "This RTLD setup precedes SDK Start and constructor dispatch. The alias slot is initially zero; the SDK later installs its original callback with its ordinary data store"
+  ],
+  "adjacent_measured_contracts_not_implemented": {
+    "g_pAutoLoadList": "RTLD0x7e0 publishes the real automatic-module list head at RTLD0x4030. It starts self-linked at0x150 and is subsequently populated with actual module descriptors",
+    "g_pManualLoadList": "RTLD0x808 publishes manual list head RTLD0x4020; initialization at0x128/0x130 makes its two links point to itself",
+    "g_pRoDebugFlag": "RTLD0x838 publishes debug-flag storage RTLD0x4010",
+    "g_pLookupGlobalAutoFunctionPointer": "RTLD0x860 publishes a code address obtained from its relocated data entry0x31b8, identifying RTLD0x1230. That real automatic lookup function walks the actual loaded-module descriptors; this is not the manual writable callback-slot alias",
+    "boundary": "Only the manual callback-slot alias required by the observed fault is supplied. No empty module lists, synthetic RoModule descriptors, guessed automatic lookup implementation, debug policy or NRO-loading service is supplied. Later consumers remain unverified and require their own measured implementation or explicit diagnostic failure"
+  },
+  "implementation": {
+    "helper": "runtime/rtld_ro_abi.h",
+    "integration": "runtime/loader.c calls runtime_rtld_ro_prepare once after thread setup and before either symbol-resolved SDK Start variant, inside the existing mandatory host-scratch guard",
+    "storage": "One static RuntimeRtldRoState owns a uintptr_t manual_lookup_address initially0 for the process lifetime. The helper publishes its address, never a host callback and never the address of guest code",
+    "resolution": "Exact name _ZN2nn2ro6detail36g_pLookupGlobalManualFunctionPointerE in each module's generated symbol metadata; no hardcoded module name, SDK offset or copied RTLD addresses",
+    "validation": "At least one definition; defined global/weak STT_OBJECT of size8; aligned address wholly in mapped writable data/bss; valid module bounds; fresh-zero target and fresh-zero slot; no duplicate definition inside a module or repeated preparation. All definitions are validated before any alias is written",
+    "scope": "Only exact named definitions are aliased to the same owned slot. Undefined imports and unrelated symbols are untouched. Missing, malformed or unsupported metadata stops at the caller's runtime_fail gate",
+    "unchanged": "No SDK/game instruction, generated table, constructor flag, service implementation, relocation/load order, builder, runner, GFX or asset was changed"
+  },
+  "native_regression": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -p test_rtld_ro_abi.py -v",
+    "compiler": "xcrun clang -arch arm64 -std=c11 -O2 -Wall -Wextra -Werror",
+    "tests_passed": 11,
+    "fixture_process_cases": 27,
+    "boundary": "Independently authored tiny native DSOs call the actual helper. Their own native callback ABI is only a fixture contract, not an assertion about the SDK function signature. No game, original SDK instructions, generated tables, GPU, Cocoa, real assets or guest code is executed",
+    "positive_cases": [
+      "Preparation binds an exact exported object to live writable host storage without installing or calling a callback",
+      "The tiny SDK normally writes its own callback address through the alias, invokes its own callback and rebinds it; unrelated data stays unchanged",
+      "Separate global/weak definitions share one slot, and an undefined import is skipped while its real provider is bound"
+    ],
+    "negative_cases": [
+      "Missing or near-match name, unsupported binding/type/size/defined metadata, duplicate definitions and repeated preparation",
+      "Read-only/out-of-bounds/unaligned/overflow storage and invalid module ranges, null base, symbols, names or arguments",
+      "Preexisting alias or callback-slot values are never overwritten",
+      "An invalid second provider causes no partial write to an already validated first provider"
+    ]
+  },
+  "owned_paths": [
+    "runtime/loader.c",
+    "runtime/rtld_ro_abi.h",
+    "tests/test_rtld_ro_abi.py",
+    "provenance/RTLD_RO_CALLBACK_ALIAS_20261027.json"
+  ],
+  "actual_host_build_or_guest_execution_by_this_stage": false,
+  "remaining": "Root review, actual host build and diagnostic boot are required to establish whether the observed null write is resolved and to discover the next legitimate service/RO ABI requirement. No frame, menu or gameplay is claimed"
+}

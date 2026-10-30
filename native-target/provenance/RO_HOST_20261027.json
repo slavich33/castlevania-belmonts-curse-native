@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "measured_ldr_ro_registration_and_real_retained_transport_native_tested_awaiting_actual_boot",
+  "actual_trigger": {
+    "source_commit_short": "1264a22",
+    "binary_sha256": "467274cb6d09d9d9479d7c155a18c91d6cd953f7197690f4b64559018e0cd24e",
+    "compiled_build_receipt_sha256": "0d9cfe6bcd8b8b6e31664c25d1b2aedad03b49c6090c0748aa86194e3a1b8338",
+    "log_sha256": "f9e3442faba06581fdccb13f094dd1d174f7cfd56a301c073130fa49567ad7a3",
+    "private_run_description": "external host-build/runs/host-6zaurvlr",
+    "observed": "Actual boot13 passed the original RO callback-slot store, then stopped opening the missing ldr:ro service via SDK0x14a090, return site0x14a094. The subsequent RegisterProcessHandle RPC is statically measured, not yet runtime-observed"
+  },
+  "source_identity": {
+    "SDK_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "SDK_AOT_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+    "original_AOT_comparison": "Read-only in-memory comparisons were identical for SDK0x14a110..0x14a134,0x14b9cc..0x14b9d8,0x14bd3c..0x14be70 and0x13da90..0x13da98",
+    "sanitization": "Only source hashes, offsets and decoded semantics are retained here; no original owned instruction bytes, module payloads or personal absolute paths"
+  },
+  "actual_SDK_evidence": [
+    "After service connection, SDK0x14a0dc..0x14a0e4 installs vtable0xb40cb8 into its real client object. RELATIVE relocation at vtable+0x40 resolves to SDK0x14b9cc",
+    "SDK0x14a110 calls GetCurrentProcessHandle through PLT0x636e50, whose relocation binds exported nn::os::GetCurrentProcessHandle at0x13da90. This function returns the pseudo current-process handle0xffff8001",
+    "At SDK0x14a114 the handle is stored on the stack;0x14a118 passes its address as x2,0x14a128 sets x1=0, and0x14a12c/0x14a130 dispatch vtable+0x40",
+    "SDK0x14b9cc adjusts this by8,0x14b9d0 selects command4 and0x14b9d4 tail-calls0x14bd3c. That encoder preserves x1 as the raw u64 PID placeholder and reads the supplied handle from x2",
+    "The encoder builds HIPC type6 at0x14bd6c..0x14bd84, a special header value3 at0x14bd88/0x14bd8c (send-PID plus one COPY handle), the handle at0x14bdb0 and raw placeholder at0x14bdb8. No buffers, moved handle or output object is part of this request"
+  ],
+  "primary_protocol_sources": [
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/source/services/ro.c#L58-L65",
+      "fact": "The ldr:ro wrapper sends command4, an eight-byte zero ClientProcessId placeholder, the PID descriptor and one input current-process handle. Other commands load/unload NRO/NRR and are outside this implementation"
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/stratosphere/ro/source/ro_ro_service.cpp#L28-L54",
+      "fact": "The service object owns a process context. RegisterProcessHandle accepts ClientProcessId and COPY process handle; its destructor unregisters its context"
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/stratosphere/ro/source/impl/ro_service_impl.cpp#L548-L575",
+      "fact": "Registration validates process-handle identity against authenticated client PID, rejects an already registered process as InvalidSession, and retains the server-owned handle/context until finalization. This host adapts only the single native current-process identity"
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libvapours/include/vapours/results/ro_results.hpp#L18-L41",
+      "fact": "RO module22 and InvalidSession description1030 produce result0x80c16 for duplicate registration"
+    }
+  ],
+  "implemented_contract": {
+    "endpoint": "ldr:ro only; no unobserved ro:1 or ro:dmnt capability registration",
+    "command4": "Validate CMIF request4/6, PID descriptor, one COPY current-process pseudo handle, no moved handles or buffers, raw u64zero with only CMIF alignment slack. Persist a genuine per-object native-process registration and return an empty response",
+    "identity_boundary": "The in-process IPC core does not perform Horizon kernel PID injection; raw rq.pid bits are not trusted. Only the measured current-process pseudo handle is accepted, and registration binds the service's actual getpid() identity. No foreign process, claimed Horizon numeric PID or OS process-handle duplication is fabricated; the caller pseudo handle is never consumed or closed",
+    "duplicate_registration": "A repeated command4 on the same shared object, or an independent object while this process is already registered, returns the primary InvalidSession0x80c16 without replacing the existing registration",
+    "lifetime": "Each open allocates one state with reference count1. Opt-in generic retained sessions call retain for independent clones/copies, transfer ownership on domain conversion, and release on close. Last service-state release unregisters the process and frees state, including domain root-object close while an empty transport remains open",
+    "concurrency": "A mutex protects reference counts and the single native-process registration owner. An unregistered object's close cannot remove another object's registration",
+    "unsupported": "All service commands other than4, including MapNro0, UnmapNro1, RegisterModuleInfo2, UnregisterModuleInfo3 and RegisterModuleInfoWithUserProcessHandle10, stop through ipc_unimplemented. No NRR authorization, mapping, signature validation, loader permission, asset load, game entry or SDK-init override is represented by registration success",
+    "guard": "Constructor only registers the service/ownership callbacks. Open and every service request require the existing compile-time diagnostic opt-in and checked private host run. No profile, environment, file, log, handle or process lookup occurs in this module before main"
+  },
+  "native_validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -p test_ro_ipc.py -v",
+    "compiler": "xcrun clang -arch arm64 -std=gnu11 -O1 -Wall -Wextra -Werror",
+    "tests_passed": 27,
+    "uses": "The actual runtime/ipc.c HIPC parser, CMIF/domain/control dispatch and session ownership, actual threads.c handle CloseHandle, actual ro_host.c; original tiny native request fixtures, no game or SDK code",
+    "positive_cases": [
+      "Registration-only constructor in default and diagnostic builds creates no state, handles or files",
+      "SM returns an actual moved retained service; valid type4/type6 command4 persists actual host PID with empty output, including when wire PID bits differ",
+      "Same-object repeat and same-process independent registration return the exact primary InvalidSession; final close permits a later real registration",
+      "Non-domain clone before/after registration, domain clone/CloneEx, CopyFromDomain, domain-root close and entire-domain destruction retain state until its last actual owner closes",
+      "Closing an unregistered state cannot affect another registration; last domain-object release unregisters before transport close",
+      "1000 real open/register/domain/clone/copy/close cycles leave zero RO objects, zero tracked IPC allocations, no registration owner and no remaining handle slots"
+    ],
+    "negative_cases": [
+      "Missing PID/COPY, extra COPY, MOVE handle, unknown/thread/session process handle, nonzero ClientProcessId placeholder",
+      "Every X/A/B/W/C buffer family, unmeasured TIPC, truncated or oversized domain raw arguments",
+      "Unknown control and all unimplemented service/load/map/NRR commands stop explicitly",
+      "Missing checked run or compile-time diagnostic opt-in prevents service open; adapters create no extra files"
+    ]
+  },
+  "owned_paths": ["runtime/ro_host.c", "tests/test_ro_ipc.py", "provenance/RO_HOST_20261027.json"],
+  "dependency": "The generic runtime_ipc_register_retained API and its lifecycle/regression tests are independently owned/reviewed in runtime/ipc.c and runtime/ipc.h",
+  "independent_review": "Peer source/protocol review clean; separate generic retained-IPC diff review clean. No source change made by the reviewer",
+  "actual_host_build_or_guest_execution_by_this_stage": false,
+  "remaining": "Root must build and run the real diagnostic host to observe command4 and its next requirement. No NRO/NRR operation, engine load, GPU frame, menu or gameplay result is claimed"
+}

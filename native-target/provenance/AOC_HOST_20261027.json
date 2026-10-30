@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "title_id": "0100BA4026E94000",
+  "display_version": "1.1.0",
+  "state": "native_AOC_empty_inventory_adapter_tested_not_boot_verified",
+  "trigger": {
+    "observed_boot_log": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/host-build/runs/host-i5ossow7/logs/native-host.log",
+    "observed": "Actual native boot opened lm, apm, appletOE and ApplicationProxy, passed ApplicationFunctions130 and created an SDK thread, then stopped opening the unimplemented aoc:u service",
+    "SDK_return_offsets": ["0xc8f768", "0x1ddd2c", "0x1ddba4", "0x10d9fc", "0x10da94"],
+    "SDK_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "SDK_AOT_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1"
+  },
+  "independent_static_SDK_checks": [
+    "nn::aoc::Initialize at sdk+0x1dd600 calls InitializeForHipc at sdk+0x1ddb00; it opens and wraps aoc:u at sdk+0x1ddd28, stores the service at SDK global0xbacc78 and increments its reference count. It sends no AOC command during this initializer",
+    "CountAddOnContent wrapper sdk+0x1dd630 -> virtual0x20 -> sdk+0x1ddf44 selects cmd2. Transfer helper sdk+0x1de284 writes raw u64 ClientProcessId placeholder0, sdk+0x1de270 sets sendPID, sdk+0x1de30c reads u32 count",
+    "ListAddOnContent wrapper sdk+0x1dd680 -> virtual0x28 -> sdk+0x1ddf50 selects cmd3. Raw arguments are u32 offset,u32 count,u64 ClientProcessId placeholder0, with sendPID; sdk+0x1de3b8/0x1de3bc writes B1 HIPC header0x01000006 and sdk+0x1de438/0x1de43c writes raw arguments. Output buffer capacity is count*4, output raw count is u32",
+    "PID-aware list-changed event wrapper sdk+0x1dd940 -> virtual0x50 -> sdk+0x1ddfc0 selects cmd10, with raw u64 ClientProcessId placeholder0 and sendPID. Transfer helper sdk+0x1de8ac returns readable COPY handle; SDK AttachSystemEvent at sdk+0x1dd98c uses autoclear1",
+    "Count/List/Event wrappers are statically measured available calls, not commands observed in boot5. The observed runtime gate was service acquisition only"
+  ],
+  "host_policy": {
+    "inventory": "immutable empty runtime-visible add-on-content inventory for the prepared base game/update v1.1.0; no DLC has been installed or mounted through this host",
+    "entitlement_limit": "No account, purchase entitlement, ownership license or external installed-content catalog is queried or inferred. A separately present small DLC input is not considered installed or mounted",
+    "scope": "single current application only; no arbitrary-application queries, content preparation, mounting, purchasing, installation or dynamic inventory updates"
+  },
+  "implemented": {
+    "service": "actual aoc:u registered with the existing generic IPC service manager; a real MOVE session is returned, with one process-lifetime immutable policy state",
+    "CountAddOnContent2": "sendPID plus raw u64 placeholder0; returns exactly u32 count0",
+    "ListAddOnContent3": "sendPID plus raw u32 offset,u32 count,u64 placeholder0 and exactly one output B MapAlias descriptor; validates requested index capacity, nonempty address and address overflow, returns exactly u32 written0 at every offset and performs no output-buffer writes",
+    "GetAddOnContentListChangedEventWithProcessId10": "sendPID plus raw u64 placeholder0; returns exactly one fresh readable COPY handle and no raw data. One service-owned writable event is allocated lazily; initially and persistently unsignaled because this adapter exposes no inventory mutations. Client SDK attaches its copy with autoclear1",
+    "lifetime": "generic IPC domain/clone support remains in ipc.c; clones borrow the process-lifetime state, and closing readable copies leaves the service-owned event alive",
+    "guards": "checked host scratch required at service open and commands; CMIF4/6 only, expected PID descriptor and zero ClientProcessId placeholder, bounded raw widths with unspecified alignment slack, no unmeasured handles or buffer types; unknown commands fail explicitly",
+    "pre_main": "constructor only registers the service; no environment, profile, inventory or event access before main"
+  },
+  "unsupported": [
+    "legacy GetAddOnContentListChangedEvent8; only this SDK's measured PID-aware cmd10 is implemented",
+    "GetAddOnContentBaseId, PrepareAddOnContent, mount/unmount notifications, purchasing and entitlement interfaces",
+    "arbitrary application ID discovery, DLC content/filesystem installation or access, dynamic content inventory changes",
+    "all other commands; they fail with exact service/command diagnostics instead of blanket success"
+  ],
+  "validation": {
+    "focused_native_wire_tests_passed": 20,
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_aoc_ipc.py -v",
+    "actual_native_sources": ["runtime/ipc.c", "runtime/threads.c", "runtime/aoc_host.c"],
+    "test_boundaries": "actual C HIPC/CMIF, service manager, session handles, events, CloseHandle and WaitSynchronization; guest entry/TLS/symbol calls abort if reached. No game/SDK/DLC/GPU input is executed or read by tests",
+    "cases": [
+      "pre-main registration without environment or event creation",
+      "actual service-manager GetServiceHandle returns a real moved aoc:u session",
+      "Count result is exactly u32 zero, with consistent List zero results",
+      "actual HIPC B descriptor decodes to the expected output address and capacity; empty List preserves all caller sentinel bytes",
+      "zero-capacity and out-of-range offset List calls return no entries",
+      "fresh readable COPY event handles start unsignaled, remain valid when another copy closes, and 1000 query/close iterations retain service state",
+      "actual WaitSynchronization times out for unchanged inventory; queries do not invent content-change notifications",
+      "domain Count and event COPY output; cloned session retains policy after original close",
+      "missing PID, extra handles/buffers, unsupported transport, nonzero PID placeholder, truncated input and missing run guard fail",
+      "List rejects missing B descriptor, undersized capacity and address overflow",
+      "unmeasured prepare, purchase, mount, legacy event and unknown commands fail"
+    ],
+    "standalone_syntax_default0": "clang -fsyntax-only -Wall -Wextra -Werror passed",
+    "standalone_syntax_diagnostic1": "clang -fsyntax-only -Wall -Wextra -Werror passed",
+    "independent_peer_review": "focused read-only source/test review found no material issue; peer did not execute tests"
+  },
+  "primary_references": [
+    {
+      "url": "https://github.com/reswitched/SwIPC/blob/2a39037055f9c9b4ac7052c04e83430f8bf498df/ipcdefs/switchbrew.id#L415-L425",
+      "used_for": "primary protocol-research definitions: Count2 raw u64+PID -> u32; List3 raw u32,u32,u64+PID -> u32 and buffer<u32,6>, output MapAlias/B. This historical source predates cmd10; cmd10 is established by actual SDK static checks"
+    },
+    {
+      "url": "https://switchbrew.org/wiki/NS_services#aoc:u",
+      "used_for": "primary protocol research names aoc:u IAddOnContentManager and PID-aware GetAddOnContentListChangedEvent10 since11.0.0"
+    }
+  ],
+  "SDK_initializer_bypass": false,
+  "guest_or_GPU_execution_by_this_stage": false,
+  "shared_runtime_GFX_builder_inputs_modified_by_this_stage": false,
+  "owned_paths": ["runtime/aoc_host.c", "tests/test_aoc_ipc.py", "provenance/AOC_HOST_20261027.json"],
+  "remaining": "root must rebuild and run the real native host. No successful AOC initialization after this adapter, SDK initialization completion, first frame or gameplay is claimed"
+}

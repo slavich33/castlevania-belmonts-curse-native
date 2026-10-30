@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "native_offline_IsMounted_adapter_ready_for_parent_build",
+  "source_base_commit": "2c94be13e82ad6faae31a0ca12925c399fe55d7e",
+  "observed_failure": {
+    "private_run_description": "external host-build/runs/host-on8bqek1",
+    "binary_sha256": "926ec5e67bd02998c35f79e092a0db52cbc386e0f7b9e5db94648dcd57452f54",
+    "log_sha256": "379085701f8ecf34a45a6d89a2a5fe505087b1f8bac9f0412346acafb97aaa4f",
+    "log_bytes": 16191,
+    "log_hash_independently_read_back": true,
+    "missing_service": "fsp-srv",
+    "SDK_callers": [
+      "0xc0e4c",
+      "0xc0d68",
+      "0xf198c",
+      "0xa6db0"
+    ],
+    "main_caller": "0xcae0a8",
+    "direct_FS_request_observed_at_failure": false,
+    "interpretation": "Missing direct IsMounted binding entered SDK access-logging initialization before its separate SDK mount-table lookup."
+  },
+  "local_primary_evidence": {
+    "source": "Owned verified original NSO fixtures; static decoded semantics only, no original instruction bytes in this receipt.",
+    "sdk_nso_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "main_nso_sha256": "c71362eb3cc09826f209896d225de212863ed8bb261383893ee7555d52b46319",
+    "public_function": {
+      "symbol": "_ZN2nn2fs9IsMountedEPKc",
+      "offset": "0xa6d90",
+      "size": 324,
+      "ABI": "bool(const char *bare_mount_name)",
+      "flow": [
+        "0xa6dac calls IsEnabledAccessLog before checking the mount name.",
+        "0xf1988 requests GetFileSystemProxyServiceObject; 0xc0e48 connects fsp-srv.",
+        "0xa6e30 (or logged path 0xa6dd4) calls FindFileSystemAccessor through PLT0x633d90.",
+        "MountTable::Find at0xa6440 compares registered names over16 bytes.",
+        "Unknown nonnull name returns0x35f202; public IsMounted clears that result and returns false.",
+        "NULL returns0x2f5e02 through the non-notfound error/abort path, not normal false."
+      ]
+    },
+    "detail_function": {
+      "symbol": "_ZN2nn2fs6detail9IsMountedEPbPKc",
+      "offset": "0xa6bf0",
+      "size": 80,
+      "scope": "Separate Result/out-bool interface; not newly overridden."
+    },
+    "main_call": {
+      "offset": "0xcae0a4",
+      "PLT": "0x1b46120",
+      "input": "0xcae070 copies at most15 bytes into a zeroed16-byte mount-name buffer; x0 points to it.",
+      "return": "0xcae0ac masks w0 with1, independently confirming bool ABI."
+    },
+    "SDK_registration_validation": "Separate registration validator enforces at most15-byte valid UTF8 names; rejects empty, slash, colon and single ASCII letter. IsMounted itself uses the mount-table lookup rather than rerunning that validator."
+  },
+  "implementation": {
+    "resolver_symbol": "_ZN2nn2fs9IsMountedEPKc",
+    "query_truth": "Exact case-sensitive live host mounts[16] OR successfully published RomFS mount_name.",
+    "host_types": "Existing save, temporary, cache and RAM-backed host mount entries; their existing registration and unmount operations remain authoritative.",
+    "RomFS_helper": "runtime_romfs_is_mounted(const char *bare_name); no image initialization or mount creation.",
+    "query_side_effects": "No ready(), runtime_fs_init(), account identity query, profile creation, image/index/proof access, filesystem logging, FSP connection or host file I/O.",
+    "NULL_policy": "Explicit runtime_fail follows existing host fatal policy, preserving SDK fatal/error intent without claiming an identical Nintendo Result transport.",
+    "nonnull_policy": "Malformed empty/path-syntax/unterminated-or-overlong names return false. Exact registered bare names remain authoritative.",
+    "inherited_registration_limit_difference": "Existing host/RomFS registries accept names up to31 bytes, versus SDK registration limit15. This change preserves that pre-existing API and queries such registered names exactly; it does not claim complete SDK registration validation equivalence.",
+    "locking": "Host table read under its existing mutex, released before querying RomFS. RomFS publication/query/path ownership/listing read mount_name under its own mutex or locked snapshot. No nested host-table/RomFS mutex acquisition.",
+    "runtime_verifier": "Image/index/full-SHA/proof validation functions unchanged. Because romfs.c source hash changed, parent will perform a fresh full native image hash before using a new proof baseline.",
+    "not_implemented": [
+      "FSP IPC service or access-log service",
+      "New filesystem permission or allocator behavior",
+      "RomFS unmount lifecycle; inherited bare-name Unmount does not clear RomFS and was not observed in this startup path.",
+      "General SDK filesystem registration validation overhaul"
+    ]
+  },
+  "validation": {
+    "new_native_tests": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python tests/test_fs_is_mounted.py -v",
+      "passed": 12,
+      "compile": "Real runtime/fs_host.c plus runtime/romfs.c, arm64 clang GNU11 O1 -Wall -Wextra -Werror; original20-byte image and one-entry index generated by tests.",
+      "coverage": [
+        "Exact public resolver and bool invocation, nonmatching symbols absent",
+        "Pure queries before any scratch/env/filesystem initialization; no directory/file mutations or account callback",
+        "NULL fatal without filesystem initialization",
+        "Actual save/temp/cache/RAM mount and host unmount transitions",
+        "Case/prefix/path/unknown and bounded-name negatives",
+        "Inherited31-byte registered host name exact lookup",
+        "Verified image readiness alone remains unmounted",
+        "Real RomFS mount query, original file read and directory access",
+        "Concurrent host mount/unmount and queries",
+        "10000 mounted queries leave filesystem snapshot and account-call count unchanged"
+      ]
+    },
+    "regressions": [
+      {
+        "test": "tests/test_host_policy.py",
+        "passed": 9
+      },
+      {
+        "test": "tests/test_host_runner_proof.py",
+        "passed": 15
+      }
+    ],
+    "total_passed": 36,
+    "guest_code_executed": false,
+    "GPU_executed": false,
+    "full_host_build_or_boot_performed_by_author": false,
+    "new_adapter_actual_game_runtime_verified": false,
+    "game_frame_or_gameplay_claim": false
+  },
+  "source_sha256": {
+    "runtime/fs_host.c": "1e2a81bcb92aae4541f4ae4f6957cd9c2b95421b212b10f90fb3748498d2c66f",
+    "runtime/fs_host.h": "77982a8a4c14241cc798cecdb827ed5337169e2977ee6b53a95e5799f35bd225",
+    "runtime/romfs.c": "af7ae8a55caea22b6ea13884b32fee1ed02507edc3e4ed4544c012e856849c9c",
+    "tests/test_fs_is_mounted.py": "c729ac06d55cd4136f2c733f22a0c16a978a94e7e78406aa98d847840148c3a3"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "actual_native_original_DSO_initializer_phase_returns_nnMain_executes_first_game_IPC_request",
+  "compiled_source_commit": "f534d93133cb5ec3f1fa4a62f7de4ffe133a6da9",
+  "compiled_source_hashes_match_commit": true,
+  "compiled_source_files": 149,
+  "translation_units": 70,
+  "binary_sha256": "7424d43f8c75f55b160baef734f299fcde4232a9673699ccb2531ecf8107a323",
+  "compiled_build_receipt_sha256": "901873c30de0e19db98b4efe5a9efb2fa3404b59dab18261aa377c675b91040e",
+  "run_receipt_sha256": "caa3cf0e834af2484d5156323a6c36b995c2aa90856c6799dfb2246d2a44494e",
+  "log_sha256": "19b24d41d5e0a16b4a15ed9b027dbe63346af95b2147416277b4eeacc63a9ac9",
+  "native_exit_code": 1,
+  "native_seconds": 0.946,
+  "SDK_initialization_and_startup_returned": true,
+  "original_DT_INIT_firstpass_order": [
+    "sdk",
+    "subsdk0",
+    "main"
+  ],
+  "observed_initial_registration_transitions": {
+    "sdk": [
+      0,
+      1
+    ],
+    "subsdk0": [
+      0,
+      1
+    ],
+    "main": [
+      0,
+      2
+    ]
+  },
+  "observed_final_DSO_results_main_subsdk0_sdk": [
+    2,
+    1,
+    1
+  ],
+  "original_module_initializer_phase_returned": true,
+  "each_individual_deferred_callback_separately_instrumented": false,
+  "no_manual_init_array_calls_or_guest_flag_writes": true,
+  "nnMain_entered": true,
+  "actual_game_code_reached_first_IPC_callsite": "main+0xca8c58",
+  "next_unimplemented_interface": "applet:ICommonStateGetter",
+  "next_unimplemented_command": 66,
+  "next_command_raw_bytes": 4,
+  "runtime_RomFS_verification_mode": "reused_previous_C_full_hash_record",
+  "fresh_image_hash_performed_this_run": false,
+  "runtime_RomFS_record_sha256": "4ac4a3a64fed51368cc149745a3e96d5b0ffc3bdb38ee34784fb9998022eb60b",
+  "game_engine_asset_deserialization_observed": false,
+  "actual_game_GPU_work_verified": false,
+  "first_game_frame_verified": false,
+  "menu_verified": false,
+  "gameplay_verified": false,
+  "app_installed": false,
+  "remaining_owned_processes": [],
+  "private_evidence_location": "external host-build/runs/host-6bcdxjxy",
+  "boundary": "nnMain and original initializer completion are real native execution evidence; no frame/menu/gameplay or iPhone compatibility is asserted"
+}

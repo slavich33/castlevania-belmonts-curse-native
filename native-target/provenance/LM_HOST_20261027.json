@@ -1,0 +1,143 @@
+{
+  "schema": 2,
+  "state": "real_host_LM_service_v2_global_destination_offline_verified",
+  "observed_at_utc": "2026-10-27T02:08:38.821399+00:00",
+  "source_hashes": {
+    "runtime/lm_host.c": "0fd1b2de45d3c10d57a1ba824cdd78cc5d0a0e3f5b1c15a6e457124e49eb1a2b",
+    "tests/test_lm_ipc.py": "1f4ed6dfc67141fa569ba04ff2d16e4082cf3ef1809ef700a2cef716ea4d7067"
+  },
+  "actual_boot_trigger": {
+    "observation": "nnosInitialize returned; nninitInitializeSdkModule stopped on missing IPC service lm",
+    "sdk_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "SDK_decoded_evidence": [
+      "lm::Initialize sdk+0x3c34ac..+0x3c34c0 calls ILogService virtual with output interface and zero ClientProcessId placeholder",
+      "SDK source exports LM packet-header getters and ULEB128 transmitter; measured callbacks remain unchanged"
+    ]
+  },
+  "implemented_protocol": {
+    "lm_ILogService": "cmd0 OpenLogger: ClientProcessId placeholder plus send-PID descriptor, no input handles; real moved ILogger session or domain object through existing IPC dispatcher",
+    "ILogger": "cmd0 Log: one active X or A input buffer (AutoSelect0x21); cmd1 SetDestination u32 mask",
+    "unsupported": "all other request commands fail; Request cmd2 is not Flush. Existing CMIF control2 is generic clone, separate from request dispatch",
+    "packet": "24-byte header; validates payload exactly, little-endian known flags/severity; padding unspecified; snapshots readable bounded guest bytes",
+    "chunks": "ULEB128 key/length streaming validation; key/length/value may span packets; head/tail checked per thread; unknown chunk keys preserved as payload metadata"
+  },
+  "real_host_behavior": {
+    "sink": "run/logs/guest-lm.log, owned regular0600, NOFOLLOW/openat in checked run logs directory",
+    "file_limit_bytes": 4194304,
+    "packet_limit_bytes": 65535,
+    "logical_message_limit_bytes": 65536,
+    "logger_limit_per_process": 64,
+    "concurrent_streams_per_logger": 16,
+    "PID": "single-process host identity (getpid), replacing untrusted packet/client placeholder PID; no PID injection needed in other IPC services",
+    "destination": "service-global under lm_lock, default TargetManager1. Setting via A affects B/clones, and opening another logger does not reset it; supported masks map to the diagnostic host sink; mask0 disables payload output. No physical UART/TargetManager transport claimed",
+    "storage": "hex payload records retain packet fragmentation losslessly and cannot inject terminal controls",
+    "success_condition": "service/session creation or validated log/configuration writes actually completed and fsynced; budget/write failures stop",
+    "lifetime": "bounded process-lifetime logger states are not freed/reused while generic IPC clone sessions can borrow them"
+  },
+  "validation": {
+    "new_native_CMIF_tests_passed": 19,
+    "tested": [
+      "real MOVE-handle session return",
+      "X pointer and A map-alias",
+      "AutoSelect both descriptors with one empty",
+      "fragmented TLV value across packets",
+      "unspecified CMIF/header padding",
+      "destination configuration",
+      "control-byte escaping",
+      "missing PID",
+      "ambiguous buffers",
+      "unreadable buffer",
+      "wrong payload size",
+      "truncated TLV tail",
+      "unsupported mask/command",
+      "actual file cap without overrun",
+      "A disables global destination; B opened afterward remains disabled",
+      "B enables destination2; A payload output resumes"
+    ],
+    "git_diff_check": "passed",
+    "previous_v1_entire_offline_suite_passed": 36,
+    "previous_v1_syntax_checks": [
+      {
+        "command": [
+          "/usr/bin/xcrun",
+          "clang",
+          "-arch",
+          "arm64",
+          "-std=gnu11",
+          "-fsyntax-only",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-Wno-deprecated-declarations",
+          "-DGAME_CASTLEVANIA=1",
+          "-DCASTLEVANIA_DIAGNOSTIC_BOOT=0",
+          "-Iruntime",
+          "-Ithird_party/d2r_gfx/gfx/nvn/include",
+          "runtime/lm_host.c",
+          "runtime/ipc.c"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "/usr/bin/xcrun",
+          "clang",
+          "-arch",
+          "arm64",
+          "-std=gnu11",
+          "-fsyntax-only",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-Wno-deprecated-declarations",
+          "-DGAME_CASTLEVANIA=1",
+          "-DCASTLEVANIA_DIAGNOSTIC_BOOT=1",
+          "-Iruntime",
+          "-Ithird_party/d2r_gfx/gfx/nvn/include",
+          "runtime/lm_host.c",
+          "runtime/ipc.c"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "v2_focused_command": "python3 -m unittest discover -s tests -p test_lm_ipc.py -v",
+    "v2_test_compile": "real IPC and LM handlers compiled native ARM64 with -Wall -Wextra -Werror; no guest/SDK execution"
+  },
+  "primary_references": [
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libstratosphere/source/lm/lm_remote_log_service.cpp",
+      "used_for": "OpenLogger command0/ClientProcessId/output service"
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libstratosphere/source/lm/lm_remote_log_service.hpp",
+      "used_for": "ILogger Log0/SetDestination1 and AutoSelect buffer"
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libstratosphere/source/lm/impl/lm_log_packet_header.hpp",
+      "used_for": "packet layout and flags"
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/master/nx/include/switch/sf/service.h",
+      "used_for": "non-domain output service uses moved handle; domain uses object id"
+    },
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/master/nx/include/switch/sf/cmif.h",
+      "used_for": "AutoSelect inactive descriptor and generic control2 CloneCurrentObject"
+    },
+    {
+      "url": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libstratosphere/source/lm/srv/lm_logger_impl.cpp",
+      "used_for": "service-global g_log_destination, default TargetManager, SetDestination affects all ILogger instances"
+    }
+  ],
+  "independent_protocol_review": "castlevania_probe source review found one P2 global-destination mismatch, fixed in v2 with two-session regression tests; other reviewed framing/packet/continuation/session/error paths clean",
+  "code_authorship": "independent host C implementation; protocol facts referenced, no Atmosphere implementation copied",
+  "SDK_init_override_added": false,
+  "fake_success_or_guest_bypass_added": false,
+  "guest_or_GPU_executed_by_this_stage": false,
+  "loader_builder_or_GFX_modified": false,
+  "remaining": "root rebuild/run must measure actual SDK LM traffic and subsequent unsupported service/ABI failures; no post-fix boot claim",
+  "previous_v1_source_hashes": {
+    "runtime/lm_host.c": "ca8b9cb858a64eb66276aab0beaa0f6560f556428e6b2fcd6574cc00ef7fb0b0",
+    "tests/test_lm_ipc.py": "91d0b9682204c5d6b9e5b859584a50f540458305f128f7b0c9a200ceede1f9e2"
+  }
+}

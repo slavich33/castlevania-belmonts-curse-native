@@ -1,0 +1,23 @@
+{
+  "state": "pinned_standalone_tool_licenses_verified",
+  "license": "GNU General Public License version2",
+  "files": [
+    {
+      "component": "Atmosphere",
+      "source": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/tooling/Atmosphere-6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/LICENSE",
+      "destination_relative": "native-target/tooling/hac2l/licenses/Atmosphere-LICENSE",
+      "bytes": 18091,
+      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "pinned_upstream_compared": true
+    },
+    {
+      "component": "hac2l",
+      "source": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/tooling/Atmosphere-6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/tools/hac2l/LICENSE",
+      "destination_relative": "native-target/tooling/hac2l/licenses/hac2l-LICENSE",
+      "bytes": 18091,
+      "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "pinned_upstream_compared": true
+    }
+  ],
+  "component_scope": "Standalone extraction tool public source, not linked into the native host"
+}

@@ -1,0 +1,71 @@
+{
+  "state": "all_modified_hac2l_pristine_sources_match_pinned_official_upstream",
+  "hac2l_commit": "603de9228dad2a0b6d6897e9dd7ca50a20485eba",
+  "files": [
+    {
+      "path": "tools/hac2l/source/hactool_application_list.hpp",
+      "upstream_url": "https://raw.githubusercontent.com/Atmosphere-NX/hac2l/603de9228dad2a0b6d6897e9dd7ca50a20485eba/source/hactool_application_list.hpp",
+      "expected_pristine_sha256": "5f4884366f11a243e4d8b8970db4891bfa0df19c459857303450e8742a23c078",
+      "upstream_sha256": "5f4884366f11a243e4d8b8970db4891bfa0df19c459857303450e8742a23c078",
+      "matches": true
+    },
+    {
+      "path": "tools/hac2l/source/hactool_fs_utils.cpp",
+      "upstream_url": "https://raw.githubusercontent.com/Atmosphere-NX/hac2l/603de9228dad2a0b6d6897e9dd7ca50a20485eba/source/hactool_fs_utils.cpp",
+      "expected_pristine_sha256": "2a75c5fbc5f33982b63d23f3945984d501becad4fe972e4a243faff6661bf00a",
+      "upstream_sha256": "2a75c5fbc5f33982b63d23f3945984d501becad4fe972e4a243faff6661bf00a",
+      "matches": true
+    },
+    {
+      "path": "tools/hac2l/source/hactool_fs_utils.hpp",
+      "upstream_url": "https://raw.githubusercontent.com/Atmosphere-NX/hac2l/603de9228dad2a0b6d6897e9dd7ca50a20485eba/source/hactool_fs_utils.hpp",
+      "expected_pristine_sha256": "4a01722936eb558118f4c75fc7ce2045b920a5fb7ed91631a3fb1efb29e23a7c",
+      "upstream_sha256": "4a01722936eb558118f4c75fc7ce2045b920a5fb7ed91631a3fb1efb29e23a7c",
+      "matches": true
+    },
+    {
+      "path": "tools/hac2l/source/hactool_options.cpp",
+      "upstream_url": "https://raw.githubusercontent.com/Atmosphere-NX/hac2l/603de9228dad2a0b6d6897e9dd7ca50a20485eba/source/hactool_options.cpp",
+      "expected_pristine_sha256": "a661f4298d3970f29119a6b3230d8a1b3a0ae70ea24cbc14b029bb06e004d32d",
+      "upstream_sha256": "a661f4298d3970f29119a6b3230d8a1b3a0ae70ea24cbc14b029bb06e004d32d",
+      "matches": true
+    },
+    {
+      "path": "tools/hac2l/source/hactool_options.hpp",
+      "upstream_url": "https://raw.githubusercontent.com/Atmosphere-NX/hac2l/603de9228dad2a0b6d6897e9dd7ca50a20485eba/source/hactool_options.hpp",
+      "expected_pristine_sha256": "c9c5c9a2c37821d04e3450091688e5eb89900502d28f594a108ef6f71509785e",
+      "upstream_sha256": "c9c5c9a2c37821d04e3450091688e5eb89900502d28f594a108ef6f71509785e",
+      "matches": true
+    },
+    {
+      "path": "tools/hac2l/source/hactool_processor.hpp",
+      "upstream_url": "https://raw.githubusercontent.com/Atmosphere-NX/hac2l/603de9228dad2a0b6d6897e9dd7ca50a20485eba/source/hactool_processor.hpp",
+      "expected_pristine_sha256": "e11d8a06ce9f78d998c4ca7f7dabb8dbd3ea3c87d575fb5047cb31ebe665d239",
+      "upstream_sha256": "e11d8a06ce9f78d998c4ca7f7dabb8dbd3ea3c87d575fb5047cb31ebe665d239",
+      "matches": true
+    },
+    {
+      "path": "tools/hac2l/source/hactool_processor.keys.cpp",
+      "upstream_url": "https://raw.githubusercontent.com/Atmosphere-NX/hac2l/603de9228dad2a0b6d6897e9dd7ca50a20485eba/source/hactool_processor.keys.cpp",
+      "expected_pristine_sha256": "eb747bdd8380c3bcae6335a6bd520ca7fa925cb13055d98344e7e7d25039fb96",
+      "upstream_sha256": "eb747bdd8380c3bcae6335a6bd520ca7fa925cb13055d98344e7e7d25039fb96",
+      "matches": true
+    },
+    {
+      "path": "tools/hac2l/source/hactool_processor.nca.cpp",
+      "upstream_url": "https://raw.githubusercontent.com/Atmosphere-NX/hac2l/603de9228dad2a0b6d6897e9dd7ca50a20485eba/source/hactool_processor.nca.cpp",
+      "expected_pristine_sha256": "23c002d921fa9bd2864dcd571667b3e450409b7c15f8627f60050557de3750e3",
+      "upstream_sha256": "23c002d921fa9bd2864dcd571667b3e450409b7c15f8627f60050557de3750e3",
+      "matches": true
+    },
+    {
+      "path": "tools/hac2l/source/hactool_processor.npdm.cpp",
+      "upstream_url": "https://raw.githubusercontent.com/Atmosphere-NX/hac2l/603de9228dad2a0b6d6897e9dd7ca50a20485eba/source/hactool_processor.npdm.cpp",
+      "expected_pristine_sha256": "72feda98f3e60c755ddec84e5dadc86e20bd2c9ca2255dd8b28799d7305cfaec",
+      "upstream_sha256": "72feda98f3e60c755ddec84e5dadc86e20bd2c9ca2255dd8b28799d7305cfaec",
+      "matches": true
+    }
+  ],
+  "source_data_downloaded_to_RAM_only": true,
+  "ROM_or_private_keys_downloaded": false
+}

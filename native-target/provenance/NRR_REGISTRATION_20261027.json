@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "native_RSA_PSS_NRR_registry_tested_genuine_production_chain_verified_awaiting_actual_cmd2_boot",
+  "actual_trigger": {
+    "source_commit_short": "dd64805",
+    "binary_sha256": "a42a0fc112ff7f6f3d6d52f46ef6e1ca49fc7eb0ebef120323f71374fa925b27",
+    "log_sha256": "d04563d7ebffe585cd5d23ce26e018e1340c9c7a6f21642889b07acc26bcf39a",
+    "private_run_description": "external host-build/runs/host-85_9bafv",
+    "observed": "Actual boot14 opened ldr:ro, completed cmd4 type6 with PID/COPY and empty response, then stopped on real cmd2 type6, raw bytes28 including alignment slack, zero handles/buffers. Native time1.192 seconds, exit1 and no remaining owned processes"
+  },
+  "measured_wire": {
+    "command": "ldr:ro RegisterModuleInfo2, called LoadNrr by libnx",
+    "input": "PID descriptor plus three raw u64 values: zero ClientProcessId placeholder, NRR source address, NRR byte size. No input handles or buffer descriptors, no output payload/objects",
+    "SDK_evidence": "Vtable adapter0x14b9b4..0x14b9bc selects cmd2 and branches to0x14bc30. Encoder selects type6 at0x14bc60..0x14bc74 and special-header1 at0x14bc78/0x14bc7c (PID only). It places raw x1/x2 at0x14bc9c and x3 at0x14bc94",
+    "primary_reference": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/source/services/ro.c#L83-L89"
+  },
+  "public_verification_contract": {
+    "root_source": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/stratosphere/ro/source/impl/ro_nrr_utils.cpp",
+    "root_data": "Only public production RSA2048 moduli for generations0/1 are embedded as factual verification data; exponent65537. No private/owner key, development-root fallback, ease-restriction policy or runtime trust override",
+    "production_modulus_sha256": ["6babd582fb42fccac088724f25b292c7fdcfc9d12b189df9a23db28cde720de7", "e00cdbbef9a3ee2ea7bf79854bb5c1d01775585bdb05330c2e2e00974456820d"],
+    "certificate": "RSA-PSS/SHA256 verifies signature[0x130,0x230) over certificate[0x10,0x130) with the selected public production root; certificate contains ProgramId mask/pattern and certified public modulus[0x30,0x130)",
+    "NRR": "RSA-PSS/SHA256 verifies signature[0x230,0x330) over the complete signed area[0x330,declared_size) with that certified modulus",
+    "API": "SecKeyCreateWithData imports public PKCS#1 DER in memory; SecKeyVerifySignature uses RSASignatureMessagePSSSHA256, MGF1-SHA256 and salt32. CommonCrypto SHA256 records the complete immutable signed-area digest. No keychain persistence or private-key operation occurs in production",
+    "compatibility_boundary": "Pinned Atmosphere accepts variable nonzero PSS salts. This host intentionally supports salt32, confirmed on the genuine local NRR and independent fixtures; other valid encodings are not silently accepted or claimed compatible"
+  },
+  "structure_and_policy": {
+    "reference": "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libstratosphere/include/stratosphere/ro/ro_types.hpp#L34-L124",
+    "header": "NRR0, supported production key generation, declared size matching snapshot; ProgramId@0x330 equals the compile-time title and matches certificate mask/pattern; User kind0@0x33c",
+    "hashes": "u32 offset@0x340/count@0x344; range starts at/after0x350 and fits without multiplication overflow. Original32-byte hashes must be lexicographically sorted and unique. Authenticated count0 is valid but authorizes no module hash",
+    "process": "A live retained current-process registration is mandatory. Wire PID is not a trusted kernel identity; this in-process transport binds its own getpid as documented by RO_HOST",
+    "snapshot": "Nonzero 4KiB-aligned source address and byte size, no address overflow, at most1MiB diagnostic resource cap. mach_vm_read_overwrite copies the complete readable range before parsing or cryptography; ipc_guest alone is not treated as a readability check",
+    "registry": "Only after complete validation, store original source address/size, owned immutable full snapshot, exact original hash range/count and signed-area SHA256 under the RO mutex. Reject duplicate addresses and registry overflow; at most64 records per service state",
+    "lifetime": "Retained clones/copies share the real registry. Last state release frees every snapshot and unregisters the process. Mutation/free of the caller's original buffer cannot replace the trusted hashes",
+    "limits_boundary": "The1MiB snapshot cap and duplicate-address rejection are explicit host diagnostic policy. The64-entry bound follows the pinned public implementation's MaxNrrInfos; none is a measured game requirement",
+    "unsupported": "Cmd0 MapNro, cmd1 UnmapNro, cmd3 UnregisterModuleInfo, cmd10 alternate registration and unknown methods still stop explicitly. No NRO memory mapping, relocation, AOT execution, symbol/list alias protocol, module initialization or first frame is implied by cmd2 success"
+  },
+  "genuine_private_fixture_verification": {
+    "description": "Read-only inputs/dynamic.nrr from the local cimgui native-feasibility export; owned payload remains outside Git",
+    "sha256_before_and_after": "dd97a3ca8c5bff347be41289bef9c88ad6293f204ce162ea3a614aee5bd45770",
+    "size": 4096,
+    "key_generation": 0,
+    "program_id": "0100BA4026E94000",
+    "certificate_program_mask_match": true,
+    "kind": 0,
+    "hash_offset": "0x350",
+    "hash_count": 1,
+    "certified_public_modulus_sha256": "9c04f77431b10cae25b895641bf0709fa3fb32bde363c5f29880bad34057d182",
+    "certificate_signature": "PASS against pinned public production root0, first independently via public modular arithmetic/SHA256, then via actual native Security production wrapper",
+    "NRR_signature": "PASS against the certified public modulus by both independent public arithmetic and native Security production wrapper",
+    "both_PSS_salt_sizes": 32,
+    "authorization_boundary": "This exact-file hash is provenance only, not a hardcoded runtime trust shortcut. The production validator authorizes the actual certificate/signature chain and immutable original hash list; no expected NRO hash is injected"
+  },
+  "native_validation": {
+    "validator_tests": 10,
+    "RO_wire_and_lifetime_tests": 37,
+    "compiler": "xcrun clang -arch arm64 -std=gnu11 -O1 -Wall -Wextra -Werror -framework Security -framework CoreFoundation",
+    "validator_fixture": "Independently authored NRRs signed with ephemeral in-memory Security RSA root/child test keys. Private keys are neither exported nor saved. Tests include the same source's private static core solely in the test translation unit; the production entry always selects pinned production roots and is explicitly tested to reject the ephemeral root",
+    "genuine_fixture": "A test-only explicit private path runs the real production entry on the original NRR and verifies SHA256 readback; default source-only tests skip it when that private fixture is not supplied",
+    "cases": [
+      "Certificate/whole-NRR signatures, wrong root, tampered signed certificate/data/signature, authentic kind/program/mask validation",
+      "Magic, declared/snapshot size, alignment/resource cap, unsupported generation, overflowing/invalid hash range/count, unsorted/duplicate hashes and empty authority",
+      "Actual HIPC/CMIF cmd2 including observed raw28, live process, buffer/handle/PID/raw-shape negatives, safe unreadable-memory rejection",
+      "Immutable trusted hashes after caller mutation, clone/domain ownership, duplicate address and64-entry registry exhaustion",
+      "Existing cmd4 clone/domain/refcount/identity/duplicate-registration/1000-cycle cleanup regressions; unknown MapNro and other commands remain explicit stops"
+    ]
+  },
+  "owned_paths": ["runtime/nrr_validate.c", "runtime/nrr_validate.h", "runtime/ro_host.c", "tests/nrr_fixture.h", "tests/test_nrr_validation.py", "tests/test_ro_ipc.py", "provenance/NRR_REGISTRATION_20261027.json"],
+  "independent_review": "Focused peer source review found no material issue in signed ranges, production trust, immutable snapshot/registry or final release. No guest/test/build operation by the reviewer",
+  "actual_guest_or_GPU_execution_by_this_stage": false,
+  "remaining": "Root review/build and actual diagnostic boot must establish observed cmd2 return and the next real request. A valid NRR is not a mapped NRO, completed module initialization, game frame, menu or gameplay"
+}

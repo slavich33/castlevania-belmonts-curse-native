@@ -1,0 +1,297 @@
+{
+  "state": "safe_source_checkpoint_ready",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 369,
+      "sha256": "8733ac5e7927066701841eb176082ff7d99390f29489bb7ae090a0a2dead09b5"
+    },
+    {
+      "path": "HAC2L-SOURCE-COPY-20261027.json",
+      "bytes": 5409,
+      "sha256": "791459906a8410cc1e8cf97c9b632c156b31eb16db0f32eda9c7402d0ef6a574"
+    },
+    {
+      "path": "README-hac2l-20261027.md",
+      "bytes": 8240,
+      "sha256": "16948e9c2e7451028d5000e301590171ea60aaff5815b347ac69b71d6e3c99ce"
+    },
+    {
+      "path": "audit_hac2l_binary_20261027.py",
+      "bytes": 4220,
+      "sha256": "67f612db5abbfa695a64d326958fd1e01251b450cb3f8be1a4ca4b9468191e0d"
+    },
+    {
+      "path": "build_hac2l_safe_20261027.py",
+      "bytes": 2303,
+      "sha256": "2692cec97621550ab86a66b6b01d4629e7901757476634e30ca2c3d7d0b7bf9b"
+    },
+    {
+      "path": "checkpoint_probe_sources_20261027.py",
+      "bytes": 1776,
+      "sha256": "0299266a9cbd696760ba9395d3265bead597b818acf650ba0bf1294bd6ccc170"
+    },
+    {
+      "path": "consolidate_public_tool_patch_20261027.py",
+      "bytes": 4672,
+      "sha256": "806b13bc514d38583e7722e830c1343b7117d25ff0c818493628f1911c437a5c"
+    },
+    {
+      "path": "export_verified_romfs_20261027.py",
+      "bytes": 12499,
+      "sha256": "5cae2532c9dfd5afd1747c65a56b44f9489c8f09afe4a1473dfe2f9151e08936"
+    },
+    {
+      "path": "hac2l-LICENSE-PROVENANCE-20261027.json",
+      "bytes": 1083,
+      "sha256": "822e4c0a60444fd4ddde375c8b5ab5255c4c24da05288cbab6e3c9eb40df857a"
+    },
+    {
+      "path": "hac2l-RomFS-export-plan-20261027-r2.json",
+      "bytes": 4495,
+      "sha256": "fb514491c89743fd49d1f545b0224603bd6bd2c1baf6c10ad297c223756fbdf1"
+    },
+    {
+      "path": "hac2l-RomFS-export-plan-20261027.json",
+      "bytes": 4278,
+      "sha256": "dcd395834353092d408e070622c91f8e319f8d0c2c78d4f3e2ae2d63ff45cecc"
+    },
+    {
+      "path": "hac2l-RomFS-recovery-progress-20261027.json",
+      "bytes": 3304,
+      "sha256": "4d6b84023a8137679b3003d0fe2d04d2d04a0a6414b171e07df7a426c2362372"
+    },
+    {
+      "path": "hac2l-bounded-merged-listromfs-20261027-r1.json",
+      "bytes": 1730,
+      "sha256": "1404e21063d32a14852029927dca1aa7a94e9f0cfb2664d28f711afa378c181d"
+    },
+    {
+      "path": "hac2l-bounded-merged-listromfs-20261027-r2.json",
+      "bytes": 381300,
+      "sha256": "5f70fc40d5cb26b19fcb40cd8244ddb9234d5fc43fb8f6ccd208f9a5c749c7c5"
+    },
+    {
+      "path": "hac2l-bounded-merged-listromfs-20261027-r3.json",
+      "bytes": 381304,
+      "sha256": "e074e456727ef8f72d70807d0fc3096fca940495c34e09eb3cbbdf43e0382040"
+    },
+    {
+      "path": "hac2l-budget-accuracy-20261027.patch",
+      "bytes": 1260,
+      "sha256": "5145ee7440964061b32e3d673e63c1861c74468e1e95d94c9ead04be13b522e5"
+    },
+    {
+      "path": "hac2l-build-20261027-r10.json",
+      "bytes": 1167,
+      "sha256": "7dbc11017020e8468b4a4c66682346b700f73a61291739ac506236ea9714e56c"
+    },
+    {
+      "path": "hac2l-build-20261027-r11.json",
+      "bytes": 1167,
+      "sha256": "1fa9c467c626c5b088e9a7d1bbb704999a90ad9cb4ad638c3d02e727c99db2af"
+    },
+    {
+      "path": "hac2l-build-20261027-r4.json",
+      "bytes": 1229,
+      "sha256": "59dc92cd4c4a8f1788a7ef95113a64727a7ad474e6187aa04bb567281f4d8f65"
+    },
+    {
+      "path": "hac2l-build-20261027-r5.json",
+      "bytes": 1229,
+      "sha256": "ff9bb162615e64a8235439b0d5bba6b85ebabd820a70acd0c4af6e7664c22fea"
+    },
+    {
+      "path": "hac2l-build-20261027-r6.json",
+      "bytes": 1227,
+      "sha256": "5039ebfd1a4c760b81012260751d1d79c4a840ae84259624bcdc0931960c83b1"
+    },
+    {
+      "path": "hac2l-build-20261027-r7.json",
+      "bytes": 1166,
+      "sha256": "8b6815fbc949866e8d53a4d4d2b93114612502d9928dbb450b6a5c1bfc19d5c6"
+    },
+    {
+      "path": "hac2l-build-20261027-r8.json",
+      "bytes": 1166,
+      "sha256": "8e226d087594e31dc93094d7a442cbf0220baaa283c22cb234fec0464ca975a8"
+    },
+    {
+      "path": "hac2l-build-20261027-r9.json",
+      "bytes": 1166,
+      "sha256": "274987bae5ba9ae330896a9b17d93597b7aebab6ab0d70f7af90390a4bb134c9"
+    },
+    {
+      "path": "hac2l-consolidated-public-20261027.json",
+      "bytes": 5532,
+      "sha256": "fae84a0ec7422a3fc8c9e60ba545da22b0a077301252368991dd8abebf21ee06"
+    },
+    {
+      "path": "hac2l-consolidated-public-20261027.patch",
+      "bytes": 45424,
+      "sha256": "36b1c1bd44b1813d3db0fb79c8b18c7be1d64451158d9533fcaf6a8adefd5b7d"
+    },
+    {
+      "path": "hac2l-dependent-template-20261027.json",
+      "bytes": 407,
+      "sha256": "cfc04362e07acdbe6b376db567485e2eb7aa6bc1c9f49d06ab3ece230aa9bb99"
+    },
+    {
+      "path": "hac2l-dependent-template-20261027.patch",
+      "bytes": 545,
+      "sha256": "07a6be4f0890f89446d797399633b2bfd9e79e985d2c20db51ad9205e1ffd7e4"
+    },
+    {
+      "path": "hac2l-macho-bignum-symbols-20261027.json",
+      "bytes": 618,
+      "sha256": "88884424ef3e1cf1a34240b96c5d2a97544706815dcfc73fc11d4f7857017f47"
+    },
+    {
+      "path": "hac2l-macho-bignum-symbols-20261027.patch",
+      "bytes": 1151,
+      "sha256": "487ea974c0715c8c162c8a23674d9738f057023bd88712ecf3ed7fb9c8477bd3"
+    },
+    {
+      "path": "hac2l-macho-bignum-text-check-20261027.json",
+      "bytes": 617,
+      "sha256": "37d0c7bed6543f3649725060b73fd0eca1a789148ed7b4f5bc662fe0c2d79237"
+    },
+    {
+      "path": "hac2l-macos-buffer-TLS-init-20261027.json",
+      "bytes": 699,
+      "sha256": "0f9d3b26188353e7b7bb72b2a8bfc62c0656f7c60ea82534ad4c3fc2026ae718"
+    },
+    {
+      "path": "hac2l-macos-buffer-TLS-init-20261027.patch",
+      "bytes": 1602,
+      "sha256": "fb38d21547e33add11f28ec774917e3d352c3eae54ef95e54262b5d839ea271c"
+    },
+    {
+      "path": "hac2l-macos-context-TLS-init-20261027.json",
+      "bytes": 1077,
+      "sha256": "f48b0d2e7c066b5daa74b9d796ee0d2b98173b878cf769ffb33f3eb749fed036"
+    },
+    {
+      "path": "hac2l-macos-context-TLS-init-20261027.patch",
+      "bytes": 3105,
+      "sha256": "6d60a5676e199c4516d8c4d5d76ed2f928a0094fe903ffd120bee0541b9cd5b7"
+    },
+    {
+      "path": "hac2l-npdm-api-compat-20261027.json",
+      "bytes": 552,
+      "sha256": "37bf8c6fa3cb0aa4b04eca7bf2564fca9b09942156ef9209ecea201a4e85ec61"
+    },
+    {
+      "path": "hac2l-npdm-api-compat-20261027.patch",
+      "bytes": 4303,
+      "sha256": "7bea6d9bfe6fa668d9d0729d80acae5fb54898c7f39f3036959c312cb235d308"
+    },
+    {
+      "path": "hac2l-resume-source-audit-20261027.json",
+      "bytes": 1245,
+      "sha256": "a5c976545c84cfe73fb58913cd6186dd590c7ee3bf236d4ea8adda4fb6a7ceb7"
+    },
+    {
+      "path": "hac2l-safe-binary-20261027-r2.json",
+      "bytes": 1242,
+      "sha256": "35364e0abb670d1523ed6e6a399eb69e57ea6545bd37c684486d8aa9dcc6c85b"
+    },
+    {
+      "path": "hac2l-safe-binary-20261027-r3.json",
+      "bytes": 2154,
+      "sha256": "ac1acef5f1cf81c7d537290524c08fb4052e0e5251e6163b3b8e6c0db2cc8333"
+    },
+    {
+      "path": "hac2l-safe-binary-20261027-r4.json",
+      "bytes": 2668,
+      "sha256": "324b626fea263c8d8855c66b7fe9828810ce6adce82def73434896eb4e5106e7"
+    },
+    {
+      "path": "hac2l-safe-binary-20261027.json",
+      "bytes": 1227,
+      "sha256": "3fc32e1f44a5d22454ae2c3d32d950df713f03ed0dd76fc8d71d5db79aa342c5"
+    },
+    {
+      "path": "hac2l-selected-base-identity-20261027.json",
+      "bytes": 954,
+      "sha256": "d80306d5d85d502b299930678ad89d718a5a7f52813494cc2013d91f8005c5f3"
+    },
+    {
+      "path": "hac2l-selected-base-identity-20261027.patch",
+      "bytes": 4966,
+      "sha256": "46c4c3abdc0b201b59218434bf734c167fcf49d2254bdb721110e21819b128cf"
+    },
+    {
+      "path": "hac2l-selected-base-version-20261027.json",
+      "bytes": 758,
+      "sha256": "84fd9f727e459359fd15e2728df7aa6cfdf9a8dff2cb44e0bf409c4390f37e9b"
+    },
+    {
+      "path": "hac2l-selected-base-version-20261027.patch",
+      "bytes": 1743,
+      "sha256": "a177f41e569ba04da5cb44fcd500da851fa78d537160226ed9a8b50d059fe0fd"
+    },
+    {
+      "path": "hac2l-single-RomFS-allowlist-20261027.json",
+      "bytes": 2282,
+      "sha256": "9b6b4450db684eac524e56f3d2a1e3d16b4bac35f2b1610ae72f8127173bf8f8"
+    },
+    {
+      "path": "hac2l-single-RomFS-allowlist-20261027.patch",
+      "bytes": 9575,
+      "sha256": "5285f64b4a685dfaaa244e4da017cbb0b276924e91a953bb0dbd5fb6a9ba940a"
+    },
+    {
+      "path": "hac2l-single-RomFS-export-20261027-r2.json",
+      "bytes": 3304,
+      "sha256": "4d6b84023a8137679b3003d0fe2d04d2d04a0a6414b171e07df7a426c2362372"
+    },
+    {
+      "path": "hac2l-upstream-source-verification-20261027.json",
+      "bytes": 4215,
+      "sha256": "7211d098046bbdcc5277a3511cd76cfe54a2d37db5c3df839aa3daadd1c6e354"
+    },
+    {
+      "path": "hac2l-verification-booleans-20261027.json",
+      "bytes": 882,
+      "sha256": "30177de4d00781ea9c4ae45e51369d239f2c5ef79b9b43008449a6cbfb2640af"
+    },
+    {
+      "path": "hac2l-verification-booleans-20261027.patch",
+      "bytes": 1042,
+      "sha256": "8bdc4066d0c3b8e4e864ccb48f7453bd6046b8abe5079b1aa1c3c3ef4d7a1efe"
+    },
+    {
+      "path": "plan_romfs_image_export_20261027.py",
+      "bytes": 6279,
+      "sha256": "4c33847b3cf77eaf20c1de3168e58cd43a2ee80cfb9740dcbff9168eb61b948b"
+    },
+    {
+      "path": "recover_romfs_image_20261027.py",
+      "bytes": 6501,
+      "sha256": "33417cf96d9b2abd5602390ef687c9dcbc1bb3ea4c4c581cabce4da9bcfba2b8"
+    },
+    {
+      "path": "run_bounded_listromfs_20261027.py",
+      "bytes": 9618,
+      "sha256": "3ec89cdc25f6d34d40bfb0dd7393a98b5dc29ce0da544496a50abedc48b68cd8"
+    }
+  ],
+  "current_export_receipt": "hac2l-single-RomFS-export-20261027-r2.json",
+  "excluded": [
+    "tooling",
+    "NSP",
+    "NCA",
+    "keys",
+    "RomFS image",
+    "game code",
+    "objects",
+    "logs",
+    "maps",
+    "symbol lists",
+    "Python bytecode"
+  ],
+  "legacy_receipts_modified": false,
+  "game_or_GPU_executed": false,
+  "scope": "probe own source and safe receipts20261027 only; prepared-v110 payload excluded"
+}

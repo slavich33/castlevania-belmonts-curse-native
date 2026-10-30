@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "title_id": "0100BA4026E94000",
+  "display_version": "1.1.0",
+  "state": "measured_DSO_deferral_invariant_helpers_native_regression_tested_not_integrated_boot_verified",
+  "actual_trigger": {
+    "log": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/host-build/runs/host-h6e0suz_/logs/native-host.log",
+    "binary_sha256": "0c87a09743c5378099800981dfe45e643da20654b360391cbea2d6e9ca6df4a1",
+    "source_commit": "6307852",
+    "observed": "Actual boot9 returned from SDK initialization and Startup, then original sdk DT_INIT returned with registration-result word at SDK0xb87008 before0 after1 and init_array_count87. The previous universal state2 assertion stopped the host",
+    "observation_boundary": "sdk first-pass0->1 is runtime-observed. subsdk0 first-pass0->1, main0->2, deferred callback execution and final main/subsdk0/sdk2/1/1 remain exact statically decoded ABI until the next root integration boot"
+  },
+  "source_identity": {
+    "SDK_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "SDK_AOT_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+    "evidence_method": "Independent peer static decoding of the verified original/AOT module and relocation metadata; sanitized offsets and semantics only, no owned code bytes embedded in this receipt or fixture"
+  },
+  "measured_ABI": {
+    "meaning": "The word historically named ctor_flag stores __nnmusl_init_dso's registration result; it is not a universal completed-constructors flag",
+    "first_pass_order": [
+      "sdk",
+      "subsdk0",
+      "main"
+    ],
+    "first_pass_transitions": {
+      "sdk": [
+        0,
+        1
+      ],
+      "subsdk0": [
+        0,
+        1
+      ],
+      "main": [
+        0,
+        2
+      ]
+    },
+    "deferred_callbacks": "Main's original registration helper drains pending descriptor DT_INIT callbacks in ascending registration slots: SDK slot2, subsdk0 slot3. Each callback reenters original DT_INIT with existing result1, bypasses registration/comparison and executes its own constructor path without rewriting the result word",
+    "main_completion": "Main owns nnMain, registers its descriptor in reserved slot1, drains the deferred SDK/sub callbacks, returns registration result2, then original main DT_INIT executes main constructors and returns normally",
+    "final_states": {
+      "main": 2,
+      "subsdk0": 1,
+      "sdk": 1
+    },
+    "no_retry": "Do not immediately retry a deferred first-pass SDK/sub DT_INIT and do not force result1 to2. Original main's callback drain is the required owner-driven path"
+  },
+  "sanitized_instruction_evidence": [
+    "SDK _init at0x400 first reads word SDK0xb87008 at0x414; fresh path calls PLT0x62f7e0 -> SDK-defined __nnmusl_init_dso0x985e0 at0x4e0, stores returned w0 at0x4e4, and new result1 branches at0x4ec/0x4f0 to return0x550",
+    "Existing nonzero result branches at0x418 ->0x4f4 past helper/comparison, reaches ProtectRelro at0x51c and constructor loop0x540..0x54c; no later flag store occurs on that callback path",
+    "__nnmusl_init_dso reads relocation-bound nnMain at0x98b58/0x98b5c and checks owning DSO range at0x98b60..0x98b6c. Main stores descriptor at0x98b80 into SDK global0xb92c70, and reserves array slot1 at0x98b98",
+    "When owning-main descriptor0xb92c70 is absent, helper returns1 via0x98fac/0x98fb0/0x98fe0; after owner registration/drain it returns2 via0x98fbc",
+    "DT_INIT dynamic tag12 resolves into descriptor offset0x128:0x98844 defines descriptor+0x128,0x98898 selects destination, selector0x92bd01+12 targets0x98870 and0x98878 stores modulebase+DT_INIT. Peers independently checked AOT replacements0xc886e8/0xc88670 for original x18 handling",
+    "Pending-DSO loop starts at registration index2 at0x98e58, reads descriptor array at0x98e74/0x98e78, loads descriptor+0x128 at0x98ea4 and calls it via BLR0x98eac, increasing index at0x98e60 through count+1; first-empty insertion0x98de0..0x98f58 preserves SDK then subsdk0 registration order"
+  ],
+  "helper_contract": {
+    "header": "runtime/castlevania_constructors.h",
+    "type": "CvCtorProtocol { unsigned phase,in_flight; }; zero-initialize once",
+    "cv_ctor_begin": "Before original DT_INIT: exact profile title/v1.1.0/v110, known next module sdk/subsdk0/main, fresh result0, no call already in flight. Returns int; caller must fail on0",
+    "cv_ctor_end": "Only after original DT_INIT returns: matching in-flight module, first-pass returned result1/1/2 respectively; advances phase. Returns int; caller must fail on0",
+    "cv_ctor_finish": "Completion only after phase3 and no in-flight call, with exact main/sub/sdk2/1/1. This remains false during the owner-driven callbacks and until main's normal DT_INIT return",
+    "no_guest_mutation": "Helpers only inspect supplied values and update their small host protocol state. They do not write guest flags, invoke callbacks, iterate constructor arrays, skip modules or modify generated tables"
+  },
+  "native_regression": {
+    "tests_passed": 17,
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_constructor_protocol.py -v",
+    "compiler": "xcrun clang -arch arm64 -std=c11 -O1 -Wall -Wextra -Werror",
+    "configurations": [
+      "diagnostic default0",
+      "diagnostic1",
+      "deliberately mismatched version1.2.0 rejected"
+    ],
+    "model_boundary": "Independently written tiny registration/deferred-callback fixture, with no owned SDK/game code, binary input, generated tables or init arrays. It calls the real invariant header around its original tiny DT_INIT model; it is not a whole-SDK or game execution proof",
+    "cases": [
+      "First SDK/sub passes register and defer without executing constructors",
+      "Main's original tiny registration drains ascending pending SDK/sub callbacks exactly once; callbacks retain result1 and do not repeat registration",
+      "Main's own constructors execute after deferred callbacks; final main/sub/sdk2/1/1 accepted only after normal main DT_INIT return",
+      "Completion barrier stays closed during pending callbacks and even after main result becomes2 until the enclosing main call ends",
+      "Unsafe main0->1 and naive final2/2/2 are rejected",
+      "Reordered, skipped, repeated, unknown, overlapping and missing module calls are rejected",
+      "Fresh-zero preconditions, matching begin/end pairing, every invalid first-pass/final result and invalid/null protocol state are checked",
+      "Completed protocol rejects extra passes and a different game-version profile is rejected"
+    ]
+  },
+  "owned_paths": [
+    "runtime/castlevania_constructors.h",
+    "tests/test_constructor_protocol.py",
+    "provenance/DSO_DEFERRAL_ABI_20261027.json"
+  ],
+  "guest_or_GPU_execution_by_this_stage": false,
+  "guest_flags_callbacks_tables_or_generator_modified_by_this_stage": false,
+  "remaining": "Root must integrate the helper into existing mandatory loader fail gates, build and run the actual native host. This stage does not claim observed subsdk/main completion, nnMain, first frame or gameplay"
+}

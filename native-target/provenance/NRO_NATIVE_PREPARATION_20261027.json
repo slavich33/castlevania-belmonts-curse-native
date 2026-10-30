@@ -1,0 +1,165 @@
+{
+  "boundaries": {
+    "RomFS_or_original_NRO_changed": false,
+    "actual_rewriter_run": true,
+    "dynamic_mapping_or_RO_overrides_implemented": false,
+    "existing_engine_changed": false,
+    "guest_or_SDK_execution": false,
+    "owned_binary_added_to_Git": false,
+    "runtime_or_gameplay_claim": false
+  },
+  "candidate": {
+    "container_bytes": 1286400,
+    "container_path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-nro-container-candidate-20261027/cimgui.synthetic.nso",
+    "container_sha256": "716a3373fc450d5ff69034203ca69565ca3fadf383619c6fbe845ba190e3139e",
+    "flat_initialized_image_bytes_preserved": true,
+    "independent_readback_sha256": "716a3373fc450d5ff69034203ca69565ca3fadf383619c6fbe845ba190e3139e",
+    "original_source_before_after_SHA_and_stat_unchanged": true,
+    "receipt_path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-nro-container-candidate-20261027/PREPARATION-RECEIPT.json",
+    "receipt_sha256": "650d75bdb72f0cbc088f39f093a622418320757eec2dde6804e405a21ed390d5"
+  },
+  "date": "2026-10-27",
+  "engine": {
+    "command": [
+      "/Users/your-user/Games/TOTK_build/venv/bin/python",
+      "-B",
+      "-E",
+      "-s",
+      "/Users/your-user/Games/CastlevaniaBelmont-native-research/native-target/third_party/d2r/patch_nso.py",
+      "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/cimgui.synthetic.nso",
+      "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/native",
+      "cimgui"
+    ],
+    "cuts_observations_parameters_forbidden": true,
+    "donor_build_rules_rejected": true,
+    "environment": {
+      "DM_PRIVATE_GATES": "0",
+      "DM_RULESET": "native",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "sha256_pins": {
+      "call_window.py": "a51c5350eeef1ae27934d4732f001b9d217db8495c0d97e44cd9ce2c2f191a4f",
+      "patch_nso.py": "1239f34af30030c942d8c4147ead6c1531101da08c7efd958b83f37c5d032c32",
+      "relr.py": "afa0b371c494af7814ba0aa34c40f6376381269cd70895f24e61426e35129f44"
+    },
+    "source_directory": "/Users/your-user/Games/CastlevaniaBelmont-native-research/native-target/third_party/d2r"
+  },
+  "input_binding": {
+    "NRR_hash_membership": "Exact original NRO SHA is sole listed NRR hash; this frontend does not verify RSA and does not authenticate derivative.",
+    "extraction_receipt_path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-feasibility-20261027T040536Z/FEASIBILITY-RECEIPT.json",
+    "extraction_receipt_sha256": "160d9b9a5c10dcdfc80e4e0da2e4aebd0db860910595479531493edf65d77662",
+    "original_NRO_bytes": 1286144,
+    "original_NRO_sha256": "3a26a5d536f8dbc5b2bd46196cc39dd04abf3446c2bce97d2208fd54c9122cbe",
+    "original_NRR_sha256": "dd97a3ca8c5bff347be41289bef9c88ad6293f204ce162ea3a614aee5bd45770",
+    "title_id": "0100BA4026E94000"
+  },
+  "known_limits": [
+    "Supports only NRO0 version0 flags0, contiguous page-aligned initialized sections and explicitly understood dynamic/EH metadata.",
+    "ELF TLS/RELR/DT_NEEDED/unknown metadata fail; no donor cuts, observations or product parameters accepted.",
+    "Synthetic NSO outer header is a preparation container; embedded original NRO/MOD0, module ID, flat bytes and BSS size preserved.",
+    "Completed rewriter output readback preserved exact NRO header, all original RO/data/MOD0/dynamic and BSS;455 changed text words are all within declared engine sites. No repair applied.",
+    "No native loader registry, relocation/import resolution, RO lifecycle or executable ABI correctness is established by preparation."
+  ],
+  "measured_RoModule_storage": {
+    "alignment": 8,
+    "bytes": 208,
+    "evidence": "Original RTLD reserved module4048..4118 and zero lastslot+C8; SDK LoadModule writes through+C8. Scalar offsets only, no code bytes."
+  },
+  "prepared_native_derivative": {
+    "artifacts": [
+      {
+        "bytes": 79,
+        "independent_readback_sha256": "d0840b44de77f69300a49ecd7a08386dc4b83881df6591fd88f6933d791e29e5",
+        "path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/native/build_src.sha256",
+        "sha256": "d0840b44de77f69300a49ecd7a08386dc4b83881df6591fd88f6933d791e29e5"
+      },
+      {
+        "bytes": 44,
+        "independent_readback_sha256": "abf4abd0547a7afd117fc10553fce8e6b05226205df18374d6185319f19d22eb",
+        "path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/native/cimgui.cuts.tsv",
+        "sha256": "abf4abd0547a7afd117fc10553fce8e6b05226205df18374d6185319f19d22eb"
+      },
+      {
+        "bytes": 270,
+        "independent_readback_sha256": "e2089269cba19b2fc8ae77a9a2e5de641e15e1e6e044716e0dff5ca7781a771e",
+        "path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/native/cimgui.fixups.tsv",
+        "sha256": "e2089269cba19b2fc8ae77a9a2e5de641e15e1e6e044716e0dff5ca7781a771e"
+      },
+      {
+        "bytes": 0,
+        "independent_readback_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/native/cimgui.gates.tsv",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 44,
+        "independent_readback_sha256": "abf4abd0547a7afd117fc10553fce8e6b05226205df18374d6185319f19d22eb",
+        "path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/native/cimgui.obs.tsv",
+        "sha256": "abf4abd0547a7afd117fc10553fce8e6b05226205df18374d6185319f19d22eb"
+      },
+      {
+        "bytes": 44,
+        "independent_readback_sha256": "abf4abd0547a7afd117fc10553fce8e6b05226205df18374d6185319f19d22eb",
+        "path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/native/cimgui.params.tsv",
+        "sha256": "abf4abd0547a7afd117fc10553fce8e6b05226205df18374d6185319f19d22eb"
+      },
+      {
+        "bytes": 1394500,
+        "independent_readback_sha256": "e398061bca940bb8e5f01f409c1bd2937e476c31b3ef45d5d123077a81248753",
+        "path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/native/cimgui.patched.bin",
+        "sha256": "e398061bca940bb8e5f01f409c1bd2937e476c31b3ef45d5d123077a81248753"
+      },
+      {
+        "bytes": 5457,
+        "independent_readback_sha256": "fd4daec18e1b6a2a43c3cc6fc593ae44377b41c6b47b033278dc620906cdf392",
+        "path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/native/cimgui.sites.tsv",
+        "sha256": "fd4daec18e1b6a2a43c3cc6fc593ae44377b41c6b47b033278dc620906cdf392"
+      }
+    ],
+    "container_sha256": "716a3373fc450d5ff69034203ca69565ca3fadf383619c6fbe845ba190e3139e",
+    "independent_readback_path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/INDEPENDENT-READBACK.json",
+    "independent_readback_sha256": "3eb327e4b0b2095708b87de19f332c7aadca71ee7e924002775eeece77e7697d",
+    "manifest_path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/SHA256SUMS",
+    "manifest_sha256": "e16da6d936730acbff072dd10fba33511e9f48fe21d66559cd83c22608e030b7",
+    "native_flat_image_readback": {
+      "NRO_header_unchanged": true,
+      "all_text_changes_inside_declared_site_ranges": true,
+      "changed_text_word_count": 455,
+      "flat_image_file_offset": 0,
+      "original_BSS_zero_unchanged": true,
+      "original_RO_data_MOD0_unchanged": true,
+      "site_inventory_excludes_NRO_header": true
+    },
+    "original_sha256_before_after_unchanged": true,
+    "original_stat_before_after_unchanged": true,
+    "receipt_path": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/probe/cimgui-native-prepared-20261027-r1/PREPARATION-RECEIPT.json",
+    "receipt_sha256": "1188bcbbe1d647ceb4ef112fe4f20c820518ef68fa345394dcd3f753139a610e"
+  },
+  "primary_definitions": [
+    "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libstratosphere/include/stratosphere/ro/ro_types.hpp",
+    "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/libraries/libstratosphere/include/stratosphere/rocrt/rocrt.hpp",
+    "https://github.com/Atmosphere-NX/Atmosphere/blob/6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8/stratosphere/ro/source/impl/ro_service_impl.cpp#L225"
+  ],
+  "schema": 1,
+  "scope": "Standalone plain NRO to synthetic uncompressed NSO frontend and pinned generic preparation wrapper. No runtime integration.",
+  "source_sha256": {
+    "scripts/nro_to_nso.py": "86a03e17f24e5e25b854a1919225d9beeb6f52c51a1bc5d0da5e27bd0b5655c4",
+    "scripts/prepare_native_nro.py": "a366b46b9ed39c50f61f495f987346643372d50f8811f37c8a9e410bde488ae5",
+    "tests/test_native_nro_prepare.py": "07b8dcb63522f9a2905b6597494c0a3db3828a85f12d1b2e200e71d0f000eaf8"
+  },
+  "status": "STABLE_native_derivative_prepared_readback_verified_not_executed",
+  "validation": {
+    "actual_original_metadata_parse": "PASS,2474symbols,4supportedrelocationkinds,2552FDEs",
+    "actual_rewrite": "PASS; pinned unchanged engine, no inherited donor options, no cuts/observations/parameters.",
+    "command": "python3 -B native-target/tests/test_native_nro_prepare.py -v",
+    "independent_native_readback": "PASS; new process checked every SHA256SUMS entry, original source hash, container flat bytes, engine/preparer pins, and repeated complete native flat proof.",
+    "peer_finding_fixed": "MOD0 runtime module requires aligned full0xd0 storage within BSS/writable image; negative end-1/unaligned/truncated/beforeBSS fixtures PASS. IFUNC/unknown symbol metadata rejected.",
+    "root_review": "PASS; conditional actual rewrite authorized after standalone CLI tests and peer review, both completed before run.",
+    "source_peer_review": "PASS; concrete full RoModule span finding resolved and latest source read back clean.",
+    "tests_passed": 15,
+    "tests_use": "Independent authored tiny fixtures; negative ranges/flags/TLS/ELF/metadata/hash/env/Git/overwrite/donor/post-rewrite-readback guards; no original asset in tests, no engine execution. Real standalone CLI positive/readback/private0600/wrongSHA/overwrite and GNU/GOT/RELACOUNT bounds are covered."
+  }
+}

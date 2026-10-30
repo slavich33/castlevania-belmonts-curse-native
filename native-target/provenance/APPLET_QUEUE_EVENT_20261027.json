@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "offline_native_queue_event_tests_passed_no_guest_execution",
+  "scope": "One notification queue and one owned service event shared by high-level OE overrides and applet IPC. No loader, builder, GPU, or SDK-init bypass changes.",
+  "api": {
+    "runtime_event_clear(uint32_t writable)": "Clear the owned writable event under the real event-handle lock; readable handles rejected.",
+    "runtime_oe_message_event(void)": "Lazily allocate one retained writable event and return a fresh readable COPY handle per call. Caller owns and closes each readable copy.",
+    "runtime_oe_try_pop_message(uint32_t *out)": "Nonblocking: return 1 and remove one FIFO message into non-NULL out, or return 0 for empty. NULL fails without discarding."
+  },
+  "semantics": [
+    "Queue lock precedes the event-handle lock; event code does not call back into the queue.",
+    "Enqueue signals the event and wakes blocking high-level consumers. Both nonblocking and blocking pops clear the event only when the shared queue becomes empty.",
+    "The first event query publishes exactly one initial message 15 when runtime_front_focus()==1. This reports the existing logical host policy, not observed Cocoa focus.",
+    "Messages queued before the first event query retain their FIFO order. Initial status follows them.",
+    "Fixed queue capacity remains 32; overflow now fails explicitly instead of silently dropping a notification.",
+    "One writable event is retained for process lifetime. Readable-copy reference counts and handle slots are reclaimed by the existing real CloseHandle SVC."
+  ],
+  "actual_sdk_evidence": {
+    "module": "sdk",
+    "source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "patched_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+    "decoded_only": true,
+    "initialize_applet": "0x3f6e50",
+    "notification_event_attachment": "0x3f6f20 passes EventClearMode=0 (manual clear).",
+    "startup_loop": "0x3f6f30 waits on CommonStateGetter event; 0x3f6f4c calls ReceiveMessage; 0x3f6f68 loops unless message==15; 0x3f6f80 queries current focus; 0x3f6f94 loops unless focus==1.",
+    "independent_event": "SelfController command91 event is separate from notification queue and is not signaled by this bridge.",
+    "privacy": "No raw instruction bytes, game binaries, generated tables, credentials, device data, or private absolute evidence paths are included."
+  },
+  "validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s native-target/tests -p test_applet_queue_event.py -v",
+    "result": "13 tests passed",
+    "native_compilation": "arm64 clang -std=gnu11 -O2 -Wall -Wextra -Werror; actual threads.c and applet_host.c compiled into host fixture.",
+    "coverage": [
+      "initial status once",
+      "preexisting FIFO preservation",
+      "manual event signal until last pop",
+      "shared high-level and IPC consumption",
+      "read/write event rights",
+      "read-copy close isolation",
+      "10000 copy-close cycles with one retained ref/slot",
+      "full 32-entry FIFO",
+      "explicit overflow and NULL-output failure",
+      "blocking high-level pop",
+      "real native WaitSynchronization timeout and wake",
+      "200 native pthread wait/signal/pop handoffs"
+    ],
+    "no_guest": "Guest symbol lookup, guest TLS setup, guest entry, and guest exit stubs fail if called. None ran. No game or GPU execution.",
+    "remaining": "Actual SDK integration is for the next separately authorized diagnostic boot. This receipt is offline host-only validation."
+  },
+  "source_sha256": {
+    "runtime/applet_host.c": "1ff66aaeedf7f876cdc4d75f17fd883fc93522658d0bd06f990596cd57c8b99d",
+    "runtime/ipc.h": "6737c72abbf887fea2dc4d71da9b63fc31824b65713adab338f1a38ad588a244",
+    "runtime/threads.c": "30a724f3846865d30ab5b15f59a003e5906148bbf48eae766e79d9972d4e4242",
+    "tests/test_applet_queue_event.py": "639aee889c2aed1752d310178ed02af386562fbfcd45bb03616f44d2bbf0b1a7"
+  },
+  "peer_review": {
+    "result": "clean read-only review; no material findings",
+    "scope": "queue/event lock order, signal/last-clear race, retained writable/fresh readable handle lifetime and rights, once-only initial status, actual native test coverage",
+    "execution": "reviewer performed no tests, guest execution, or source changes"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "state": "consolidated_public_patch_reverse_and_forward_replay_passed",
+  "Atmosphere_commit": "6b0c077b4c608a3a2ee712b8dc35fee87ceb62e8",
+  "Atmosphere_archive_sha256": "7df8ed32fceba0b4bb3a6f17a596b27118b98eb1c79fff414e166b2c9f890841",
+  "hac2l_commit": "603de9228dad2a0b6d6897e9dd7ca50a20485eba",
+  "ordered_patch_inputs": [
+    "hac2l-safe-bounded.patch",
+    "hac2l-macos-compile-compat.patch",
+    "hac2l-budget-accuracy-20261027.patch",
+    "hac2l-verification-booleans-20261027.patch",
+    "hac2l-dependent-template-20261027.patch",
+    "hac2l-npdm-api-compat-20261027.patch",
+    "hac2l-macho-bignum-symbols-20261027.patch",
+    "hac2l-macos-context-TLS-init-20261027.patch",
+    "hac2l-macos-buffer-TLS-init-20261027.patch",
+    "hac2l-selected-base-version-20261027.patch",
+    "hac2l-selected-base-identity-20261027.patch",
+    "hac2l-single-RomFS-allowlist-20261027.patch"
+  ],
+  "patch_sha256": "36b1c1bd44b1813d3db0fb79c8b18c7be1d64451158d9533fcaf6a8adefd5b7d",
+  "files": [
+    {
+      "path": "libraries/libstratosphere/include/stratosphere/wec/wec_wake_event.generic.hpp",
+      "pristine_sha256": "56e168476451f2b721222a23bf98a9f9bc7dc1fb688a8451f57550cd7abf5ba4",
+      "patched_sha256": "f1fb79e4580ff34957d610a360532e5141ee725fb0dfa4be649b0042d092d444",
+      "pinned_Atmosphere_archive_compared": true
+    },
+    {
+      "path": "libraries/libstratosphere/source/fs/fs_context.cpp",
+      "pristine_sha256": "ad84e87ff56d6056e9400d9ddbe94732a805e6194308db27a3e4703476f7e9b0",
+      "patched_sha256": "a083fa46f74f1a2ddf63aa592e3439e5eedfad0cc5872d17eba5f4ceb775c422",
+      "pinned_Atmosphere_archive_compared": true
+    },
+    {
+      "path": "libraries/libstratosphere/source/fssystem/buffers/fssystem_buffer_manager_utils.cpp",
+      "pristine_sha256": "86282a6e6fee999b008fcb6059ef71bb62ed85aec4a02bd88b13df5873571913",
+      "patched_sha256": "2f1ec796f79aaa795a644553c54df1d365a10fd97e6af43472b587991f148b38",
+      "pinned_Atmosphere_archive_compared": true
+    },
+    {
+      "path": "libraries/libstratosphere/source/fssystem/fssystem_service_context.cpp",
+      "pristine_sha256": "d82cbeed83e72890ef6355a0a0ca5d6af2d5e79d3b06ff948ae1d28fceaa3d76",
+      "patched_sha256": "ff49b001b5f2f2cbe24a3f759410b5818b05270662277c7cc21104ba490916d2",
+      "pinned_Atmosphere_archive_compared": true
+    },
+    {
+      "path": "libraries/libvapours/source/crypto/impl/crypto_bignum_operations_asm.arch.arm64.s",
+      "pristine_sha256": "2338c51608b60edd042ceda14f4497a6c03de294376ce603e0bf1a6e1703efe8",
+      "patched_sha256": "4b2b46db31606e36233161ad6cff7c8e684e92188722b76f9ec60dc082c0f892",
+      "pinned_Atmosphere_archive_compared": true
+    },
+    {
+      "path": "tools/hac2l/source/hactool_application_list.hpp",
+      "pristine_sha256": "5f4884366f11a243e4d8b8970db4891bfa0df19c459857303450e8742a23c078",
+      "patched_sha256": "377d5b26e716b49f4d02c3b323b9b6191052fc508ab986b594a22f232dc8f884",
+      "pinned_Atmosphere_archive_compared": false
+    },
+    {
+      "path": "tools/hac2l/source/hactool_fs_utils.cpp",
+      "pristine_sha256": "2a75c5fbc5f33982b63d23f3945984d501becad4fe972e4a243faff6661bf00a",
+      "patched_sha256": "2e7b6202e88b220d10f6bbb99fe66d6c5579de685dc42a9da4b149f05549e9af",
+      "pinned_Atmosphere_archive_compared": false
+    },
+    {
+      "path": "tools/hac2l/source/hactool_fs_utils.hpp",
+      "pristine_sha256": "4a01722936eb558118f4c75fc7ce2045b920a5fb7ed91631a3fb1efb29e23a7c",
+      "patched_sha256": "1f46b5cddb4ef568df7547bfd99dd1472c18d7d510b9edd227e9aad2ca48cfa5",
+      "pinned_Atmosphere_archive_compared": false
+    },
+    {
+      "path": "tools/hac2l/source/hactool_options.cpp",
+      "pristine_sha256": "a661f4298d3970f29119a6b3230d8a1b3a0ae70ea24cbc14b029bb06e004d32d",
+      "patched_sha256": "6b8ac6b52a63c85dee16d6e5027fea6845879512afec34a937f5d01a91dbacff",
+      "pinned_Atmosphere_archive_compared": false
+    },
+    {
+      "path": "tools/hac2l/source/hactool_options.hpp",
+      "pristine_sha256": "c9c5c9a2c37821d04e3450091688e5eb89900502d28f594a108ef6f71509785e",
+      "patched_sha256": "c442b018f145959fe2a526c5a57ff9bc090c98661bfa221460064b724c72de22",
+      "pinned_Atmosphere_archive_compared": false
+    },
+    {
+      "path": "tools/hac2l/source/hactool_processor.hpp",
+      "pristine_sha256": "e11d8a06ce9f78d998c4ca7f7dabb8dbd3ea3c87d575fb5047cb31ebe665d239",
+      "patched_sha256": "4435b011bb38aa9483c0f1400afdea391b59d3530b3ef78ab92bbd44dd162ff0",
+      "pinned_Atmosphere_archive_compared": false
+    },
+    {
+      "path": "tools/hac2l/source/hactool_processor.keys.cpp",
+      "pristine_sha256": "eb747bdd8380c3bcae6335a6bd520ca7fa925cb13055d98344e7e7d25039fb96",
+      "patched_sha256": "ab89788271b943a8c934202f06cb06c18e1d226e118951b4fb75a1a6822f2557",
+      "pinned_Atmosphere_archive_compared": false
+    },
+    {
+      "path": "tools/hac2l/source/hactool_processor.nca.cpp",
+      "pristine_sha256": "23c002d921fa9bd2864dcd571667b3e450409b7c15f8627f60050557de3750e3",
+      "patched_sha256": "5df2681dd9ae8fa10caf247bbf7a350ea66a653f7c203dc6851a7689e30de7f5",
+      "pinned_Atmosphere_archive_compared": false
+    },
+    {
+      "path": "tools/hac2l/source/hactool_processor.npdm.cpp",
+      "pristine_sha256": "72feda98f3e60c755ddec84e5dadc86e20bd2c9ca2255dd8b28799d7305cfaec",
+      "patched_sha256": "9b09f65f7aa164a43d98c4cb15787c6b918c14be5c7269f74f7aa400a6f058d8",
+      "pinned_Atmosphere_archive_compared": false
+    }
+  ],
+  "game_or_key_inputs_opened": false,
+  "raw_keyed_tool_output_saved": false
+}

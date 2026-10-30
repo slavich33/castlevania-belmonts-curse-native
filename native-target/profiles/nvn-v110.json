@@ -1,0 +1,53 @@
+{
+  "state": "static_NVN_version_gate_measured",
+  "main_NSO_sha256": "c71362eb3cc09826f209896d225de212863ed8bb261383893ee7555d52b46319",
+  "main_build_id": "0f1169aa7d0fa4529c861f96adec306e00000000000000000000000000000000",
+  "required_driver_major": 55,
+  "required_driver_minor_at_least": 15,
+  "evidence": [
+    {
+      "offset": "0xd395e8",
+      "bytes": "e1068052",
+      "verified_disassembly": "mov w1, #0x37"
+    },
+    {
+      "offset": "0xd395ec",
+      "bytes": "e2018052",
+      "verified_disassembly": "mov w2, #0xf"
+    },
+    {
+      "offset": "0xd3960c",
+      "bytes": "1fdd0071",
+      "verified_disassembly": "cmp w8, #0x37"
+    },
+    {
+      "offset": "0xd39618",
+      "bytes": "1f390071",
+      "verified_disassembly": "cmp w8, #0xe"
+    },
+    {
+      "offset": "0xd3961c",
+      "bytes": "8c000054",
+      "verified_disassembly": "b.gt #0xd3962c"
+    },
+    {
+      "offset": "0xd387dc",
+      "bytes": "1fdd0071",
+      "verified_disassembly": "cmp w8, #0x37"
+    },
+    {
+      "offset": "0xd387e8",
+      "bytes": "1f390071",
+      "verified_disassembly": "cmp w8, #0xe"
+    },
+    {
+      "offset": "0xd387ec",
+      "bytes": "0c010054",
+      "verified_disassembly": "b.gt #0xd3880c"
+    }
+  ],
+  "limit": "Static API-version guards only; no NVN feature/ABI validation or game execution",
+  "game_executed": false,
+  "GPU_called": false,
+  "compiled_NVN_api": "55.15"
+}

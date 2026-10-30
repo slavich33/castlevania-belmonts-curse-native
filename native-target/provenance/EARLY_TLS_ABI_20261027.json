@@ -1,0 +1,351 @@
+{
+  "schema": 1,
+  "state": "early_TLS_base_initialization_fixed_without_guest_execution",
+  "observed_at_utc": "2026-10-27T01:43:46.017526+00:00",
+  "source_sdk_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+  "source_rtld_sha256": "ebfbe916731d944870124b29e990f9647a9efdb3cca359790973db90f9bb399b",
+  "patched_sdk_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+  "source_change": "runtime_thread_init additionally copies its owned e->tls pointer to TLR+0x1f0; KTLS initially receives the same pointer; no other ABI fallback added",
+  "loader_source_sha256": "14a8c40432e3e02af136523e337d6293e02d2071ce1722379a0b3ab17708cee6",
+  "TLR_contract": {
+    "allocation_bytes": 512,
+    "TLS_base_pointer_offset": "0x1f0",
+    "current_ThreadType_pointer_offset": "0x1f8",
+    "ThreadType_observed_setup_zeroes_bytes": 448,
+    "ThreadType_handle_offset": "0x1b0",
+    "main_thread_behavior": "nnosInitialize -> ThreadManagerImpl loads TLR+0x1f0 and writes TPIDR_EL0; ThreadManager then publishes SDK-owned main ThreadType pointer at TLR+0x1f8 before entering its critical section",
+    "dummy_scope": "bootstrap pointer only; SDK replaces it; not a claim that an arbitrary zero ThreadType is valid for all operations"
+  },
+  "AOT_site_confirmation": [
+    "sdk.sites.tsv 0x144618 tpidrro_r",
+    "sdk.sites.tsv 0x144620 tpidr_w",
+    "patched sdk+0xc8e030 loads key-page offset8 (KTLS); +0xc8e038 stores x8 into that Darwin thread slot"
+  ],
+  "empty_Start_argument": {
+    "current_x1": 0,
+    "original_rtld_argument": "rtld+0x5000 (past its loaded image)",
+    "actual_sdk_path": "nnosInitialize saves x1, QueryMemory(x1) checks Result and state==3 before any argument-header read; other states skip parsing",
+    "current_HLE_path": "QueryMemory(0) returns success/state0 free; SDK takes skip branch at +0x145b18 -> +0x145c58",
+    "required_argument_structure_for_empty_case": false,
+    "nonempty_argument_observation": "If state3, aligns argument pointer to8, reads header word+0 and signed length+4, starts payload at+0x20; no nonempty argument support added"
+  },
+  "known_possible_later_gate": {
+    "consumer": "SDK TLS-descriptor helper +0x9751c..+0x9752c",
+    "structure": "TPIDR_EL0 points to a TLS control block; pointer at base+8 is DTV, then indexed by descriptor module id",
+    "current_DTV_initial_state": "owned calloc TLS buffer starts zero; DTV initialization before the helper has not been established",
+    "dynamic_first_consumer": "not observed; numerical/text address order is not execution order",
+    "synthetic_DTV_added": false,
+    "boot_outcome_claimed": false
+  },
+  "static_instruction_evidence": [
+    {
+      "meaning": "SDK reloads TLS base",
+      "sdk_offset": "0x144618",
+      "instruction": "mrs x8, tpidrro_el0"
+    },
+    {
+      "meaning": "SDK reloads TLS base",
+      "sdk_offset": "0x14461c",
+      "instruction": "ldr x8, [x8, #0x1f0]"
+    },
+    {
+      "meaning": "SDK reloads TLS base",
+      "sdk_offset": "0x144620",
+      "instruction": "msr tpidr_el0, x8"
+    },
+    {
+      "meaning": "SDK publishes real main ThreadType",
+      "sdk_offset": "0x13ed74",
+      "instruction": "add x20, x0, #8"
+    },
+    {
+      "meaning": "SDK publishes real main ThreadType",
+      "sdk_offset": "0x13ed78",
+      "instruction": "mov x19, x0"
+    },
+    {
+      "meaning": "SDK publishes real main ThreadType",
+      "sdk_offset": "0x13ed7c",
+      "instruction": "mov x1, x20"
+    },
+    {
+      "meaning": "SDK publishes real main ThreadType",
+      "sdk_offset": "0x13edb0",
+      "instruction": "mrs x8, tpidrro_el0"
+    },
+    {
+      "meaning": "SDK publishes real main ThreadType",
+      "sdk_offset": "0x13edb4",
+      "instruction": "str x20, [x8, #0x1f8]"
+    },
+    {
+      "meaning": "GetCurrentThread uses TLR pointer",
+      "sdk_offset": "0x13d7b0",
+      "instruction": "mrs x8, tpidrro_el0"
+    },
+    {
+      "meaning": "GetCurrentThread uses TLR pointer",
+      "sdk_offset": "0x13d7b4",
+      "instruction": "ldr x0, [x8, #0x1f8]"
+    },
+    {
+      "meaning": "GetCurrentThread uses TLR pointer",
+      "sdk_offset": "0x13d7b8",
+      "instruction": "ret "
+    },
+    {
+      "meaning": "Possible later DTV consumer",
+      "sdk_offset": "0x9751c",
+      "instruction": "mrs x3, tpidr_el0"
+    },
+    {
+      "meaning": "Possible later DTV consumer",
+      "sdk_offset": "0x97520",
+      "instruction": "ldr x1, [x3, #8]"
+    },
+    {
+      "meaning": "Possible later DTV consumer",
+      "sdk_offset": "0x97524",
+      "instruction": "ldr x2, [x0]"
+    },
+    {
+      "meaning": "Possible later DTV consumer",
+      "sdk_offset": "0x97528",
+      "instruction": "ldr x1, [x1, x2, lsl #3]"
+    },
+    {
+      "meaning": "Possible later DTV consumer",
+      "sdk_offset": "0x9752c",
+      "instruction": "cbz x1, #0x97548"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145af8",
+      "instruction": "sub x0, x29, #0x28"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145afc",
+      "instruction": "sub x1, x29, #0x2c"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b00",
+      "instruction": "stur wzr, [x29, #-0x2c]"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b04",
+      "instruction": "mov x2, x22"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b08",
+      "instruction": "bl #0x17000c"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b0c",
+      "instruction": "cbnz w0, #0x145c58"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b10",
+      "instruction": "ldur w8, [x29, #-0x10]"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b14",
+      "instruction": "cmp w8, #3"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b18",
+      "instruction": "b.ne #0x145c58"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b1c",
+      "instruction": "add x8, x22, #7"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b20",
+      "instruction": "mov x19, xzr"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b24",
+      "instruction": "and x21, x8, #0xfffffffffffffff8"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b28",
+      "instruction": "ldrsw x8, [x21, #4]"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145b2c",
+      "instruction": "ldr w9, [x21], #0x20"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145c58",
+      "instruction": "mov x0, xzr"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145c5c",
+      "instruction": "mov x1, xzr"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145c60",
+      "instruction": "mov x2, xzr"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145c64",
+      "instruction": "mov x3, xzr"
+    },
+    {
+      "meaning": "Argument region validates before parsing",
+      "sdk_offset": "0x145c68",
+      "instruction": "bl #0x6372d0"
+    },
+    {
+      "meaning": "Actual QueryMemory wrapper",
+      "sdk_offset": "0x17000c",
+      "instruction": "str x1, [sp, #-0x10]!"
+    },
+    {
+      "meaning": "Actual QueryMemory wrapper",
+      "sdk_offset": "0x170010",
+      "instruction": "svc #6"
+    },
+    {
+      "meaning": "Actual QueryMemory wrapper",
+      "sdk_offset": "0x170014",
+      "instruction": "ldr x2, [sp]"
+    },
+    {
+      "meaning": "Actual QueryMemory wrapper",
+      "sdk_offset": "0x170018",
+      "instruction": "str w1, [x2]"
+    },
+    {
+      "meaning": "Actual QueryMemory wrapper",
+      "sdk_offset": "0x17001c",
+      "instruction": "add sp, sp, #0x10"
+    },
+    {
+      "meaning": "Actual QueryMemory wrapper",
+      "sdk_offset": "0x170020",
+      "instruction": "ret "
+    },
+    {
+      "meaning": "AOT write uses KTLS key offset8",
+      "sdk_offset": "0xc8e020",
+      "instruction": "stur x0, [sp, #-0x10]"
+    },
+    {
+      "meaning": "AOT write uses KTLS key offset8",
+      "sdk_offset": "0xc8e024",
+      "instruction": "stur x16, [sp, #-0x18]"
+    },
+    {
+      "meaning": "AOT write uses KTLS key offset8",
+      "sdk_offset": "0xc8e028",
+      "instruction": "mrs x0, tpidrro_el0"
+    },
+    {
+      "meaning": "AOT write uses KTLS key offset8",
+      "sdk_offset": "0xc8e02c",
+      "instruction": "adrp x16, #0xc60000"
+    },
+    {
+      "meaning": "AOT write uses KTLS key offset8",
+      "sdk_offset": "0xc8e030",
+      "instruction": "ldr x16, [x16, #8]"
+    },
+    {
+      "meaning": "AOT write uses KTLS key offset8",
+      "sdk_offset": "0xc8e034",
+      "instruction": "add x0, x0, x16"
+    },
+    {
+      "meaning": "AOT write uses KTLS key offset8",
+      "sdk_offset": "0xc8e038",
+      "instruction": "str x8, [x0]"
+    },
+    {
+      "meaning": "AOT write uses KTLS key offset8",
+      "sdk_offset": "0xc8e03c",
+      "instruction": "ldur x16, [sp, #-0x18]"
+    },
+    {
+      "meaning": "AOT write uses KTLS key offset8",
+      "sdk_offset": "0xc8e040",
+      "instruction": "ldur x0, [sp, #-0x10]"
+    },
+    {
+      "meaning": "AOT write uses KTLS key offset8",
+      "sdk_offset": "0xc8e044",
+      "instruction": "b #0x144624"
+    }
+  ],
+  "focused_syntax_checks": [
+    {
+      "command": [
+        "/usr/bin/xcrun",
+        "clang",
+        "-arch",
+        "arm64",
+        "-std=gnu11",
+        "-fsyntax-only",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-deprecated-declarations",
+        "-DGAME_CASTLEVANIA=1",
+        "-DCASTLEVANIA_DIAGNOSTIC_BOOT=0",
+        "-Iruntime",
+        "-Ibuild",
+        "-Ithird_party/d2r_gfx/gfx/nvn/include",
+        "runtime/loader.c"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/usr/bin/xcrun",
+        "clang",
+        "-arch",
+        "arm64",
+        "-std=gnu11",
+        "-fsyntax-only",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-deprecated-declarations",
+        "-DGAME_CASTLEVANIA=1",
+        "-DCASTLEVANIA_DIAGNOSTIC_BOOT=1",
+        "-Iruntime",
+        "-Ibuild",
+        "-Ithird_party/d2r_gfx/gfx/nvn/include",
+        "runtime/loader.c"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "git_diff_check": "passed",
+  "guest_or_GPU_executed": false,
+  "dummy_guest_execution_used": false,
+  "generated_or_owned_inputs_modified": false,
+  "root_build_scripts_modified": false,
+  "evidence_storage": {
+    "full_private_receipt_sha256": "6834db7a4a1436526e0cfabff3cfe677d07b510ed11f643280c855a1ecbfa154",
+    "description": "Owner-private artifacts: castlevania-early-abi-evidence-20261027 / EARLY_TLS_ABI_20261027.full.json",
+    "private_readback_sha256_verified": true
+  }
+}

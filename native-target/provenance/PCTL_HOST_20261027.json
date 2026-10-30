@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "title_id": "0100BA4026E94000",
+  "display_version": "1.1.0",
+  "state": "native_PCTL_startup_lifecycle_adapter_tested_not_post_adapter_boot_verified",
+  "trigger": {
+    "observed_boot_log": "/Volumes/NativeGamesResearch/CastlevaniaBelmont-native/host-build/runs/host-7k1zc30r/logs/native-host.log",
+    "observed": "Root's actual boot7 completed the mandatory full RomFS hash for 3101 files, then stopped opening unimplemented pctl. No nnMain or frame was reached",
+    "SDK_return_offsets": [
+      "0xc8f768",
+      "0x3fcdd0",
+      "0x10da10",
+      "0x10da94"
+    ],
+    "SDK_source_sha256": "a1e55456e86a76b37a9ad7645ab85b0f47adc8cc5da20d33244961f31d751d44",
+    "SDK_AOT_sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1",
+    "measurement_boundary": "Only missing pctl service acquisition was runtime-observed. Factory and Initialize request shapes below are independently statically measured SDK wrappers, pending a real post-adapter boot"
+  },
+  "independent_static_SDK_checks": [
+    "PCTL Initialize at sdk+0x3fc050 calls PLT0x645c80 then sdk+0x3fcad0. Service-name table at SDK0xb5ea80 contains pctl,pctl:s,pctl:a,pctl:r",
+    "For each successful service acquisition the SDK converts the factory into a CMIF domain and calls factory virtual0x28 -> sdk+0x3fd334: command1 CreateServiceWithoutInitialize, sendPID plus raw u64 ClientProcessId placeholder0, no buffers or input handles, one output interface object",
+    "The SDK caches the first successful child and discards subsequently created successful children. It then calls cached-child virtual0x20 -> sdk+0x3fd4fc: service command1 Initialize, no raw IO, PID, buffers or handles",
+    "No restriction, permission, unrestricted-state, safety-level or parental-settings query is part of this measured initializer"
+  ],
+  "implemented": {
+    "factories": "Four explicitly registered real service names pctl,pctl:s,pctl:a,pctl:r; service manager is unchanged, with no alias or forced-success fallback",
+    "CreateServiceWithoutInitialize1": "CMIF4/6, required PID descriptor and raw u64 placeholder0, no buffers or input handles. Creates a distinct initially uninitialized child and returns a real MOVE interface session; generic ipc.c converts it to a domain object ID when requested through a domain",
+    "Initialize1": "On a created child, no raw inputs/outputs, PID, buffers or handles. Sets only that child's local initialized lifecycle state under a mutex; repeated calls preserve that initialized state",
+    "family_identity": "Factory family identity is preserved in every child, including service diagnostic names. No unverified family capability masks or privilege equivalence are invented. Every unmeasured policy/permission method fails for all four names",
+    "ownership": "32 child states are retained in a bounded process-lifetime pool; exhaustion explicitly fails. States are never freed or silently reused while generic cloned/copied IPC sessions could borrow them. This is a host allocation budget, not a claim about Horizon family session limits",
+    "guards": "Checked host scratch at service open and commands; bounded raw argument sizes with unspecified CMIF alignment slack; required factory PID/zero placeholder; rejection of extra input handles, buffers and unsupported transport",
+    "pre_main": "Constructor only registers names and function pointers; no environment, profile, settings, IPC object or guest access before main"
+  },
+  "policy_limits": [
+    "Initialize establishes a local IPC object lifecycle only; it does not claim that parental restrictions are disabled, enabled, configured, checked or unrestricted",
+    "No host or guest parental-control settings, permission data, account state or system configuration are read or written",
+    "All restriction/permission/safety-level/settings/timer/event operations, legacy factory CreateService0 and unknown commands fail explicitly",
+    "The public primary sources confirm common factory interfaces but do not establish complete per-family capability masks; no general PCTL interface or privilege compatibility is claimed",
+    "General mutable-state reclamation across generic IPC clones/domains remains outside this narrow startup adapter; process-lifetime retention avoids a borrowed-state use-after-free"
+  ],
+  "validation": {
+    "focused_native_wire_tests_passed": 20,
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_pctl_ipc.py -v",
+    "actual_native_sources": [
+      "runtime/ipc.c",
+      "runtime/threads.c",
+      "runtime/pctl_host.c"
+    ],
+    "test_boundaries": "Actual C service manager, HIPC/CMIF/domain conversion, session handles and CloseHandle; guest entry/TLS/symbol calls abort if reached. No SDK binary, game, parental-control data or GPU input is executed or read by tests",
+    "cases": [
+      "pre-main registration of exactly four names without environment or child allocation",
+      "real service-manager MOVE factory and MOVE child sessions; factory family identity retained",
+      "CreateServiceWithoutInitialize leaves state uninitialized; Initialize has exact empty output and persists only per-child state",
+      "four-family startup-style factory loop creates independent children; only first child is initialized",
+      "two same-family children have distinct lifecycle state",
+      "domain factory returns an object ID rather than a moved handle; domain Initialize reaches the same persisted state",
+      "service clone and factory clone remain valid after actual original-handle CloseHandle",
+      "CopyFromCurrentDomain child remains valid after actual CloseHandle destroys the entire originating domain",
+      "child survives factory close; process-lifetime pool fails explicitly at its 32-object budget",
+      "missing factory PID, nonzero placeholder, extra Initialize PID, handles/buffers, unsupported transport, truncated input and missing run guard fail",
+      "permission, restriction, settings, event, legacy factory and unknown requests fail instead of invented results"
+    ],
+    "standalone_syntax_default0": "clang -fsyntax-only -Wall -Wextra -Werror passed",
+    "standalone_syntax_diagnostic1": "clang -fsyntax-only -Wall -Wextra -Werror passed",
+    "independent_peer_review": "Focused read-only review of the new source and test fixture found no material issue; peer did not execute tests or edit files"
+  },
+  "primary_references": [
+    {
+      "url": "https://github.com/switchbrew/libnx/blob/b156b4774fb2df7b93402169509266da7547fc4c/nx/source/services/pctl.c#L12-L52",
+      "used_for": "Public client uses explicit service-family names, domain conversion, factory1 with PID/u64zero and one output object, then service1 with no IO. Libnx fallback order differs from this actual SDK's four-name iteration"
+    },
+    {
+      "url": "https://switchbrew.org/w/index.php?title=Parental_Control_services&oldid=15057",
+      "used_for": "Primary protocol research identifies all four names as IParentalControlServiceFactory and separates factory1 CreateServiceWithoutInitialize from child-service1 Initialize; policy/query methods are distinct commands"
+    }
+  ],
+  "SDK_initializer_bypass": false,
+  "guest_or_GPU_execution_by_this_stage": false,
+  "shared_runtime_GFX_builder_inputs_modified_by_this_stage": false,
+  "owned_paths": [
+    "runtime/pctl_host.c",
+    "tests/test_pctl_ipc.py",
+    "provenance/PCTL_HOST_20261027.json"
+  ],
+  "remaining": "root must rebuild and run the real native host after source freeze. No accepted PCTL factory/Initialize request, completed SDK initialization, nnMain, frame or gameplay is claimed by this adapter stage"
+}

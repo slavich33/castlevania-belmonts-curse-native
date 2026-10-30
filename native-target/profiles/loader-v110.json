@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "title_id": "0100BA4026E94000",
+  "display_version": "1.1.0",
+  "mode": "native_loader_mapping_only",
+  "load_order": ["main", "subsdk0", "sdk"],
+  "runtime_tables_sha256": "ec9dd59df9198e49e8712905928dbe956e86c6b87654273e1e670134b11f0c2c",
+  "modules": {
+    "main": {"bytes": 121765888, "sha256": "083ef231c464d02e04da549498ce8a66c7e20e8ce2e4059c52aae57131c51672"},
+    "subsdk0": {"bytes": 7288876, "sha256": "c611526dfa8d58980c4b11ae4aa5980af030a00fb3dab6ae73a21528ee4a0507"},
+    "sdk": {"bytes": 14452808, "sha256": "06d9db91acc803573f939826321f8ddace25c2a2707065f8b67224707312bdf1"}
+  },
+  "relocations_readback": 679115,
+  "unresolved_weak_symbols": ["_ZTH15gDeferredAction", "nnProfilerInitialize", "nnProfilerRecordHeartbeat"],
+  "provenance": "Authenticated 2026-10-26 loader completion checkpoint, exact Castlevania v1.1.0 AOT modules; generated code/tables stay outside Git",
+  "guest_instructions_authorized": false
+}

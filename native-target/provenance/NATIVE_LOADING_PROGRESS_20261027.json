@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "title_id": "0100BA4026E94000",
+  "version": "1.1.0",
+  "state": "actual_bundled_native_game_loading_image_observed_menu_not_reached",
+  "scope": "Normal guarded bundled diagnostic, independent exact artifact/signature readback and direct CUA observation of the running app. No game or shader payloads are included.",
+  "compiled_source_commit": "f39e2f4f5e27195ed0158a6b96fa69aae0dc6b22",
+  "compiled_source_binding_reference": {
+    "path": "native-target/provenance/NATIVE_PRESENT_PROGRESS_20261027.json",
+    "sha256": "b6c13978eb6fb94343e01278b70e422f319b0b8ca825b61a3fe6eea3049090e3",
+    "meaning": "Same compiled build receipt and original binary as the independently verified155-source/74-unit diagnostic."
+  },
+  "runner_source_commit": "d21322f9dd8f7f60ce700988de5b769adfb3d837",
+  "runner_sha256": "12e58b4613985106aaf7796d9cf2a9ef93f55f5f3d165fa960f2354a7de13ae8",
+  "artifacts": {
+    "run_relative_to_work": "runs/host-0ezy2ydv",
+    "run_receipt_sha256": "9a2dad4410a7564cf4e06958064ea78f5dd06a23255d0cc14dfd05956e362143",
+    "app_bundle_receipt_sha256": "700b619e2f14546ea9653b3e1b8a4f1286417eeea42adc9f2289eed64141bb07",
+    "compiled_build_receipt_sha256": "1345f7eced17053edc258e97df585aa8c93eb12f30b6366dde70936dc1559dd6",
+    "native_log_sha256": "1ebf49b6dec03559237c4bebecbc51ec5716b7508511e71a7600cf7d4a66fe68",
+    "native_log_bytes": 160250,
+    "original_compiled_binary_sha256": "6f8212d3020e3ee1caa35ef4ee6940203434cf564325475d1124eaf75db7018b",
+    "launched_signed_derivative_sha256": "3e059e5ad990b3c155f900312323d87c70c49def23e7409276fd807313e5da12"
+  },
+  "app_verification": {
+    "bundle_id": "org.macnativegames.castlevania.diagnostic",
+    "strict_entire_bundle_and_main_and_two_helpers_after_run": "pass",
+    "every_signed_copy_sha_matches_manifest": true,
+    "all_three_original_source_executable_sha_unchanged": true,
+    "no_external_bundle_symlinks": true,
+    "ad_hoc_local_only": true,
+    "standalone_installation": false
+  },
+  "policy": {
+    "diagnostic_gpu_budget_mib": 2048,
+    "diagnostic_file_size_limit_mib": 1024,
+    "diagnostic_app_pool_bytes": 3456106496,
+    "runtime_romfs_verification_mode": "reused_previous_C_full_hash_record",
+    "runtime_romfs_proof_sha256": "4ac4a3a64fed51368cc149745a3e96d5b0ffc3bdb38ee34784fb9998022eb60b",
+    "gpu_keepalive_disabled_by_runner": true
+  },
+  "direct_UI_observation": {
+    "observer": "root via native CUA app inventory, getApp, AX and two screenshot observations during the live run",
+    "app_detected_running": true,
+    "window_title": "Castlevania: Belmont's Curse  Mac \u2014 Ver. 1.1.0",
+    "observed_pixels": "Black loading screen with a small gold quill near the bottom right; host overlay shows FPS60 at1920x1080 and4shaders. The quill shape/position differs between observations. No game menu or gameplay is visible.",
+    "meaningful_title_loading_pixels_verified": true,
+    "menu_verified": false,
+    "gameplay_verified": false,
+    "input_check": "One Return key through CUA; following AX/screenshot shows no menu transition. Source input.c maps Return to Plus, not A (J maps A). Confirm/A and gameplay input remain untested.",
+    "screenshot_file_not_saved": true,
+    "screenshot_hash_claimed": false
+  },
+  "graphics": {
+    "first_drawable_callback_elapsed_seconds": 3.65,
+    "first_callback_positive_timestamp_asserted": false,
+    "last_logged_nvn_frame_lower_bound": 9900,
+    "shader_rows": 4,
+    "render_pipeline_rows": 2,
+    "compute_pipeline_rows": 0,
+    "generic_runner_first_frame_verified_retained": false,
+    "generic_runner_gpu_execution_verified_retained": false,
+    "interpretation": "Directly observed loading pixels plus native presentation counters; no promotion to playable game or complete renderer compatibility."
+  },
+  "termination": {
+    "seconds": 180.516,
+    "timeout_seconds": 180,
+    "timed_out": true,
+    "exit_code": -15,
+    "SIGTERM_sent_by_runner": true,
+    "forced_kill_sent": false,
+    "owned_cleanup_complete": true,
+    "remaining_owned_processes": []
+  },
+  "bounded_thread_sample": {
+    "private_preserved_sample_sha256": "a72cb24d45b7fb3fc0f032d8a8f8609d1c777b5f2b3a21a434a76ac5e46d8dc9",
+    "duration_seconds": 2,
+    "interval_ms": 10,
+    "scope": "Only the exact owned PID after command verification; sample content stays outsideGit.",
+    "observed": "Guest main is in an engine loop with WaitEvent and active branches; workers mostly wait on semaphores, render/presentation progress remains. No RomFS/pread/read stack in this short snapshot.",
+    "specific_asset_loader_deadlock_proven": false
+  },
+  "remaining": "Find why the title remains on its loading screen; inspect explicit file-open/miss trace before changing filesystem/thread/graphics behavior. Menu, gameplay, durable installation and iPhone port remain incomplete.",
+  "raw_logs_or_game_or_shader_payloads_included": false,
+  "device_team_signing_credentials_included": false
+}

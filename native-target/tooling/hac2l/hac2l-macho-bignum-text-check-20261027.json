@@ -1,0 +1,13 @@
+{
+  "state": "MachO_symbol_fix_verified_crypto_text_identical",
+  "text_SHA256": "d76cbd28dd2d789bdaa4d36df40d7c6326f5c90b2fb9fd9162fbab8eca8b9e9e",
+  "instruction_text_identical_before_after": true,
+  "required_MachO_exports_defined": [
+    "__ZN3ams6crypto4impl6BigNum3AddEPjPKjS5_m",
+    "__ZN3ams6crypto4impl6BigNum3SubEPjPKjS5_m",
+    "__ZN3ams6crypto4impl6BigNum7MultAddEPjPKjmj"
+  ],
+  "original_object_SHA256": "386b61fce5e90f76f829d8debd32c5b6aaa6bd4c95907633dc7958af1c2211dd",
+  "patched_object_SHA256": "d746721093d08162e41081ddd1e8dc89e9fe4760c3070455c089403c315465b3",
+  "game_or_key_data_used": false
+}

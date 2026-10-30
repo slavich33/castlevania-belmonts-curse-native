@@ -1,0 +1,108 @@
+{
+  "schema": "castlevania-native-sdk-path-gate-v1",
+  "recorded_at_utc": "2026-10-27T07:05:00.931883+00:00",
+  "title_id": "0100BA4026E94000",
+  "version": "1.1.0",
+  "state": "observed_existing_settings_path_rejected_by_original_sdk_mount_table_gate_unfixed",
+  "compiled_source_commit": "f39e2f4f5e27195ed0158a6b96fa69aae0dc6b22",
+  "normal_runner_source_commit": "6da63f0092919b936d3cfa0120798f4284a779d7",
+  "normal_runner_sha256": "b8584ffb55efbc6a89e653e2be38e0c51d57195f8357ddb9abda85bd4be4ec03",
+  "original_binary_sha256": "6f8212d3020e3ee1caa35ef4ee6940203434cf564325475d1124eaf75db7018b",
+  "signed_derivative_sha256": "3e059e5ad990b3c155f900312323d87c70c49def23e7409276fd807313e5da12",
+  "run_relative_to_work": "runs/host-2e8xbeh2",
+  "private_artifacts": {
+    "receipt.json": {
+      "sha256": "6c4ebf4450468c4195ee7e86db94e098aea96433330efcbbbeeff0c2e212f156",
+      "bytes": 10135
+    },
+    "compiled-build-receipt.json": {
+      "sha256": "1345f7eced17053edc258e97df585aa8c93eb12f30b6366dde70936dc1559dd6",
+      "bytes": 31185
+    },
+    "managed-instrumentation.json": {
+      "sha256": "44e033b4c034e1001032a93590a85fbc1672cfa5d2ec6cbaa016cb4a587c71f5",
+      "bytes": 664
+    },
+    "managed-trace-events.jsonl": {
+      "sha256": "a42300558f94f24c03398988ecb65c668e9a29f28d8fd3ca65bea6b1f9d067a1",
+      "bytes": 12517
+    },
+    "managed-trace-events.jsonl.exit.json": {
+      "sha256": "420e9ea55a43e568e8e7153108b6714441c799b626d5f5219a4d0eec94624dbc",
+      "bytes": 167
+    },
+    "managed-debugger.log": {
+      "sha256": "07940736ca1431788ffe00c69a9b85f4885d885775e5bd9382d4c5f7b74f97f7",
+      "bytes": 15543
+    },
+    "managed-trace-code/run.py": {
+      "sha256": "56e1d7953670059b82278044825b067fdd8e1e02c9b7507504be58a3c5e8aae7",
+      "bytes": 6552
+    },
+    "managed-trace-code/callbacks.py": {
+      "sha256": "da18eaefa84ae794021356a3faaeb013c5a2256ea52f63aaea3fc144943ec097",
+      "bytes": 10598
+    },
+    "logs/native-host.log": {
+      "sha256": "44314fd6eb6a7f500159a8048a273d1db8187967842f614380e5ab8aeca7483f",
+      "bytes": 61050
+    }
+  },
+  "instrumentation": {
+    "prelaunch_frozen_source_hashes_match": true,
+    "sdk_module_DWARF_identity": "sdk, index2, pre0, text_end6612672",
+    "temporarily_changes_code_memory_and_timing": true,
+    "guest_calls_forced_returns_or_register_object_overrides": false,
+    "raw_pointer_register_random_suffix_or_private_payload_in_git": false,
+    "normal_performance_claimed": false
+  },
+  "actual_sdk_checkpoints": {
+    "BeforeIsPathMounted": {
+      "sdk_rva": "0x92090",
+      "argument": "x0 C-string full mounted path"
+    },
+    "AfterIsPathMounted": {
+      "sdk_rva": "0x92098",
+      "return": "w0 bool"
+    },
+    "PathNotMounted": {
+      "sdk_rva": "0x92210",
+      "meaning": "original SDK rejects path before nn::fs::OpenFile bridge"
+    }
+  },
+  "observed": {
+    "ordered_before_after_false_rejection_triples": 7,
+    "existing_settings_path": "rom:/Data/StreamingAssets/aa/settings.json",
+    "existing_settings_path_false_rejections": 2,
+    "boot_config_path_false_rejections": 1,
+    "ram_path_false_rejections": 4,
+    "all_after_results": 0,
+    "setup_callback_or_bounded_read_errors": false
+  },
+  "interpretation": {
+    "established": "The correct rom:/ settings path reaches the original SDK IsPathMounted check; its bool is false and the original rejection branch executes twice. The earlier verified settings file is present, so data deletion/replacement and a speculative leading-slash alias are not indicated.",
+    "static_review": "The host currently overrides bare-name IsMounted, but not full-path IsPathMounted. Original IsPathMounted queries the SDK MountTable, separate from actual host FS registries. SDK normalizer then uses four additional path-length/name-length queries which also lack host adapters.",
+    "limits": "This is a concrete observed failing gate, not proof that implementing it alone reaches the menu. No code fix, fake success, path alias, asset rewrite or later-query behavior is claimed."
+  },
+  "next_after_explicit_resume": [
+    "Implement truthful full-path mount query against existing host/RomFS registries while preserving path and traversal rules.",
+    "Measure/implement the four actual backend path/name length queries with exact output ABI; never blanket-return success.",
+    "Add native data-free FS resolver regressions, commit and build source, then rerun normally to verify progress."
+  ],
+  "reference": {
+    "path": "native-target/provenance/NATIVE_ADDRESSABLES_FAILURE_20261027.json",
+    "sha256": "3c316e82e4ed695017b1df93e5671165b3e64d3c2e8d3ca8095b863d81205b2d"
+  },
+  "cleanup": {
+    "configured_timeout_seconds": 45,
+    "observed_seconds": 45.851,
+    "planned_SIGTERM": true,
+    "debugger_and_parent_native_return_code": -15,
+    "debugger_exit_code": 0,
+    "empty_owned_group_verified": true,
+    "forced_kill": false,
+    "all_four_strict_signatures_and_original_signed_hashes_rechecked": true
+  },
+  "further_build_fix_or_install_started": false,
+  "menu_or_gameplay_verified": false
+}

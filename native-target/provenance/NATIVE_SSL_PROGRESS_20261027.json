@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "state": "actual_SSL_interface_declaration_returns_next_original_touchscreen_reader_null_shared_ring",
+  "compiled_source_commit": "a77b8cd0b8aa760626488e7f9fd63e9c650c851c",
+  "compiled_source_hashes_match_commit": true,
+  "compiled_source_files": 155,
+  "translation_units": 74,
+  "binary_sha256": "f0580bcbec8f939a611db60b9bb607fb69909e9eac3e0b0b4063ec6ebce58e4a",
+  "compiled_build_receipt_sha256": "27866abecaec2ed2b1fa73209bfccfc6bc0e15baccad545661021be7363498ac",
+  "log_sha256": "74ec2d3ca54e35680d6704bacd0c99c398e8e1aad03c3a4350444bb9101a29a3",
+  "run_receipt_sha256": "536191a697a8f8de22556d39983a70300a1c7af4febd48b41afb8e53570366a0",
+  "native_exit_code": 139,
+  "native_seconds": 3.925,
+  "SSL_SetInterfaceVersion_actual_request": {
+    "command": 5,
+    "transport_type": 6,
+    "raw_bytes": 4,
+    "input_buffers": 0,
+    "input_handles": 0,
+    "validated_version": 3,
+    "result": 0,
+    "response_bytes": 0,
+    "output_handles_or_objects": 0
+  },
+  "TLS_connection_or_certificate_validation_claim": false,
+  "next_fault": {
+    "signal": 11,
+    "address": "0x18",
+    "SDK_PC": "0x4ff0fc",
+    "SDK_LR": "0x4fdce8",
+    "decoded_operation": "Touch-screen LIFO reader loads [x0+0x18], where x0 is the NULL unactivated SDK touch accessor ring pointer at SDK+0xc42d70",
+    "SDK_callers": [
+      "sdk+0x502c40"
+    ],
+    "main_callers": [
+      "main+0xd59ae4",
+      "main+0xd5da20",
+      "main+0xfdbd90",
+      "main+0xd2baa0"
+    ],
+    "binding_gap": "Host InitializeTouchScreen is already overridden, but only old singular GetTouchScreenState<1> is handled; the actual imported plural GetTouchScreenStates<16> enters original SDK shared-memory access.",
+    "fault_skipped_or_repaired": false,
+    "TLS_or_allocator_as_null_source_supported": false
+  },
+  "NRO_mapping_observed": false,
+  "actual_game_GPU_execution_verified": false,
+  "first_game_frame_verified": false,
+  "menu_verified": false,
+  "gameplay_verified": false,
+  "runtime_RomFS_verification_mode": "reused_previous_C_full_hash_record",
+  "fresh_image_baseline_private_run": "host-x5bjs1z3",
+  "remaining_owned_processes": [],
+  "private_evidence_location": "external host-build/runs/host-43uxfwwc",
+  "boundary": "The original SDK accepted the real interface-version declaration. No SSL context, TLS connection, certificate/trust result or game frame is claimed. The next original HID reader faults due to incomplete native input ABI binding, without any signal continuation."
+}

@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "checked_at_utc": "2026-10-27T03:55:28.581689+00:00",
+  "official_repository": "ly05010419/MacNativeGames",
+  "pinned_base_commit": "f5a03fead9c40c8fe23103abce6bfe505a80756a",
+  "observed_upstream_head_commit": "aaf6ba1f494fabaa209d049e528d6f923dfe822a",
+  "API_recursive_trees_untruncated": true,
+  "games_ori_all_tree_entries_identical": true,
+  "games_ori_tree_entry_count": 206,
+  "games_ori_symlinks": [],
+  "graphics_tree_sha": "28477f803fd67f636bdb73beabc148ac247f52d6",
+  "local_source_origin_manifest": "ori-base-source-manifest.json",
+  "source_change_applied": false,
+  "boundary": "The pinned Ori runtime and copied graphics implementation have no upstream source delta at this exact checked head. Other title backends can differ; this comparison neither proves gameplay compatibility nor applies their title-specific initialization bypasses."
+}

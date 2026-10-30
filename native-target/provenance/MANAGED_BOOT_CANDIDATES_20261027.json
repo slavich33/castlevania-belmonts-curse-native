@@ -1,0 +1,664 @@
+{
+  "schema": "castlevania-managed-boot-candidates-v1",
+  "recorded_at_utc": "2026-10-27T06:31:35Z",
+  "title_id": "0100BA4026E94000",
+  "display_version": "1.1.0",
+  "content_version": 65536,
+  "scope": {
+    "mode": "bounded static analysis only",
+    "runtime_method_hits_observed": false,
+    "managed_wait_identified_at_runtime": false,
+    "game_state_changed": false,
+    "guest_executed_by_this_analysis": false,
+    "assets_modified": false,
+    "raw_metadata_or_complete_derived_tables_written": false,
+    "only_repository_write": "native-target/provenance/MANAGED_BOOT_CANDIDATES_20261027.json"
+  },
+  "inputs": [
+    {
+      "role": "original_nso",
+      "size": 55597475,
+      "sha256": "c71362eb3cc09826f209896d225de212863ed8bb261383893ee7555d52b46319",
+      "stat_stable_during_hash": true
+    },
+    {
+      "role": "original_elf",
+      "size": 116858624,
+      "sha256": "7368c191b512afb2badc70cda4522eaf87e44fdc4c741daba8d54a3587e8c6ff",
+      "stat_stable_during_hash": true
+    },
+    {
+      "role": "aot_flat",
+      "size": 121765888,
+      "sha256": "083ef231c464d02e04da549498ce8a66c7e20e8ce2e4059c52aae57131c51672",
+      "stat_stable_during_hash": true
+    },
+    {
+      "role": "runtime_layout",
+      "size": 85004362,
+      "sha256": "588b3b109e8e8b5d5c8155db0f961f4225656922c654a68e1026889a1beebe34",
+      "stat_stable_during_hash": true
+    },
+    {
+      "role": "romfs_index",
+      "size": 583590,
+      "sha256": "205fa149cb1c3da3be2c072bfcc9ec7a5ccc7e251474f90b256742e23797d273",
+      "stat_stable_during_hash": true
+    }
+  ],
+  "format_references": [
+    {
+      "url": "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/MetadataClass.cs",
+      "purpose": "v31 metadata structures; method definition includes returnParameterToken"
+    },
+    {
+      "url": "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+      "purpose": "code/metadata registration, codegen-module and generic-method structures"
+    },
+    {
+      "url": "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/Il2Cpp.cs",
+      "purpose": "per-image method-token RID lookup and generic MethodSpec lookup"
+    }
+  ],
+  "method_map_recipe": {
+    "metadata_header": "little-endian uint32 fields; magic 0xfab11baf, version 31",
+    "type_definition_struct": "<IIiiiiiIiiiiiiii8HII (88 bytes)",
+    "method_definition_struct": "<IiiiiiI4H (36 bytes); fields nameIndex, declaringType, returnType, returnParameterToken, parameterStart, genericContainerIndex, token, flags, iflags, slot, parameterCount",
+    "image_definition_struct": "<IiiIiIiIiI (40 bytes)",
+    "codegen_module_prefix": "moduleName pointer +0; uint64 methodPointerCount +8; methodPointers pointer +16",
+    "ordinary_method_pointer": "match metadata image name to codegen module name, then methodPointers[(token & 0x00ffffff)-1]",
+    "relative_pointer_resolution": "for main ELF R_AARCH64_RELATIVE entries (kind 1027), use relocation addend as logical RVA; otherwise read the original uint64 field",
+    "generic_method_pointer": "MetadataRegistration.genericMethodTable entry <iiii> (16B): genericMethodIndex, methodIndex, invokerIndex, adjustorThunk; MethodSpec entry <iii> (12B): methodDefinitionIndex, classIndexIndex, methodIndexIndex; resolve method name from methodDefinitionIndex and pointer from CodeRegistration.genericMethodPointers[methodIndex]",
+    "addresses_are": "logical main-relative RVAs; physical AOT offset is RVA+0x110000; live address is mapped_main_base+RVA without adding PRE"
+  },
+  "registration": {
+    "runtime_registration_callback_got_rva": "0x6c027f0",
+    "callback_pointer_storage_rva": "0x6cb63e8",
+    "callback_rva": "0x20e2a0",
+    "callback_dispatch_callsite_rva": "0x55a0dc",
+    "code_registration_rva": "0x689feb8",
+    "metadata_registration_rva": "0x6a95908",
+    "codegen_modules_count_field_rva": "0x689ff30",
+    "codegen_modules_pointer_field_rva": "0x689ff38",
+    "codegen_modules_array_rva": "0x6cb60b8",
+    "codegen_modules_count": 102,
+    "runtime_registration_store_rva": "0x56412c",
+    "registered_code_registration_global_rva": "0x6f877f8",
+    "registered_metadata_registration_global_rva": "0x6f87800",
+    "registered_options_global_rva": "0x6f87808"
+  },
+  "selected_codegen_modules": [
+    {
+      "image": "Assembly-CSharp.dll",
+      "descriptor_rva": "0x68fe508",
+      "method_pointer_count": 30625,
+      "method_pointers_rva": "0x6ccb0f0"
+    },
+    {
+      "image": "MotherBase.ApplicationFlowManager.dll",
+      "descriptor_rva": "0x6b429d8",
+      "method_pointer_count": 426,
+      "method_pointers_rva": "0x6e9a3b0"
+    },
+    {
+      "image": "MotherBase.SDK-Switch.dll",
+      "descriptor_rva": "0x6b43d68",
+      "method_pointer_count": 44,
+      "method_pointers_rva": "0x6e9e048"
+    }
+  ],
+  "generic_call_targets": [
+    {
+      "rva": "0x227db10",
+      "method": "UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<T>",
+      "method_spec_index": 129909,
+      "metadata_method_definition_index": 105574,
+      "generic_sharing": {
+        "representative_method_instantiation_index": 65,
+        "representative_type": "System.Object",
+        "concrete_callsite_type_not_decoded": true
+      },
+      "matched_definitions": [
+        "Unity.Addressables.dll:UnityEngine.AddressableAssets.Addressables.LoadAssetAsync"
+      ]
+    },
+    {
+      "rva": "0x25a5b00",
+      "method": "MotherBase.ApplicationFlowManager.AsyncOperationExtensions.CallWhenDone<T>",
+      "method_spec_index": 146110,
+      "metadata_method_definition_index": 110470,
+      "generic_sharing": {
+        "representative_method_instantiation_index": 65,
+        "representative_type": "System.Object",
+        "concrete_callsite_type_not_decoded": true
+      },
+      "matched_definitions": [
+        "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.AsyncOperationExtensions.CallWhenDone"
+      ]
+    },
+    {
+      "rva": "0x35c5060",
+      "method": "UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<T>.get_IsDone",
+      "matched_definitions": [
+        "Unity.ResourceManager.dll:UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle`1.get_IsDone"
+      ]
+    },
+    {
+      "rva": "0x35c4480",
+      "method": "UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<T>.add_Completed",
+      "matched_definitions": [
+        "Unity.ResourceManager.dll:UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle`1.add_Completed"
+      ]
+    },
+    {
+      "rva": "0x35c5140",
+      "method": "UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<T>.IsValid",
+      "matched_definitions": [
+        "Unity.ResourceManager.dll:UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle`1.IsValid"
+      ]
+    },
+    {
+      "rva": "0x35c53e0",
+      "method": "UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<T>.get_Status",
+      "matched_definitions": [
+        "Unity.ResourceManager.dll:UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle`1.get_Status"
+      ]
+    },
+    {
+      "rva": "0x35c5370",
+      "method": "UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<T>.get_Result",
+      "matched_definitions": [
+        "Unity.ResourceManager.dll:UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle`1.get_Result"
+      ]
+    }
+  ],
+  "static_paths": [
+    {
+      "name": "BootLoader",
+      "sequence": [
+        "Awake 0x40cb770 requests UnityEngine.Switch.Performance.SetCpuBoostMode(1)",
+        "Start 0x40cb780 loads byte this+0x20; zero returns, nonzero branches to Load 0x40cb790",
+        "Load dispatches through the scene-reference object and subscribes its OnSceneLoaded callback",
+        "OnSceneLoaded 0x40cb880 releases its scene-operation handle through Addressables.Release"
+      ],
+      "runtime_execution_proved": false
+    },
+    {
+      "name": "ApplicationFlowManager profile",
+      "sequence": [
+        "Start 0x40d4bf0 branches to LoadProfileAddressable 0x40d4c00",
+        "LoadProfileAddressable calls Addressables.LoadAssetAsync<T> shared reference-type body 0x227db10, then CallWhenDone 0x25a5b00",
+        "CallWhenDone checks get_IsDone 0x35c5060; done invokes the delegate immediately, pending subscribes add_Completed 0x35c4480",
+        "SetLoadedProfileAsset 0x40d54b0 checks IsValid 0x35c5140 and get_Status 0x35c53e0 == 1",
+        "Success calls get_Result 0x35c5370, stores profile at this+0x20, then branches to LoadProfileFromState 0x40d55b0",
+        "Invalid handle or status !=1 takes branch 0x40d5580 to MotherBase.ToolKit.Log.Error 0x4137e00 and returns without LoadProfileFromState"
+      ],
+      "runtime_execution_proved": false
+    },
+    {
+      "name": "Switch account initialization",
+      "sequence": [
+        "PlatformsManager.OnEnable 0x41029d0 calls EESwitchMain.Initialize 0x4102d60",
+        "EESwitchMain.Initialize calls Account.Initialize 0x41250b0, TryOpenPreselectedUser 0x41250c0, then GetUserId 0x41250e0",
+        "Success path returns integer 2 at 0x4102e44",
+        "Preselected-user or GetUserId failure paths reach nn.Nn.Abort 0x4124a10; no success is fabricated by this analysis"
+      ],
+      "runtime_execution_proved": false
+    },
+    {
+      "name": "LoadingScreenRose animation",
+      "sequence": [
+        "Start 0x1f0f180 obtains/instantiates a material and initializes animation state",
+        "Update 0x1f0f240 accumulates UnityEngine.Time.deltaTime into float this+0x40, evaluates an AnimationCurve, and updates Material.SetFloat",
+        "This method contains no observed load-completion wait or state-transition acknowledgment"
+      ],
+      "runtime_execution_proved": false,
+      "rendered_quill_identity_proved": false
+    }
+  ],
+  "wait_contracts": [
+    {
+      "method": "<WaitSystemsInitializationCoroutine>d__5.MoveNext",
+      "rva": "0x41068b0",
+      "abi": "x0=coroutine object; w0=MoveNext boolean",
+      "state": "coroutine +0x10 state, +0x18 Current, +0x20 PlatformsManager reference",
+      "predicate": "while owner isActiveAndEnabled and owner int32 +0x98 is nonnegative and !=2, yield null and return true; owner negative or 2 returns false; inactive owner also returns false",
+      "runtime_wait_observed": false
+    },
+    {
+      "method": "<WaitUserReadyCoroutine>d__4.MoveNext",
+      "rva": "0x4106b60",
+      "abi": "x0=coroutine object; w0=MoveNext boolean",
+      "state": "coroutine +0x10 state, +0x18 Current, +0x20 accumulated float time",
+      "predicate": "yield null while EESwitchMain UID fails nn.account.Uid.IsValid and accumulated time has not exceeded 180.0; valid UID exits; exceeding limit logs ToolKit.Log.Error and exits",
+      "time_source": "UnityEngine.Time.get_unscaledDeltaTime at main+0x4e60fb0",
+      "timeout_value": 180,
+      "timeout_comparison": "strictly greater than 180.0 triggers timeout",
+      "wall_clock_timeout_proved": false,
+      "runtime_wait_observed": false
+    },
+    {
+      "method": "<WaitPlayerPrefsReadyCoroutine>d__3.MoveNext",
+      "rva": "0x4106660",
+      "abi": "x0=coroutine object; w0=MoveNext boolean",
+      "state": "coroutine +0x10 state, +0x18 Current, +0x20 owner, +0x28 accumulated float time",
+      "predicate": "when enabled by owner byte +0x88, yield null while EEPlayerPrefs initialized flag is false and accumulated time <=180.0; initialized exits; exceeding limit logs ToolKit.Log.Error and exits",
+      "time_source": "UnityEngine.Time.get_unscaledDeltaTime at main+0x4e60fb0",
+      "timeout_value": 180,
+      "timeout_comparison": "strictly greater than 180.0 triggers timeout",
+      "wall_clock_timeout_proved": false,
+      "runtime_wait_observed": false
+    }
+  ],
+  "diagnostic_plan": {
+    "status": "proposal only; no debugger attach, breakpoint, process launch or instruction modification performed",
+    "host_gate": {
+      "symbol": "observed_main",
+      "source": "runtime/services.c:226",
+      "purpose": "one-time host stop before original nnMain starts engine initialization"
+    },
+    "base_source": "loader mapped-main line in the same fresh run log; mapped_main_base is logical base",
+    "first_phase": [
+      {
+        "name": "BootLoader.Start",
+        "rva": "0x40cb780"
+      },
+      {
+        "name": "ApplicationFlowManager.Start",
+        "rva": "0x40d4bf0"
+      },
+      {
+        "name": "PlatformsManager.OnEnable",
+        "rva": "0x41029d0"
+      },
+      {
+        "name": "LoadingScreenRose.Start",
+        "rva": "0x1f0f180"
+      }
+    ],
+    "second_phase": [
+      "SetLoadedProfileAsset 0x40d54b0",
+      "WaitUserReady.MoveNext 0x4106b60",
+      "WaitPlayerPrefsReady.MoveNext 0x4106660",
+      "WaitSystemsInitialization.MoveNext 0x41068b0"
+    ],
+    "record_only": "entry hit count, LR/short backtrace and bounded scalar fields; for the profile callback x0 is manager and x1 points to a 24-byte AsyncOperationHandle copy",
+    "preserve": "original return values, branch decisions, operation state, callbacks and game state",
+    "debugger_permissions_or_breakpoint_type_tested": false,
+    "missing_hit_limit": "absence of a hit requires a verified correctly placed breakpoint and adequate observation; engine-only samples cannot prove a managed method never executes"
+  },
+  "limitations": [
+    "Static names and pointer mappings do not identify the managed stage reached in the black/loading-screen run.",
+    "No actual managed method hits, coroutine state, profile-operation status, caught exception, or initialization return values were observed by this analysis.",
+    "The rendered gold-quill identity is not linked to LoadingScreenRose by the static evidence alone.",
+    "Logical Unity unscaledDeltaTime timeout values do not establish elapsed wall time for the current run.",
+    "Null method pointers were counted structurally, not classified individually as abstract/generic/stripped methods.",
+    "No additional asset extraction, code rewriting, title patch, fake acknowledgment or guest execution was performed.",
+    "The shared generic-body MethodSpec uses representative System.Object (GenericInst 65); the concrete AFM callsite RuntimeMethod context was not decoded. No concrete closed generic T is asserted."
+  ],
+  "repository_head_at_analysis": "6da63f0092919b936d3cfa0120798f4284a779d7",
+  "metadata_input": {
+    "romfs_relative_path": "Data/Managed/Metadata/global-metadata.dat",
+    "romfs_image_offset": 4608,
+    "bytes": 16008508,
+    "sha256": "018f81273297f46dba374ffd9f5d654cf6b2668fa8a17baaa99f71ddf9e0ab28",
+    "magic": "0xfab11baf",
+    "version": 31,
+    "source_read": "exact indexed metadata range only; no full RomFS hash repeated by this analysis"
+  },
+  "metadata_tables": {
+    "header_bytes": 256,
+    "strings": {
+      "offset": 731172,
+      "bytes": 2404448
+    },
+    "types": {
+      "offset": 12692772,
+      "bytes": 1770736,
+      "stride": 88,
+      "count": 20122
+    },
+    "methods": {
+      "offset": 3535252,
+      "bytes": 4216356,
+      "stride": 36,
+      "count": 117121
+    },
+    "images": {
+      "offset": 14463508,
+      "bytes": 4080,
+      "stride": 40,
+      "count": 102
+    }
+  },
+  "table_validation": {
+    "status": "pass",
+    "image_names_unique_and_equal_codegen_module_names": true,
+    "all_types_owned_exactly_once_by_images": true,
+    "all_methods_owned_exactly_once_by_declaring_types": true,
+    "all_method_token_table_ids_equal_0x06": true,
+    "all_per_image_method_rids_exactly_sequential_1_to_module_method_count": true,
+    "method_pointer_count_sum": 117121,
+    "nonzero_ordinary_method_pointers_inside_original_text": 106110,
+    "zero_ordinary_method_pointers": 11011,
+    "original_text_rva_begin": "0x0",
+    "original_text_rva_end_exclusive": "0x5133368"
+  },
+  "generic_table_validation": {
+    "status": "pass",
+    "metadata_registration_rva": "0x6a95908",
+    "method_specs_rva": "0x539452c",
+    "method_spec_count": 168578,
+    "method_spec_stride": 12,
+    "generic_method_table_rva": "0x5582344",
+    "generic_method_table_count": 142759,
+    "generic_method_table_stride": 16,
+    "generic_method_pointer_count": 142498,
+    "all_table_spec_indices_and_referenced_method_definition_indices_bounded": true,
+    "all_nonnegative_generic_method_indices_bounded_and_pointer_values_zero_or_inside_text": true,
+    "invoker_and_adjustor_indices_not_independently_validated": true
+  },
+  "selected_methods": [
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.BootLoader.Awake",
+      "metadata_method_definition_index": 110471,
+      "token": "0x6000009",
+      "per_image_method_rid": 9,
+      "rva": "0x40cb770",
+      "aot_file_offset": "0x41db770",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=BootLoader instance; bounded body sets w0=1 and tail-calls UnityEngine.Switch.Performance.SetCpuBoostMode",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.BootLoader.Start",
+      "metadata_method_definition_index": 110472,
+      "token": "0x600000a",
+      "per_image_method_rid": 10,
+      "rva": "0x40cb780",
+      "aot_file_offset": "0x41db780",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=BootLoader instance; reads byte this+0x20; zero returns, nonzero tail-calls Load",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.BootLoader.Load",
+      "metadata_method_definition_index": 110473,
+      "token": "0x600000b",
+      "per_image_method_rid": 11,
+      "rva": "0x40cb790",
+      "aot_file_offset": "0x41db790",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=BootLoader instance; void load initiation; no synchronous completion claim",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.BootLoader.OnSceneLoaded",
+      "metadata_method_definition_index": 110474,
+      "token": "0x600000c",
+      "per_image_method_rid": 12,
+      "rva": "0x40cb880",
+      "aot_file_offset": "0x41db880",
+      "explicit_parameter_count": 1,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=BootLoader instance, x1 points to a 24-byte SceneInstance operation-handle copy",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.ApplicationFlowManager.Awake",
+      "metadata_method_definition_index": 110722,
+      "token": "0x6000104",
+      "per_image_method_rid": 260,
+      "rva": "0x40d4b60",
+      "aot_file_offset": "0x41e4b60",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=AFM instance",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.ApplicationFlowManager.Start",
+      "metadata_method_definition_index": 110723,
+      "token": "0x6000105",
+      "per_image_method_rid": 261,
+      "rva": "0x40d4bf0",
+      "aot_file_offset": "0x41e4bf0",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=AFM instance; tail-calls LoadProfileAddressable",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.ApplicationFlowManager.LoadProfileAddressable",
+      "metadata_method_definition_index": 110730,
+      "token": "0x600010c",
+      "per_image_method_rid": 268,
+      "rva": "0x40d4c00",
+      "aot_file_offset": "0x41e4c00",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=AFM instance; LoadAssetAsync returns a 24-byte handle into hidden result storage x8; no manual invocation proposed",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.ApplicationFlowManager.SetLoadedProfileAsset",
+      "metadata_method_definition_index": 110731,
+      "token": "0x600010d",
+      "per_image_method_rid": 269,
+      "rva": "0x40d54b0",
+      "aot_file_offset": "0x41e54b0",
+      "explicit_parameter_count": 1,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=AFM instance, x1 points to a 24-byte AsyncOperationHandle copy; no concrete closed generic T asserted",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.ApplicationFlowManager.LoadProfileFromState",
+      "metadata_method_definition_index": 110732,
+      "token": "0x600010e",
+      "per_image_method_rid": 270,
+      "rva": "0x40d55b0",
+      "aot_file_offset": "0x41e55b0",
+      "explicit_parameter_count": 1,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=AFM instance; called with x1 loaded-profile state field on success edge",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.ApplicationFlowManager.Update",
+      "metadata_method_definition_index": 110725,
+      "token": "0x6000107",
+      "per_image_method_rid": 263,
+      "rva": "0x40d4f00",
+      "aot_file_offset": "0x41e4f00",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=AFM instance",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.ApplicationFlowManager.UpdateTaskRunner",
+      "metadata_method_definition_index": 110727,
+      "token": "0x6000109",
+      "per_image_method_rid": 265,
+      "rva": "0x40d4e70",
+      "aot_file_offset": "0x41e4e70",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=AFM instance; byte this+0x70 gates updates; task runner pointer this+0x68; time bookkeeping float this+0x74",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.ApplicationFlowManager.dll:MotherBase.ApplicationFlowManager.TaskRunner.Update",
+      "metadata_method_definition_index": 110870,
+      "token": "0x6000198",
+      "per_image_method_rid": 408,
+      "rva": "0x40d50f0",
+      "aot_file_offset": "0x41e50f0",
+      "explicit_parameter_count": 1,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=TaskRunner instance; scalar float delta time passed in s0 by AFM.UpdateTaskRunner",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.GameServices.dll:MotherBase.GameServices.PlatformsManager.OnEnable",
+      "metadata_method_definition_index": 112613,
+      "token": "0x6000091",
+      "per_image_method_rid": 145,
+      "rva": "0x41029d0",
+      "aot_file_offset": "0x42129d0",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=PlatformsManager instance",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.GameServices.dll:MotherBase.GameServices.EESwitchMain.Initialize",
+      "metadata_method_definition_index": 112706,
+      "token": "0x60000ee",
+      "per_image_method_rid": 238,
+      "rva": "0x4102d60",
+      "aot_file_offset": "0x4212d60",
+      "explicit_parameter_count": 1,
+      "static_method_flag": true,
+      "bounded_decoded_abi": "w0=incoming subsystem flags; w0=integer initialization result on return; success branch returns 2",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.GameServices.dll:.<WaitSystemsInitializationCoroutine>d__5.MoveNext",
+      "metadata_method_definition_index": 112675,
+      "token": "0x60000cf",
+      "per_image_method_rid": 207,
+      "rva": "0x41068b0",
+      "aot_file_offset": "0x42168b0",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=coroutine instance; w0=MoveNext boolean",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.GameServices.dll:.<WaitUserReadyCoroutine>d__4.MoveNext",
+      "metadata_method_definition_index": 112687,
+      "token": "0x60000db",
+      "per_image_method_rid": 219,
+      "rva": "0x4106b60",
+      "aot_file_offset": "0x4216b60",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=coroutine instance; w0=MoveNext boolean",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.GameServices.dll:.<WaitPlayerPrefsReadyCoroutine>d__3.MoveNext",
+      "metadata_method_definition_index": 112669,
+      "token": "0x60000c9",
+      "per_image_method_rid": 201,
+      "rva": "0x4106660",
+      "aot_file_offset": "0x4216660",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=coroutine instance; w0=MoveNext boolean",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.SDK-Switch.dll:nn.account.Account.Initialize",
+      "metadata_method_definition_index": 117049,
+      "token": "0x6000023",
+      "per_image_method_rid": 35,
+      "rva": "0x41250b0",
+      "aot_file_offset": "0x42350b0",
+      "explicit_parameter_count": 0,
+      "static_method_flag": true,
+      "bounded_decoded_abi": "static wrapper called from EESwitchMain.Initialize",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.SDK-Switch.dll:nn.account.Account.TryOpenPreselectedUser",
+      "metadata_method_definition_index": 117050,
+      "token": "0x6000024",
+      "per_image_method_rid": 36,
+      "rva": "0x41250c0",
+      "aot_file_offset": "0x42350c0",
+      "explicit_parameter_count": 1,
+      "static_method_flag": true,
+      "bounded_decoded_abi": "caller passes output UserHandle storage in x0; w0=boolean checked by caller",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "MotherBase.SDK-Switch.dll:nn.account.Account.GetUserId",
+      "metadata_method_definition_index": 117051,
+      "token": "0x6000025",
+      "per_image_method_rid": 37,
+      "rva": "0x41250e0",
+      "aot_file_offset": "0x42350e0",
+      "explicit_parameter_count": 2,
+      "static_method_flag": true,
+      "bounded_decoded_abi": "caller passes UID output storage x0 and address of UserHandle copy x1; w0=Result checked by caller",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "Assembly-CSharp.dll:.LoadingScreenRose.Start",
+      "metadata_method_definition_index": 20221,
+      "token": "0x6004efe",
+      "per_image_method_rid": 20222,
+      "rva": "0x1f0f180",
+      "aot_file_offset": "0x201f180",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=LoadingScreenRose instance",
+      "runtime_hit_observed": false
+    },
+    {
+      "method": "Assembly-CSharp.dll:.LoadingScreenRose.Update",
+      "metadata_method_definition_index": 20222,
+      "token": "0x6004eff",
+      "per_image_method_rid": 20223,
+      "rva": "0x1f0f240",
+      "aot_file_offset": "0x201f240",
+      "explicit_parameter_count": 0,
+      "static_method_flag": false,
+      "bounded_decoded_abi": "x0=LoadingScreenRose instance; accumulated float animation time this+0x40",
+      "runtime_hit_observed": false
+    }
+  ],
+  "abi_scope": "Only arguments/fields consumed by bounded decoded code are stated; no universal hidden-argument signature is assumed.",
+  "original_elf_loads": [
+    {
+      "flags": 5,
+      "file_offset": 4096,
+      "logical_rva": 0,
+      "file_bytes": 85144424,
+      "memory_bytes": 85144424
+    },
+    {
+      "flags": 4,
+      "file_offset": 85151744,
+      "logical_rva": 85147648,
+      "file_bytes": 24555520,
+      "memory_bytes": 24555520
+    },
+    {
+      "flags": 6,
+      "file_offset": 109707264,
+      "logical_rva": 109703168,
+      "file_bytes": 7150208,
+      "memory_bytes": 10932224
+    }
+  ],
+  "aot_addressing": {
+    "pre_bytes": 1114112,
+    "file_bytes": 121765888,
+    "logical_file_end_before_page_rounding": 120651776,
+    "logical_rva_to_physical_file_addend": 1114112,
+    "live_breakpoint_address": "mapped_main_base + logical RVA; do not add PRE"
+  },
+  "selected_registration_data_preservation": {
+    "status": "pass",
+    "range_count": 23,
+    "compared_bytes": 1624,
+    "scope": "code registration, metadata registration, codegen-module array, selected descriptors and selected ordinary method-pointer slots compare byte-exact between original ELF logical data and authenticated AOT flat data; no entire table payload saved"
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "schema": "castlevania-native-file-trace-progress-v1",
+  "recorded_at_utc": "2026-10-27T06:24:11.040465+00:00",
+  "title_id": "0100BA4026E94000",
+  "version": "1.1.0",
+  "state": "bounded_native_loading_file_activity_observed_cause_unresolved",
+  "scope": "Independent read-only artifact, structured trace and signature audit of a completed guarded diagnostic. Only this sanitized provenance file was written; no target program, guest code, debugger attach, GPU operation or process signal was initiated by this audit.",
+  "compiled_source_commit": "f39e2f4f5e27195ed0158a6b96fa69aae0dc6b22",
+  "compiled_source_binding_reference": {
+    "path": "native-target/provenance/NATIVE_PRESENT_PROGRESS_20261027.json",
+    "sha256": "b6c13978eb6fb94343e01278b70e422f319b0b8ca825b61a3fe6eea3049090e3",
+    "meaning": "The exact compiled-build receipt and original binary match the prior independently verified155-source/74-unit build; no new C compilation is claimed."
+  },
+  "runner_source_commit": "6da63f0092919b936d3cfa0120798f4284a779d7",
+  "runner_sha256": "b8584ffb55efbc6a89e653e2be38e0c51d57195f8357ddb9abda85bd4be4ec03",
+  "trace_option_reference": {
+    "path": "native-target/provenance/FILE_TRACE_20261027.json",
+    "sha256": "e9a94fa2e154bca1edfd9993a7b83e2c9a36d92f1ee68575d37930717107f2a7"
+  },
+  "artifacts": {
+    "run_relative_to_work": "runs/host-cxuzd_6k",
+    "run_receipt_sha256": "d15ac2e4b62c2c4f4bf3e749fd0dcdd5af6d1b952e30592dc88c515ad8b76d1e",
+    "app_bundle_receipt_sha256": "bb750c418eebdd6d93d7ae84e5e9e160ec5e75085c1150f6049f0b465499d109",
+    "compiled_build_receipt_sha256": "1345f7eced17053edc258e97df585aa8c93eb12f30b6366dde70936dc1559dd6",
+    "native_log_sha256": "bf1e8aa66ddda1522b7bc32c30d959a18d8342ced6f70e27e3aecee8f38953f2",
+    "native_log_bytes": 164968,
+    "original_compiled_binary_sha256": "6f8212d3020e3ee1caa35ef4ee6940203434cf564325475d1124eaf75db7018b",
+    "launched_signed_derivative_sha256": "3e059e5ad990b3c155f900312323d87c70c49def23e7409276fd807313e5da12"
+  },
+  "signature_and_code_readback": {
+    "strict_bundle_main_and_two_helpers_after_run": "pass",
+    "all_three_signed_copies_match_app_manifest": true,
+    "all_three_original_source_executable_hashes_unchanged": true,
+    "external_bundle_symlinks": 0,
+    "original_compiled_build_receipt_unchanged": true,
+    "local_ad_hoc_only": true,
+    "standalone_installation_verified": false
+  },
+  "run_policy": {
+    "file_trace_requested": true,
+    "file_trace_flags_applied_to_child": true,
+    "fixed_child_flags": {
+      "CASTLEVANIA_FS_LOG": "1",
+      "CASTLEVANIA_FS_TIMING": "1"
+    },
+    "native_log_mode": "0600",
+    "run_and_log_directory_modes": "0700",
+    "diagnostic_gpu_budget_mib": 2048,
+    "diagnostic_file_size_limit_mib": 1024,
+    "diagnostic_app_pool_bytes": 3456106496,
+    "limits_are_measured_title_contract": false,
+    "gpu_keepalive_disabled": true,
+    "runtime_romfs_verification_mode": "reused_previous_C_full_hash_record",
+    "runtime_romfs_proof_sha256": "4ac4a3a64fed51368cc149745a3e96d5b0ffc3bdb38ee34784fb9998022eb60b",
+    "fresh_whole_image_hash_in_this_run_or_audit": false
+  },
+  "file_trace": {
+    "total_instrumentation_lines": 72,
+    "timestamped_path_operation_lines": 70,
+    "aggregate_read_window_lines": 2,
+    "operation_line_counts": {
+      "rom": 29,
+      "type": 18,
+      "type-miss": 21,
+      "rom-miss": 2
+    },
+    "operation_semantics": "The rom marker is emitted before open validation and denotes an attempt, not successful completion. type/type-miss are query outcomes; rom-miss is an explicit failed open-path lookup.",
+    "last_timestamped_operation": {
+      "log_line": 509,
+      "operation": "rom",
+      "basename": "resources.assets",
+      "elapsed_seconds_from_fs_logger_origin": 2.021,
+      "timestamp_is_boot_elapsed": false,
+      "meaning": "Last observed open-attempt marker; an additional type query and repeated attempt at the same basename occurred in this final trace group."
+    },
+    "no_later_instrumentation_lines_observed": true,
+    "no_later_lines_does_not_prove_absence_of_all_IO_or_pending_work": true,
+    "reported_read_windows": [
+      {
+        "log_line": 174,
+        "calls": 1,
+        "bytes": 4096,
+        "wall_ms": 3.917,
+        "prepare_ms": 0.002
+      },
+      {
+        "log_line": 347,
+        "calls": 5,
+        "bytes": 16100327,
+        "wall_ms": 1142.425,
+        "prepare_ms": 0.001
+      }
+    ],
+    "read_window_limit": "These periodic aggregate counters show real completed read activity across handles. They do not identify each file, prove complete asset deserialization, enumerate all reads through exit, or flush a final partial window. Their absolute monotonic timestamps are intentionally omitted.",
+    "missing_probe_classes": [
+      ".usym",
+      ".resG",
+      ".res"
+    ],
+    "missing_probe_interpretation": "Sidecar/symbol probe misses are observed. Neither a required dependency failure nor a causal loading blocker is established by those misses; no file has been fabricated or replaced."
+  },
+  "graphics": {
+    "first_drawable_callback_log_line": 540,
+    "first_drawable_callback_elapsed_seconds": 2.646,
+    "first_callback_positive_presented_time_asserted": false,
+    "last_logged_nvn_frame_lower_bound": 10500,
+    "positive_timestamp_cadence_windows": 17,
+    "manifests": [
+      {
+        "relative_to_run": "profile/pso_user.tsv",
+        "sha256": "3e46c3812cc661486c90d908564d75f7b935f20e62006d5b770a383254712740",
+        "row_kind_counts": {
+          "S": 4,
+          "R": 2
+        }
+      },
+      {
+        "relative_to_run": "cache/shader-runtime-totk-native-v4-unverified/pso_collected.tsv",
+        "sha256": "3e46c3812cc661486c90d908564d75f7b935f20e62006d5b770a383254712740",
+        "row_kind_counts": {
+          "S": 4,
+          "R": 2
+        }
+      }
+    ],
+    "shader_rows": 4,
+    "render_pipeline_rows": 2,
+    "compute_pipeline_rows": 0,
+    "generic_runner_first_frame_verified_retained": false,
+    "generic_runner_gpu_execution_verified_retained": false,
+    "new_unsupported_api_or_fatal_marker_observed": false
+  },
+  "root_UI_observation_attestation": {
+    "source": "Root reports direct native CUA observation during this run; this audit did not independently view the screenshots.",
+    "observed": "Gold-quill loading image remains visible on black after J input, including a reported500ms hold; no menu transition observed.",
+    "key_mapping_source": "Current input.c maps J/keycode38 to A and Return/keycode36 to Plus.",
+    "guest_consumption_of_button_input_directly_proven": false,
+    "menu_verified": false,
+    "gameplay_verified": false,
+    "screenshot_file_or_hash_included": false
+  },
+  "termination": {
+    "seconds": 180.396,
+    "timeout_seconds": 180,
+    "timed_out": true,
+    "exit_code": -15,
+    "planned_timeout_SIGTERM": true,
+    "forced_kill_sent": false,
+    "owned_group_cleanup_complete": true,
+    "host_wait_completed": true,
+    "remaining_owned_processes": []
+  },
+  "limits": {
+    "specific_loading_cause_identified": false,
+    "specific_asset_loader_deadlock_proven": false,
+    "per_file_read_completion_trace_available": false,
+    "managed_call_gate_executed_by_this_audit": false,
+    "source_or_runtime_behavior_changed": false,
+    "raw_paths_logs_game_or_shader_payloads_included": false,
+    "device_account_team_signing_credentials_included": false
+  },
+  "remaining": "Measure the actual managed/loading gate and its live state before changing runtime behavior. Current evidence supports ongoing loading-screen presentation and early file activity, not a menu, gameplay, a specific missing sidecar fix or an event/filesystem bypass."
+}

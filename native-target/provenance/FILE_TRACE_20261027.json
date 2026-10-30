@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "title_id": "0100BA4026E94000",
+  "state": "explicit_private_file_trace_native_fixture_tested",
+  "base_source_commit": "d21322f9dd8f7f60ce700988de5b769adfb3d837",
+  "scope": "Runner-only opt-in for existing RomFS instrumentation. No C/backend/builder, filesystem adapter, asset, game behavior or asynchronous callback change.",
+  "reason": "Root observed repeated native loading-screen presentation without new fatal IPC. A bounded read-only adapter review found no proven active audio/movie/async success-stub cause. The next actual measurement needs file-open and read-activity evidence instead of a speculative bypass.",
+  "option": {
+    "name": "--trace-files",
+    "default": false,
+    "direct_API": "getattr default false preserves old Namespace callers. Require type(value) is bool and validate before work/path IO; bool-like integers and strings are invalid.",
+    "CLI": "argparse store_true, independently checked through the same helper; explicit value forms such as --trace-files=1 are rejected.",
+    "enabled_child_environment": {
+      "CASTLEVANIA_FS_LOG": "1",
+      "CASTLEVANIA_FS_TIMING": "1"
+    },
+    "disabled_child_environment": "Both keys are absent, not set to zero, because the existing C implementation tests getenv presence. Hostile parent values are not inherited.",
+    "boundary": "No arbitrary environment input, SVC trace, GPU flag, global setting or persistent configuration is added. This only adds the two fixed known keys to the existing explicit child environment when requested."
+  },
+  "existing_instrumentation": {
+    "runtime/romfs.c:fs_log": "Logs RomFS open/miss and existing runtime_fs_log operations with relative time when CASTLEVANIA_FS_LOG is present.",
+    "runtime/romfs.c:runtime_romfs_read": "When CASTLEVANIA_FS_TIMING is present, counts real completed reads/bytes and aggregate wall/prepare timings; periodically reports a read window. It does not add a callback, simulated completion, fabricated file or permissions.",
+    "no_runtime_edit": "These existing instrumentation implementations were read only. Their successful IO, error and hash behavior remain unchanged."
+  },
+  "receipt_and_privacy": {
+    "file_trace_requested": "Validated explicit opt-in, not evidence that a particular game asset was requested.",
+    "file_trace_flags_applied_to_child": "True only when both fixed keys are sent to this child.",
+    "file_trace_log_scope": "Existing owned mode0600 native-host.log inside the mode0700 private run/logs directory.",
+    "raw_paths": "Raw game virtual paths remain in the private existing log. No separate public trace or filename list is created. The existing diagnostic_tail filter may also retain error lines containing paths in the private mode0600 receipt; this change does not promise all paths can never appear there.",
+    "unchanged": "Scratch marker/token/cwd, source/build and RomFS bindings, app packaging, limits, timeout, cleanup, GPU opt-in and profile/save isolation remain in force. No trace payload from an actual game run is embedded in this source provenance."
+  },
+  "validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s native-target/tests -p 'test_host_runner*.py' -v",
+    "result": "62 tests PASS in22.067 seconds:5 new file-trace tests and57 existing runner regressions.",
+    "actual_native_fixture": "Authored small arm64 C program includes the actual runtime/romfs.c. Through the guarded runner it mounts the existing20-byte fixture image, opens one authored fixture file, reads and checks all20 original bytes, and closes the real handle. Uses a real host monotonic clock for the existing timing reporter.",
+    "cases": [
+      "default old-API Namespace ignores hostile parent FS_LOG/FS_TIMING/TRACE_SVC/legacy flags and produces no file-trace output",
+      "explicit true adds exactly both expected1 values, with no SVC/GPU opt-in",
+      "actual C open line and read-window calls1/bytes20 appear in the private native log",
+      "log and receipt modes are0600, parent run/log directories0700",
+      "the normal authored fixture filename is absent from the serialized receipt; this is a tested normal case, not a general error-path guarantee",
+      "explicit false omits both presence-based flags",
+      "nonbool direct API values fail before work IO; CLI opt-in runs the tiny fixture, invalid explicit-value CLI forms fail"
+    ],
+    "peer_review": "Independent focused read-only source/test review found no material issue. Reviewer confirmed both C flags are presence-based and that raw error paths can remain in the private existing diagnostic_tail. Reviewer ran no tests and made no edits.",
+    "diff_check": "git diff --check PASS",
+    "boundary": "No game, guest SDK, Cocoa window, GPU, new asset extraction or actual-game trace was executed by this source stage. Only original native fixtures and existing runner regression processes ran."
+  },
+  "source_sha256": {
+    "scripts/run_experimental_host.py": "b8584ffb55efbc6a89e653e2be38e0c51d57195f8357ddb9abda85bd4be4ec03",
+    "tests/test_host_runner_file_trace.py": "5e311c5dcb55260cb74d08b6820556eb677ef7428c0847a2be7ed261ca62364a"
+  },
+  "owned_paths": [
+    "scripts/run_experimental_host.py",
+    "tests/test_host_runner_file_trace.py",
+    "provenance/FILE_TRACE_20261027.json"
+  ],
+  "runtime_or_backend_modified": false,
+  "game_or_GPU_execution_by_this_stage": false,
+  "loading_cause_identified": false,
+  "remaining": "Root owns the next actual --trace-files diagnostic and interpretation of its last asset activity. No loading bypass or callback repair is justified by this runner option alone."
+}
